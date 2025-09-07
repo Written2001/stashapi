@@ -1,0 +1,11 @@
+^renv$
+^renv\.lock$
+^.*\.Rproj$
+^\.Rproj\.user$
+^LICENSE\.md$
+.Rhistory
+.Rprofile
+.gitignore
+.stash_credentials
+.Rproj.user
+.git
