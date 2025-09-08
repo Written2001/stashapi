@@ -5,7 +5,7 @@ An API wrapper for [Stash](https://github.com/stashapp/stash) written in R
 Stashapi can be installed directly from this repository:
 
 ```
-remotes::install_github()
+remotes::install_github("https://github.com/Written2001/stashapi")
 ```
 
 ## Setup
