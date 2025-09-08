@@ -85,9 +85,10 @@ fetch <- function(query, variables, connection, return_default, field){
   if(is.na(field) && !is.na(return_default))
     return(res)
 
-  if(is.na(field) && length(res) > 1)
+  if(is.na(field) && length(res) > 1){
     res <- purrr::map(res, ~ if(length(.x) > 1 | is.data.frame(.x)) {list(.x)} else .x)
     return(tibble::as_tibble(res))
+  }
 
   return(res)
 }
