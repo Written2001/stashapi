@@ -77,7 +77,8 @@ fetch <- function(query, variables, connection, return_default, field){
   }
 
   if(tibble::is_tibble(res) | all(purrr::map_lgl(res, tibble::is_tibble)))
-    return(res)
+    if(all(is.na(field)))
+      return(res)
 
   if(all(!is.na(field)))
     return(purrr::pluck(res, !!!field))
@@ -109,10 +110,10 @@ clean_list <- function(x){
   if(is.data.frame(x)){
     x <- dplyr::mutate(x, dplyr::across(dplyr::where(~ is.list(.x) || is.data.frame(.x)), ~ {
       col <- .x
-      if (all(ncol(col) > 0, purrr::map_lgl(col, ~ is.null(.x) || is.data.frame(.x)))) {
-        purrr::map(col, ~ if (is.null(.x)) {NA} else tibble::as_tibble(.x))
-      } else if (is.data.frame(col)) {
+      if (is.data.frame(col)) {
         tibble::as_tibble(col)
+      } else if (all(ncol(col) > 0, purrr::map_lgl(col, ~ is.null(.x) || is.data.frame(.x)))) {
+        purrr::map(col, ~ if (is.null(.x)) {NA} else tibble::as_tibble(.x))
       } else {
         col
       }
