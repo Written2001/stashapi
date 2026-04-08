@@ -81,7 +81,7 @@ introspection <- function(){
   }'
   )
 
-  stash_schema <- execute_query(query = introspection_query$queries$fragIntrospection, variables = list(), connection = the$connection, return_default = NA, field = NA)
+  stash_schema <- executeQuery(query = introspection_query$queries$fragIntrospection, variables = list(), connection = the$connection, return_default = NA, field = NA)
   schema_types <- stash_schema$types
   return(schema_types)
 }
@@ -285,7 +285,9 @@ fragment_overrides <- c(
     Tag = "{ id name }",
     Group = "{ id name }",
     ScrapedStudio = "{ stored_id name }",
-    StashID = "{ endpoint stash_id }"
+    StashID = "{ endpoint stash_id }",
+    Folder = "{ id path basename }",
+    BasicFile = "{ id path basename }"
 )
 
 field_overrides <- c(
@@ -296,11 +298,11 @@ field_overrides <- c(
 
 library(magrittr)
 if(file.exists("inst/extdata/schema.json")) {
-  schema_types <- jsonlite::fromJSON(jsonlite::read_json("inst/extdata/schema.json")[[1]], flatten = F)$data$'__schema'$types
+  schema_types <- jsonlite::fromJSON("inst/extdata/schema.json", flatten = F)$data$'__schema'$types
 } else {
   library(ghql)
   source("R/setStashCredentials.R")
-  source("R/execute_query.R")
+  source("R/executeQuery.R")
   setStashCredentials()
   schema_types <- introspection()
 }

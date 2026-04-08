@@ -92,9 +92,9 @@ sceneCreate <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('sceneCreate', '
   mutation sceneCreate($input: SceneCreateInput!) { sceneCreate(input: $input) { ...Scene } }
-  fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } }
+  fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
   fragment VideoCaption on VideoCaption { language_code caption_type }
-  fragment VideoFile on VideoFile { id path basename parent_folder_id zip_file_id mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+  fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
   fragment ScenePathsType on ScenePathsType { screenshot preview stream webp vtt sprite funscript interactive_heatmap caption }
   fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_seconds primary_tag { id name } tags { id name } created_at updated_at stream preview screenshot }
   fragment SceneGroup on SceneGroup { group { id name } scene_index }
@@ -126,9 +126,9 @@ sceneUpdate <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('sceneUpdate', '
   mutation sceneUpdate($input: SceneUpdateInput!) { sceneUpdate(input: $input) { ...Scene } }
-  fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } }
+  fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
   fragment VideoCaption on VideoCaption { language_code caption_type }
-  fragment VideoFile on VideoFile { id path basename parent_folder_id zip_file_id mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+  fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
   fragment ScenePathsType on ScenePathsType { screenshot preview stream webp vtt sprite funscript interactive_heatmap caption }
   fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_seconds primary_tag { id name } tags { id name } created_at updated_at stream preview screenshot }
   fragment SceneGroup on SceneGroup { group { id name } scene_index }
@@ -160,9 +160,9 @@ sceneMerge <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('sceneMerge', '
   mutation sceneMerge($input: SceneMergeInput!) { sceneMerge(input: $input) { ...Scene } }
-  fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } }
+  fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
   fragment VideoCaption on VideoCaption { language_code caption_type }
-  fragment VideoFile on VideoFile { id path basename parent_folder_id zip_file_id mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+  fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
   fragment ScenePathsType on ScenePathsType { screenshot preview stream webp vtt sprite funscript interactive_heatmap caption }
   fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_seconds primary_tag { id name } tags { id name } created_at updated_at stream preview screenshot }
   fragment SceneGroup on SceneGroup { group { id name } scene_index }
@@ -194,9 +194,9 @@ bulkSceneUpdate <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('bulkSceneUpdate', '
   mutation bulkSceneUpdate($input: BulkSceneUpdateInput!) { bulkSceneUpdate(input: $input) { ...Scene } }
-  fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } }
+  fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
   fragment VideoCaption on VideoCaption { language_code caption_type }
-  fragment VideoFile on VideoFile { id path basename parent_folder_id zip_file_id mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+  fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
   fragment ScenePathsType on ScenePathsType { screenshot preview stream webp vtt sprite funscript interactive_heatmap caption }
   fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_seconds primary_tag { id name } tags { id name } created_at updated_at stream preview screenshot }
   fragment SceneGroup on SceneGroup { group { id name } scene_index }
@@ -284,9 +284,9 @@ scenesUpdate <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('scenesUpdate', '
   mutation scenesUpdate($input: [SceneUpdateInput!]!) { scenesUpdate(input: $input) { ...Scene } }
-  fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } }
+  fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
   fragment VideoCaption on VideoCaption { language_code caption_type }
-  fragment VideoFile on VideoFile { id path basename parent_folder_id zip_file_id mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+  fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
   fragment ScenePathsType on ScenePathsType { screenshot preview stream webp vtt sprite funscript interactive_heatmap caption }
   fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_seconds primary_tag { id name } tags { id name } created_at updated_at stream preview screenshot }
   fragment SceneGroup on SceneGroup { group { id name } scene_index }
@@ -632,6 +632,34 @@ sceneMarkerUpdate <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: bulkSceneMarkerUpdate
+#' 
+#' @param input   See the Playground for further details.
+#' @param ... additional parameters like .field to retrieve only a certain field from the response
+#' @importFrom ghql Query
+#' @return processed API response
+#' @export
+bulkSceneMarkerUpdate <- function(input = NA, ...) {
+
+  query <- ghql::Query$new()
+  query$query('bulkSceneMarkerUpdate', '
+  mutation bulkSceneMarkerUpdate($input: BulkSceneMarkerUpdateInput!) { bulkSceneMarkerUpdate(input: $input) { ...SceneMarker } }
+  fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_seconds primary_tag { id name } tags { id name } created_at updated_at stream preview screenshot }
+  ')
+
+  variables <- list()
+  variables[['input']] <- input
+
+  return_default <- NA_character_
+  dotargs <- list(...)
+  if(!".field" %in% names(dotargs)) {
+    dotargs$.field <- return_default
+  }
+  res <- executeQuery(query = query$queries$bulkSceneMarkerUpdate, variables = variables, connection = the$connection, return_default = return_default, field = dotargs$.field)
+
+  return(res)
+}
+
 #' Call GraphQL operation: sceneMarkerDestroy
 #' 
 #' @param id   See the Playground for further details.
@@ -728,11 +756,11 @@ imageUpdate <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('imageUpdate', '
   mutation imageUpdate($input: ImageUpdateInput!) { imageUpdate(input: $input) { ...Image } }
-  fragment Image on Image { id title code rating100 urls date details photographer o_counter organized created_at updated_at visual_files { ...VisualFile } paths { ...ImagePathsType } galleries { id title } studio { id name } tags { id name } performers { id name gender } }
+  fragment Image on Image { id title code rating100 urls date details photographer o_counter organized created_at updated_at visual_files { ...VisualFile } paths { ...ImagePathsType } galleries { id title } studio { id name } tags { id name } performers { id name gender } custom_fields }
   fragment VisualFile on VisualFile { ...VideoFile ...ImageFile }
   fragment ImagePathsType on ImagePathsType { thumbnail preview }
-  fragment VideoFile on VideoFile { id path basename parent_folder_id zip_file_id mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
-  fragment ImageFile on ImageFile { id path basename parent_folder_id zip_file_id mod_time size fingerprints { ...Fingerprint } width height created_at updated_at }
+  fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+  fragment ImageFile on ImageFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height created_at updated_at }
   fragment Fingerprint on Fingerprint { type value }
   ')
 
@@ -761,11 +789,11 @@ bulkImageUpdate <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('bulkImageUpdate', '
   mutation bulkImageUpdate($input: BulkImageUpdateInput!) { bulkImageUpdate(input: $input) { ...Image } }
-  fragment Image on Image { id title code rating100 urls date details photographer o_counter organized created_at updated_at visual_files { ...VisualFile } paths { ...ImagePathsType } galleries { id title } studio { id name } tags { id name } performers { id name gender } }
+  fragment Image on Image { id title code rating100 urls date details photographer o_counter organized created_at updated_at visual_files { ...VisualFile } paths { ...ImagePathsType } galleries { id title } studio { id name } tags { id name } performers { id name gender } custom_fields }
   fragment VisualFile on VisualFile { ...VideoFile ...ImageFile }
   fragment ImagePathsType on ImagePathsType { thumbnail preview }
-  fragment VideoFile on VideoFile { id path basename parent_folder_id zip_file_id mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
-  fragment ImageFile on ImageFile { id path basename parent_folder_id zip_file_id mod_time size fingerprints { ...Fingerprint } width height created_at updated_at }
+  fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+  fragment ImageFile on ImageFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height created_at updated_at }
   fragment Fingerprint on Fingerprint { type value }
   ')
 
@@ -850,11 +878,11 @@ imagesUpdate <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('imagesUpdate', '
   mutation imagesUpdate($input: [ImageUpdateInput!]!) { imagesUpdate(input: $input) { ...Image } }
-  fragment Image on Image { id title code rating100 urls date details photographer o_counter organized created_at updated_at visual_files { ...VisualFile } paths { ...ImagePathsType } galleries { id title } studio { id name } tags { id name } performers { id name gender } }
+  fragment Image on Image { id title code rating100 urls date details photographer o_counter organized created_at updated_at visual_files { ...VisualFile } paths { ...ImagePathsType } galleries { id title } studio { id name } tags { id name } performers { id name gender } custom_fields }
   fragment VisualFile on VisualFile { ...VideoFile ...ImageFile }
   fragment ImagePathsType on ImagePathsType { thumbnail preview }
-  fragment VideoFile on VideoFile { id path basename parent_folder_id zip_file_id mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
-  fragment ImageFile on ImageFile { id path basename parent_folder_id zip_file_id mod_time size fingerprints { ...Fingerprint } width height created_at updated_at }
+  fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+  fragment ImageFile on ImageFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height created_at updated_at }
   fragment Fingerprint on Fingerprint { type value }
   ')
 
@@ -967,9 +995,8 @@ galleryCreate <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('galleryCreate', '
   mutation galleryCreate($input: GalleryCreateInput!) { galleryCreate(input: $input) { ...Gallery } }
-  fragment Gallery on Gallery { id title code urls date details photographer rating100 organized created_at updated_at files { ...GalleryFile } folder { ...Folder } chapters { ...GalleryChapter } scenes { id title } studio { id name } image_count tags { id name } performers { id name gender } cover { id } paths { ...GalleryPathsType } }
-  fragment GalleryFile on GalleryFile { id path basename parent_folder_id zip_file_id mod_time size fingerprints { ...Fingerprint } created_at updated_at }
-  fragment Folder on Folder { id path parent_folder_id zip_file_id mod_time created_at updated_at }
+  fragment Gallery on Gallery { id title code urls date details photographer rating100 organized created_at updated_at files { ...GalleryFile } folder { id path basename } chapters { ...GalleryChapter } scenes { id title } studio { id name } image_count tags { id name } performers { id name gender } cover { id } paths { ...GalleryPathsType } custom_fields }
+  fragment GalleryFile on GalleryFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } created_at updated_at }
   fragment GalleryChapter on GalleryChapter { id gallery { id title } title image_index created_at updated_at }
   fragment GalleryPathsType on GalleryPathsType { cover preview }
   fragment Fingerprint on Fingerprint { type value }
@@ -1000,9 +1027,8 @@ galleryUpdate <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('galleryUpdate', '
   mutation galleryUpdate($input: GalleryUpdateInput!) { galleryUpdate(input: $input) { ...Gallery } }
-  fragment Gallery on Gallery { id title code urls date details photographer rating100 organized created_at updated_at files { ...GalleryFile } folder { ...Folder } chapters { ...GalleryChapter } scenes { id title } studio { id name } image_count tags { id name } performers { id name gender } cover { id } paths { ...GalleryPathsType } }
-  fragment GalleryFile on GalleryFile { id path basename parent_folder_id zip_file_id mod_time size fingerprints { ...Fingerprint } created_at updated_at }
-  fragment Folder on Folder { id path parent_folder_id zip_file_id mod_time created_at updated_at }
+  fragment Gallery on Gallery { id title code urls date details photographer rating100 organized created_at updated_at files { ...GalleryFile } folder { id path basename } chapters { ...GalleryChapter } scenes { id title } studio { id name } image_count tags { id name } performers { id name gender } cover { id } paths { ...GalleryPathsType } custom_fields }
+  fragment GalleryFile on GalleryFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } created_at updated_at }
   fragment GalleryChapter on GalleryChapter { id gallery { id title } title image_index created_at updated_at }
   fragment GalleryPathsType on GalleryPathsType { cover preview }
   fragment Fingerprint on Fingerprint { type value }
@@ -1033,9 +1059,8 @@ bulkGalleryUpdate <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('bulkGalleryUpdate', '
   mutation bulkGalleryUpdate($input: BulkGalleryUpdateInput!) { bulkGalleryUpdate(input: $input) { ...Gallery } }
-  fragment Gallery on Gallery { id title code urls date details photographer rating100 organized created_at updated_at files { ...GalleryFile } folder { ...Folder } chapters { ...GalleryChapter } scenes { id title } studio { id name } image_count tags { id name } performers { id name gender } cover { id } paths { ...GalleryPathsType } }
-  fragment GalleryFile on GalleryFile { id path basename parent_folder_id zip_file_id mod_time size fingerprints { ...Fingerprint } created_at updated_at }
-  fragment Folder on Folder { id path parent_folder_id zip_file_id mod_time created_at updated_at }
+  fragment Gallery on Gallery { id title code urls date details photographer rating100 organized created_at updated_at files { ...GalleryFile } folder { id path basename } chapters { ...GalleryChapter } scenes { id title } studio { id name } image_count tags { id name } performers { id name gender } cover { id } paths { ...GalleryPathsType } custom_fields }
+  fragment GalleryFile on GalleryFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } created_at updated_at }
   fragment GalleryChapter on GalleryChapter { id gallery { id title } title image_index created_at updated_at }
   fragment GalleryPathsType on GalleryPathsType { cover preview }
   fragment Fingerprint on Fingerprint { type value }
@@ -1094,9 +1119,8 @@ galleriesUpdate <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('galleriesUpdate', '
   mutation galleriesUpdate($input: [GalleryUpdateInput!]!) { galleriesUpdate(input: $input) { ...Gallery } }
-  fragment Gallery on Gallery { id title code urls date details photographer rating100 organized created_at updated_at files { ...GalleryFile } folder { ...Folder } chapters { ...GalleryChapter } scenes { id title } studio { id name } image_count tags { id name } performers { id name gender } cover { id } paths { ...GalleryPathsType } }
-  fragment GalleryFile on GalleryFile { id path basename parent_folder_id zip_file_id mod_time size fingerprints { ...Fingerprint } created_at updated_at }
-  fragment Folder on Folder { id path parent_folder_id zip_file_id mod_time created_at updated_at }
+  fragment Gallery on Gallery { id title code urls date details photographer rating100 organized created_at updated_at files { ...GalleryFile } folder { id path basename } chapters { ...GalleryChapter } scenes { id title } studio { id name } image_count tags { id name } performers { id name gender } cover { id } paths { ...GalleryPathsType } custom_fields }
+  fragment GalleryFile on GalleryFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } created_at updated_at }
   fragment GalleryChapter on GalleryChapter { id gallery { id title } title image_index created_at updated_at }
   fragment GalleryPathsType on GalleryPathsType { cover preview }
   fragment Fingerprint on Fingerprint { type value }
@@ -1323,7 +1347,7 @@ performerCreate <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('performerCreate', '
   mutation performerCreate($input: PerformerCreateInput!) { performerCreate(input: $input) { ...Performer } }
-  fragment Performer on Performer { id name disambiguation urls gender birthdate ethnicity country eye_color height_cm measurements fake_tits penis_length circumcised career_length tattoos piercings alias_list favorite tags { id name } ignore_auto_tag image_path scene_count image_count gallery_count group_count performer_count o_counter scenes { id title } stash_ids { endpoint stash_id } rating100 details death_date hair_color weight created_at updated_at groups { id name } custom_fields }
+  fragment Performer on Performer { id name disambiguation urls gender birthdate ethnicity country eye_color height_cm measurements fake_tits penis_length circumcised career_start career_end tattoos piercings alias_list favorite tags { id name } ignore_auto_tag image_path scene_count image_count gallery_count group_count performer_count o_counter scenes { id title } stash_ids { endpoint stash_id } rating100 details death_date hair_color weight created_at updated_at groups { id name } custom_fields }
   ')
 
   variables <- list()
@@ -1351,7 +1375,7 @@ performerUpdate <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('performerUpdate', '
   mutation performerUpdate($input: PerformerUpdateInput!) { performerUpdate(input: $input) { ...Performer } }
-  fragment Performer on Performer { id name disambiguation urls gender birthdate ethnicity country eye_color height_cm measurements fake_tits penis_length circumcised career_length tattoos piercings alias_list favorite tags { id name } ignore_auto_tag image_path scene_count image_count gallery_count group_count performer_count o_counter scenes { id title } stash_ids { endpoint stash_id } rating100 details death_date hair_color weight created_at updated_at groups { id name } custom_fields }
+  fragment Performer on Performer { id name disambiguation urls gender birthdate ethnicity country eye_color height_cm measurements fake_tits penis_length circumcised career_start career_end tattoos piercings alias_list favorite tags { id name } ignore_auto_tag image_path scene_count image_count gallery_count group_count performer_count o_counter scenes { id title } stash_ids { endpoint stash_id } rating100 details death_date hair_color weight created_at updated_at groups { id name } custom_fields }
   ')
 
   variables <- list()
@@ -1435,7 +1459,7 @@ bulkPerformerUpdate <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('bulkPerformerUpdate', '
   mutation bulkPerformerUpdate($input: BulkPerformerUpdateInput!) { bulkPerformerUpdate(input: $input) { ...Performer } }
-  fragment Performer on Performer { id name disambiguation urls gender birthdate ethnicity country eye_color height_cm measurements fake_tits penis_length circumcised career_length tattoos piercings alias_list favorite tags { id name } ignore_auto_tag image_path scene_count image_count gallery_count group_count performer_count o_counter scenes { id title } stash_ids { endpoint stash_id } rating100 details death_date hair_color weight created_at updated_at groups { id name } custom_fields }
+  fragment Performer on Performer { id name disambiguation urls gender birthdate ethnicity country eye_color height_cm measurements fake_tits penis_length circumcised career_start career_end tattoos piercings alias_list favorite tags { id name } ignore_auto_tag image_path scene_count image_count gallery_count group_count performer_count o_counter scenes { id title } stash_ids { endpoint stash_id } rating100 details death_date hair_color weight created_at updated_at groups { id name } custom_fields }
   ')
 
   variables <- list()
@@ -1447,6 +1471,34 @@ bulkPerformerUpdate <- function(input = NA, ...) {
     dotargs$.field <- return_default
   }
   res <- executeQuery(query = query$queries$bulkPerformerUpdate, variables = variables, connection = the$connection, return_default = return_default, field = dotargs$.field)
+
+  return(res)
+}
+
+#' Call GraphQL operation: performerMerge
+#' 
+#' @param input   See the Playground for further details.
+#' @param ... additional parameters like .field to retrieve only a certain field from the response
+#' @importFrom ghql Query
+#' @return processed API response
+#' @export
+performerMerge <- function(input = NA, ...) {
+
+  query <- ghql::Query$new()
+  query$query('performerMerge', '
+  mutation performerMerge($input: PerformerMergeInput!) { performerMerge(input: $input) { ...Performer } }
+  fragment Performer on Performer { id name disambiguation urls gender birthdate ethnicity country eye_color height_cm measurements fake_tits penis_length circumcised career_start career_end tattoos piercings alias_list favorite tags { id name } ignore_auto_tag image_path scene_count image_count gallery_count group_count performer_count o_counter scenes { id title } stash_ids { endpoint stash_id } rating100 details death_date hair_color weight created_at updated_at groups { id name } custom_fields }
+  ')
+
+  variables <- list()
+  variables[['input']] <- input
+
+  return_default <- NA_character_
+  dotargs <- list(...)
+  if(!".field" %in% names(dotargs)) {
+    dotargs$.field <- return_default
+  }
+  res <- executeQuery(query = query$queries$performerMerge, variables = variables, connection = the$connection, return_default = return_default, field = dotargs$.field)
 
   return(res)
 }
@@ -1463,7 +1515,7 @@ studioCreate <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('studioCreate', '
   mutation studioCreate($input: StudioCreateInput!) { studioCreate(input: $input) { ...Studio } }
-  fragment Studio on Studio { id name url parent_studio { id name } child_studios { id name } aliases tags { id name } ignore_auto_tag image_path scene_count image_count gallery_count performer_count group_count stash_ids { endpoint stash_id } rating100 favorite details created_at updated_at groups { id name } }
+  fragment Studio on Studio { id name urls parent_studio { id name } child_studios { id name } aliases tags { id name } ignore_auto_tag organized image_path scene_count image_count gallery_count performer_count group_count stash_ids { endpoint stash_id } rating100 favorite details created_at updated_at groups { id name } o_counter custom_fields }
   ')
 
   variables <- list()
@@ -1491,7 +1543,7 @@ studioUpdate <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('studioUpdate', '
   mutation studioUpdate($input: StudioUpdateInput!) { studioUpdate(input: $input) { ...Studio } }
-  fragment Studio on Studio { id name url parent_studio { id name } child_studios { id name } aliases tags { id name } ignore_auto_tag image_path scene_count image_count gallery_count performer_count group_count stash_ids { endpoint stash_id } rating100 favorite details created_at updated_at groups { id name } }
+  fragment Studio on Studio { id name urls parent_studio { id name } child_studios { id name } aliases tags { id name } ignore_auto_tag organized image_path scene_count image_count gallery_count performer_count group_count stash_ids { endpoint stash_id } rating100 favorite details created_at updated_at groups { id name } o_counter custom_fields }
   ')
 
   variables <- list()
@@ -1563,6 +1615,34 @@ studiosDestroy <- function(ids = list(), ...) {
   return(res)
 }
 
+#' Call GraphQL operation: bulkStudioUpdate
+#' 
+#' @param input   See the Playground for further details.
+#' @param ... additional parameters like .field to retrieve only a certain field from the response
+#' @importFrom ghql Query
+#' @return processed API response
+#' @export
+bulkStudioUpdate <- function(input = NA, ...) {
+
+  query <- ghql::Query$new()
+  query$query('bulkStudioUpdate', '
+  mutation bulkStudioUpdate($input: BulkStudioUpdateInput!) { bulkStudioUpdate(input: $input) { ...Studio } }
+  fragment Studio on Studio { id name urls parent_studio { id name } child_studios { id name } aliases tags { id name } ignore_auto_tag organized image_path scene_count image_count gallery_count performer_count group_count stash_ids { endpoint stash_id } rating100 favorite details created_at updated_at groups { id name } o_counter custom_fields }
+  ')
+
+  variables <- list()
+  variables[['input']] <- input
+
+  return_default <- NA_character_
+  dotargs <- list(...)
+  if(!".field" %in% names(dotargs)) {
+    dotargs$.field <- return_default
+  }
+  res <- executeQuery(query = query$queries$bulkStudioUpdate, variables = variables, connection = the$connection, return_default = return_default, field = dotargs$.field)
+
+  return(res)
+}
+
 #' Call GraphQL operation: groupCreate
 #' 
 #' @param input   See the Playground for further details.
@@ -1575,7 +1655,7 @@ groupCreate <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('groupCreate', '
   mutation groupCreate($input: GroupCreateInput!) { groupCreate(input: $input) { ...Group } }
-  fragment Group on Group { id name aliases duration date rating100 studio { id name } director synopsis urls tags { id name } created_at updated_at containing_groups { ...GroupDescription } sub_groups { ...GroupDescription } front_image_path back_image_path scene_count sub_group_count scenes { id title } }
+  fragment Group on Group { id name aliases duration date rating100 studio { id name } director synopsis urls tags { id name } created_at updated_at containing_groups { ...GroupDescription } sub_groups { ...GroupDescription } front_image_path back_image_path scene_count performer_count sub_group_count scenes { id title } o_counter custom_fields }
   fragment GroupDescription on GroupDescription { group { id name } description }
   ')
 
@@ -1604,7 +1684,7 @@ groupUpdate <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('groupUpdate', '
   mutation groupUpdate($input: GroupUpdateInput!) { groupUpdate(input: $input) { ...Group } }
-  fragment Group on Group { id name aliases duration date rating100 studio { id name } director synopsis urls tags { id name } created_at updated_at containing_groups { ...GroupDescription } sub_groups { ...GroupDescription } front_image_path back_image_path scene_count sub_group_count scenes { id title } }
+  fragment Group on Group { id name aliases duration date rating100 studio { id name } director synopsis urls tags { id name } created_at updated_at containing_groups { ...GroupDescription } sub_groups { ...GroupDescription } front_image_path back_image_path scene_count performer_count sub_group_count scenes { id title } o_counter custom_fields }
   fragment GroupDescription on GroupDescription { group { id name } description }
   ')
 
@@ -1689,7 +1769,7 @@ bulkGroupUpdate <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('bulkGroupUpdate', '
   mutation bulkGroupUpdate($input: BulkGroupUpdateInput!) { bulkGroupUpdate(input: $input) { ...Group } }
-  fragment Group on Group { id name aliases duration date rating100 studio { id name } director synopsis urls tags { id name } created_at updated_at containing_groups { ...GroupDescription } sub_groups { ...GroupDescription } front_image_path back_image_path scene_count sub_group_count scenes { id title } }
+  fragment Group on Group { id name aliases duration date rating100 studio { id name } director synopsis urls tags { id name } created_at updated_at containing_groups { ...GroupDescription } sub_groups { ...GroupDescription } front_image_path back_image_path scene_count performer_count sub_group_count scenes { id title } o_counter custom_fields }
   fragment GroupDescription on GroupDescription { group { id name } description }
   ')
 
@@ -1802,7 +1882,7 @@ tagCreate <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('tagCreate', '
   mutation tagCreate($input: TagCreateInput!) { tagCreate(input: $input) { ...Tag } }
-  fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag created_at updated_at favorite image_path scene_count scene_marker_count image_count gallery_count performer_count studio_count group_count parents { id name } children { id name } parent_count child_count }
+  fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag created_at updated_at favorite stash_ids { endpoint stash_id } image_path scene_count scene_marker_count image_count gallery_count performer_count studio_count group_count parents { id name } children { id name } parent_count child_count custom_fields }
   ')
 
   variables <- list()
@@ -1830,7 +1910,7 @@ tagUpdate <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('tagUpdate', '
   mutation tagUpdate($input: TagUpdateInput!) { tagUpdate(input: $input) { ...Tag } }
-  fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag created_at updated_at favorite image_path scene_count scene_marker_count image_count gallery_count performer_count studio_count group_count parents { id name } children { id name } parent_count child_count }
+  fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag created_at updated_at favorite stash_ids { endpoint stash_id } image_path scene_count scene_marker_count image_count gallery_count performer_count studio_count group_count parents { id name } children { id name } parent_count child_count custom_fields }
   ')
 
   variables <- list()
@@ -1914,7 +1994,7 @@ tagsMerge <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('tagsMerge', '
   mutation tagsMerge($input: TagsMergeInput!) { tagsMerge(input: $input) { ...Tag } }
-  fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag created_at updated_at favorite image_path scene_count scene_marker_count image_count gallery_count performer_count studio_count group_count parents { id name } children { id name } parent_count child_count }
+  fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag created_at updated_at favorite stash_ids { endpoint stash_id } image_path scene_count scene_marker_count image_count gallery_count performer_count studio_count group_count parents { id name } children { id name } parent_count child_count custom_fields }
   ')
 
   variables <- list()
@@ -1942,7 +2022,7 @@ bulkTagUpdate <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('bulkTagUpdate', '
   mutation bulkTagUpdate($input: BulkTagUpdateInput!) { bulkTagUpdate(input: $input) { ...Tag } }
-  fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag created_at updated_at favorite image_path scene_count scene_marker_count image_count gallery_count performer_count studio_count group_count parents { id name } children { id name } parent_count child_count }
+  fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag created_at updated_at favorite stash_ids { endpoint stash_id } image_path scene_count scene_marker_count image_count gallery_count performer_count studio_count group_count parents { id name } children { id name } parent_count child_count custom_fields }
   ')
 
   variables <- list()
@@ -2020,6 +2100,34 @@ deleteFiles <- function(ids = list(), ...) {
   return(res)
 }
 
+#' Call GraphQL operation: destroyFiles
+#' @description Deletes file entries from the database without deleting the files from the filesystem
+#' @param ids   See the Playground for further details.
+#' @param ... additional parameters like .field to retrieve only a certain field from the response
+#' @importFrom ghql Query
+#' @return processed API response
+#' @export
+destroyFiles <- function(ids = list(), ...) {
+
+  query <- ghql::Query$new()
+  query$query('destroyFiles', '
+  mutation destroyFiles($ids: [ID!]!) { destroyFiles(ids: $ids) }
+  
+  ')
+
+  variables <- list()
+  variables[['ids']] <- ids
+
+  return_default <- NA_character_
+  dotargs <- list(...)
+  if(!".field" %in% names(dotargs)) {
+    dotargs$.field <- return_default
+  }
+  res <- executeQuery(query = query$queries$destroyFiles, variables = variables, connection = the$connection, return_default = return_default, field = dotargs$.field)
+
+  return(res)
+}
+
 #' Call GraphQL operation: fileSetFingerprints
 #' 
 #' @param input   See the Playground for further details.
@@ -2044,6 +2152,62 @@ fileSetFingerprints <- function(input = NA, ...) {
     dotargs$.field <- return_default
   }
   res <- executeQuery(query = query$queries$fileSetFingerprints, variables = variables, connection = the$connection, return_default = return_default, field = dotargs$.field)
+
+  return(res)
+}
+
+#' Call GraphQL operation: revealFileInFileManager
+#' @description Reveal the file in the system file manager
+#' @param id   See the Playground for further details.
+#' @param ... additional parameters like .field to retrieve only a certain field from the response
+#' @importFrom ghql Query
+#' @return processed API response
+#' @export
+revealFileInFileManager <- function(id = list(), ...) {
+
+  query <- ghql::Query$new()
+  query$query('revealFileInFileManager', '
+  mutation revealFileInFileManager($id: ID!) { revealFileInFileManager(id: $id) }
+  
+  ')
+
+  variables <- list()
+  variables[['id']] <- id
+
+  return_default <- NA_character_
+  dotargs <- list(...)
+  if(!".field" %in% names(dotargs)) {
+    dotargs$.field <- return_default
+  }
+  res <- executeQuery(query = query$queries$revealFileInFileManager, variables = variables, connection = the$connection, return_default = return_default, field = dotargs$.field)
+
+  return(res)
+}
+
+#' Call GraphQL operation: revealFolderInFileManager
+#' @description Reveal the folder in the system file manager
+#' @param id   See the Playground for further details.
+#' @param ... additional parameters like .field to retrieve only a certain field from the response
+#' @importFrom ghql Query
+#' @return processed API response
+#' @export
+revealFolderInFileManager <- function(id = list(), ...) {
+
+  query <- ghql::Query$new()
+  query$query('revealFolderInFileManager', '
+  mutation revealFolderInFileManager($id: ID!) { revealFolderInFileManager(id: $id) }
+  
+  ')
+
+  variables <- list()
+  variables[['id']] <- id
+
+  return_default <- NA_character_
+  dotargs <- list(...)
+  if(!".field" %in% names(dotargs)) {
+    dotargs$.field <- return_default
+  }
+  res <- executeQuery(query = query$queries$revealFolderInFileManager, variables = variables, connection = the$connection, return_default = return_default, field = dotargs$.field)
 
   return(res)
 }
@@ -2117,9 +2281,9 @@ configureGeneral <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('configureGeneral', '
   mutation configureGeneral($input: ConfigGeneralInput!) { configureGeneral(input: $input) { ...ConfigGeneralResult } }
-  fragment ConfigGeneralResult on ConfigGeneralResult { stashes { ...StashConfig } databasePath backupDirectoryPath generatedPath metadataPath configFilePath scrapersPath pluginsPath cachePath blobsPath blobsStorage ffmpegPath ffprobePath calculateMD5 videoFileNamingAlgorithm parallelTasks previewAudio previewSegments previewSegmentDuration previewExcludeStart previewExcludeEnd previewPreset transcodeHardwareAcceleration maxTranscodeSize maxStreamingTranscodeSize transcodeInputArgs transcodeOutputArgs liveTranscodeInputArgs liveTranscodeOutputArgs drawFunscriptHeatmapRange writeImageThumbnails createImageClipsFromVideos apiKey username password maxSessionAge logFile logOut logLevel logAccess videoExtensions imageExtensions galleryExtensions createGalleriesFromFolders galleryCoverRegex excludes imageExcludes customPerformerImageLocation stashBoxes { ...StashBox } pythonPath scraperPackageSources { ...PackageSource } pluginPackageSources { ...PackageSource } }
+  fragment ConfigGeneralResult on ConfigGeneralResult { stashes { ...StashConfig } databasePath backupDirectoryPath deleteTrashPath generatedPath metadataPath configFilePath scrapersPath pluginsPath cachePath blobsPath blobsStorage ffmpegPath ffprobePath calculateMD5 videoFileNamingAlgorithm parallelTasks previewAudio previewSegments previewSegmentDuration previewExcludeStart previewExcludeEnd previewPreset transcodeHardwareAcceleration maxTranscodeSize maxStreamingTranscodeSize transcodeInputArgs transcodeOutputArgs liveTranscodeInputArgs liveTranscodeOutputArgs drawFunscriptHeatmapRange writeImageThumbnails createImageClipsFromVideos apiKey username password maxSessionAge logFile logOut logLevel logAccess logFileMaxSize useCustomSpriteInterval spriteInterval minimumSprites maximumSprites spriteScreenshotSize videoExtensions imageExtensions galleryExtensions createGalleriesFromFolders galleryCoverRegex excludes imageExcludes customPerformerImageLocation stashBoxes { ...StashBox } pythonPath scraperPackageSources { ...PackageSource } pluginPackageSources { ...PackageSource } }
   fragment StashConfig on StashConfig { path excludeVideo excludeImage }
-  fragment StashBox on StashBox { endpoint api_key name }
+  fragment StashBox on StashBox { endpoint api_key name max_requests_per_minute }
   fragment PackageSource on PackageSource { name url local_path }
   ')
 
@@ -2148,9 +2312,9 @@ configureInterface <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('configureInterface', '
   mutation configureInterface($input: ConfigInterfaceInput!) { configureInterface(input: $input) { ...ConfigInterfaceResult } }
-  fragment ConfigInterfaceResult on ConfigInterfaceResult { menuItems soundOnPreview wallShowTitle wallPlayback showScrubber maximumLoopDuration noBrowser notificationsEnabled autostartVideo autostartVideoOnPlaySelected continuePlaylistDefault showStudioAsText css cssEnabled javascript javascriptEnabled customLocales customLocalesEnabled language imageLightbox { ...ConfigImageLightboxResult } disableDropdownCreate { ...ConfigDisableDropdownCreate } handyKey funscriptOffset useStashHostedFunscript }
-  fragment ConfigImageLightboxResult on ConfigImageLightboxResult { slideshowDelay displayMode scaleUp resetZoomOnNav scrollMode scrollAttemptsBeforeChange }
-  fragment ConfigDisableDropdownCreate on ConfigDisableDropdownCreate { performer tag studio movie }
+  fragment ConfigInterfaceResult on ConfigInterfaceResult { sfwContentMode menuItems soundOnPreview wallShowTitle wallPlayback showScrubber maximumLoopDuration noBrowser notificationsEnabled autostartVideo autostartVideoOnPlaySelected continuePlaylistDefault showStudioAsText css cssEnabled javascript javascriptEnabled customLocales customLocalesEnabled disableCustomizations language imageLightbox { ...ConfigImageLightboxResult } disableDropdownCreate { ...ConfigDisableDropdownCreate } handyKey funscriptOffset useStashHostedFunscript }
+  fragment ConfigImageLightboxResult on ConfigImageLightboxResult { slideshowDelay displayMode scaleUp resetZoomOnNav scrollMode scrollAttemptsBeforeChange disableAnimation }
+  fragment ConfigDisableDropdownCreate on ConfigDisableDropdownCreate { performer tag studio movie gallery }
   ')
 
   variables <- list()
@@ -2235,12 +2399,12 @@ configureDefaults <- function(input = NA, ...) {
   query$query('configureDefaults', '
   mutation configureDefaults($input: ConfigDefaultSettingsInput!) { configureDefaults(input: $input) { ...ConfigDefaultSettingsResult } }
   fragment ConfigDefaultSettingsResult on ConfigDefaultSettingsResult { scan { ...ScanMetadataOptions } identify { ...IdentifyMetadataTaskOptions } autoTag { ...AutoTagMetadataOptions } generate { ...GenerateMetadataOptions } deleteFile deleteGenerated }
-  fragment ScanMetadataOptions on ScanMetadataOptions { rescan scanGenerateCovers scanGeneratePreviews scanGenerateImagePreviews scanGenerateSprites scanGeneratePhashes scanGenerateThumbnails scanGenerateClipPreviews }
+  fragment ScanMetadataOptions on ScanMetadataOptions { rescan scanGenerateCovers scanGeneratePreviews scanGenerateImagePreviews scanGenerateSprites scanGeneratePhashes scanGenerateImagePhashes scanGenerateThumbnails scanGenerateClipPreviews }
   fragment IdentifyMetadataTaskOptions on IdentifyMetadataTaskOptions { sources { ...IdentifySource } options { ...IdentifyMetadataOptions } }
   fragment AutoTagMetadataOptions on AutoTagMetadataOptions { performers studios tags }
   fragment GenerateMetadataOptions on GenerateMetadataOptions { covers sprites previews imagePreviews previewOptions { ...GeneratePreviewOptions } markers markerImagePreviews markerScreenshots transcodes phashes interactiveHeatmapsSpeeds imageThumbnails clipPreviews }
   fragment IdentifySource on IdentifySource { source { ...ScraperSource } options { ...IdentifyMetadataOptions } }
-  fragment IdentifyMetadataOptions on IdentifyMetadataOptions { fieldOptions { ...IdentifyFieldOptions } setCoverImage setOrganized includeMalePerformers skipMultipleMatches skipMultipleMatchTag skipSingleNamePerformers skipSingleNamePerformerTag }
+  fragment IdentifyMetadataOptions on IdentifyMetadataOptions { fieldOptions { ...IdentifyFieldOptions } setCoverImage setOrganized performerGenders skipMultipleMatches skipMultipleMatchTag skipSingleNamePerformers skipSingleNamePerformerTag }
   fragment ScraperSource on ScraperSource { stash_box_endpoint scraper_id }
   fragment IdentifyFieldOptions on IdentifyFieldOptions { field strategy createMissing }
   fragment GeneratePreviewOptions on GeneratePreviewOptions { previewSegments previewSegmentDuration previewExcludeStart previewExcludeEnd previewPreset }
@@ -3326,6 +3490,34 @@ stashBoxBatchStudioTag <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: stashBoxBatchTagTag
+#' @description Run batch tag tag task. Returns the job ID.
+#' @param input   See the Playground for further details.
+#' @param ... additional parameters like .field to retrieve only a certain field from the response
+#' @importFrom ghql Query
+#' @return processed API response
+#' @export
+stashBoxBatchTagTag <- function(input = NA, ...) {
+
+  query <- ghql::Query$new()
+  query$query('stashBoxBatchTagTag', '
+  mutation stashBoxBatchTagTag($input: StashBoxBatchTagInput!) { stashBoxBatchTagTag(input: $input) }
+  
+  ')
+
+  variables <- list()
+  variables[['input']] <- input
+
+  return_default <- NA_character_
+  dotargs <- list(...)
+  if(!".field" %in% names(dotargs)) {
+    dotargs$.field <- return_default
+  }
+  res <- executeQuery(query = query$queries$stashBoxBatchTagTag, variables = variables, connection = the$connection, return_default = return_default, field = dotargs$.field)
+
+  return(res)
+}
+
 #' Call GraphQL operation: enableDLNA
 #' @description Enables DLNA for an optional duration. Has no effect if DLNA is enabled by default
 #' @param input   See the Playground for further details.
@@ -3496,6 +3688,131 @@ findSavedFilters <- function(mode = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: findFile
+#' @description Find a file by its id or path
+#' @param id   See the Playground for further details.
+#' @param path   See the Playground for further details.
+#' @param ... additional parameters like .field to retrieve only a certain field from the response
+#' @importFrom ghql Query
+#' @return processed API response
+#' @export
+findFile <- function(id = NA, path = NA, ...) {
+
+  query <- ghql::Query$new()
+  query$query('findFile', '
+  query findFile($id: ID $path: String) { findFile(id: $id path: $path) }
+  
+  ')
+
+  variables <- list()
+  variables[['id']] <- id
+  variables[['path']] <- path
+
+  return_default <- NA_character_
+  dotargs <- list(...)
+  if(!".field" %in% names(dotargs)) {
+    dotargs$.field <- return_default
+  }
+  res <- executeQuery(query = query$queries$findFile, variables = variables, connection = the$connection, return_default = return_default, field = dotargs$.field)
+
+  return(res)
+}
+
+#' Call GraphQL operation: findFiles
+#' @description Queries for Files
+#' @param filefilter   See the Playground for further details.
+#' @param filter   See the Playground for further details.
+#' @param ids   See the Playground for further details.
+#' @param ... additional parameters like .field to retrieve only a certain field from the response
+#' @importFrom ghql Query
+#' @return processed API response
+#' @export
+findFiles <- function(filefilter = NA, filter = NA, ids = list(), ...) {
+
+  query <- ghql::Query$new()
+  query$query('findFiles', '
+  query findFiles($filefilter: FileFilterType $filter: FindFilterType $ids: [ID!]) { findFiles(file_filter: $filefilter filter: $filter ids: $ids) { ...FindFilesResultType } }
+  fragment FindFilesResultType on FindFilesResultType { count megapixels duration size files }
+  ')
+
+  variables <- list()
+  variables[['filefilter']] <- filefilter
+  variables[['filter']] <- filter
+  variables[['ids']] <- ids
+
+  return_default <- NA_character_
+  dotargs <- list(...)
+  if(!".field" %in% names(dotargs)) {
+    dotargs$.field <- return_default
+  }
+  res <- executeQuery(query = query$queries$findFiles, variables = variables, connection = the$connection, return_default = return_default, field = dotargs$.field)
+
+  return(res)
+}
+
+#' Call GraphQL operation: findFolder
+#' @description Find a file by its id or path
+#' @param id   See the Playground for further details.
+#' @param path   See the Playground for further details.
+#' @param ... additional parameters like .field to retrieve only a certain field from the response
+#' @importFrom ghql Query
+#' @return processed API response
+#' @export
+findFolder <- function(id = NA, path = NA, ...) {
+
+  query <- ghql::Query$new()
+  query$query('findFolder', '
+  query findFolder($id: ID $path: String) { findFolder(id: $id path: $path) { ...Folder } }
+  fragment Folder on Folder { id path basename parent_folder { id path basename } parent_folders { id path basename } zip_file { id path basename } sub_folders { id path basename } mod_time created_at updated_at }
+  ')
+
+  variables <- list()
+  variables[['id']] <- id
+  variables[['path']] <- path
+
+  return_default <- NA_character_
+  dotargs <- list(...)
+  if(!".field" %in% names(dotargs)) {
+    dotargs$.field <- return_default
+  }
+  res <- executeQuery(query = query$queries$findFolder, variables = variables, connection = the$connection, return_default = return_default, field = dotargs$.field)
+
+  return(res)
+}
+
+#' Call GraphQL operation: findFolders
+#' @description Queries for Files
+#' @param folderfilter   See the Playground for further details.
+#' @param filter   See the Playground for further details.
+#' @param ids   See the Playground for further details.
+#' @param ... additional parameters like .field to retrieve only a certain field from the response
+#' @importFrom ghql Query
+#' @return processed API response
+#' @export
+findFolders <- function(folderfilter = NA, filter = NA, ids = list(), ...) {
+
+  query <- ghql::Query$new()
+  query$query('findFolders', '
+  query findFolders($folderfilter: FolderFilterType $filter: FindFilterType $ids: [ID!]) { findFolders(folder_filter: $folderfilter filter: $filter ids: $ids) { ...FindFoldersResultType } }
+  fragment FindFoldersResultType on FindFoldersResultType { count folders { ...Folder } }
+  fragment Folder on Folder { id path basename parent_folder { id path basename } parent_folders { id path basename } zip_file { id path basename } sub_folders { id path basename } mod_time created_at updated_at }
+  ')
+
+  variables <- list()
+  variables[['folderfilter']] <- folderfilter
+  variables[['filter']] <- filter
+  variables[['ids']] <- ids
+
+  return_default <- "folders"
+  dotargs <- list(...)
+  if(!".field" %in% names(dotargs)) {
+    dotargs$.field <- return_default
+  }
+  res <- executeQuery(query = query$queries$findFolders, variables = variables, connection = the$connection, return_default = return_default, field = dotargs$.field)
+
+  return(res)
+}
+
 #' Call GraphQL operation: findScene
 #' @description Find a scene by ID or Checksum
 #' @param id   See the Playground for further details.
@@ -3509,9 +3826,9 @@ findScene <- function(id = NA, checksum = NA, ...) {
   query <- ghql::Query$new()
   query$query('findScene', '
   query findScene($id: ID $checksum: String) { findScene(id: $id checksum: $checksum) { ...Scene } }
-  fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } }
+  fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
   fragment VideoCaption on VideoCaption { language_code caption_type }
-  fragment VideoFile on VideoFile { id path basename parent_folder_id zip_file_id mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+  fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
   fragment ScenePathsType on ScenePathsType { screenshot preview stream webp vtt sprite funscript interactive_heatmap caption }
   fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_seconds primary_tag { id name } tags { id name } created_at updated_at stream preview screenshot }
   fragment SceneGroup on SceneGroup { group { id name } scene_index }
@@ -3544,9 +3861,9 @@ findSceneByHash <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('findSceneByHash', '
   query findSceneByHash($input: SceneHashInput!) { findSceneByHash(input: $input) { ...Scene } }
-  fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } }
+  fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
   fragment VideoCaption on VideoCaption { language_code caption_type }
-  fragment VideoFile on VideoFile { id path basename parent_folder_id zip_file_id mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+  fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
   fragment ScenePathsType on ScenePathsType { screenshot preview stream webp vtt sprite funscript interactive_heatmap caption }
   fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_seconds primary_tag { id name } tags { id name } created_at updated_at stream preview screenshot }
   fragment SceneGroup on SceneGroup { group { id name } scene_index }
@@ -3582,9 +3899,9 @@ findScenes <- function(scenefilter = NA, sceneids = list(), ids = list(), filter
   query$query('findScenes', '
   query findScenes($scenefilter: SceneFilterType $sceneids: [Int!] $ids: [ID!] $filter: FindFilterType) { findScenes(scene_filter: $scenefilter scene_ids: $sceneids ids: $ids filter: $filter) { ...FindScenesResultType } }
   fragment FindScenesResultType on FindScenesResultType { count duration filesize scenes { ...Scene } }
-  fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } }
+  fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
   fragment VideoCaption on VideoCaption { language_code caption_type }
-  fragment VideoFile on VideoFile { id path basename parent_folder_id zip_file_id mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+  fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
   fragment ScenePathsType on ScenePathsType { screenshot preview stream webp vtt sprite funscript interactive_heatmap caption }
   fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_seconds primary_tag { id name } tags { id name } created_at updated_at stream preview screenshot }
   fragment SceneGroup on SceneGroup { group { id name } scene_index }
@@ -3620,9 +3937,9 @@ findScenesByPathRegex <- function(filter = NA, ...) {
   query$query('findScenesByPathRegex', '
   query findScenesByPathRegex($filter: FindFilterType) { findScenesByPathRegex(filter: $filter) { ...FindScenesResultType } }
   fragment FindScenesResultType on FindScenesResultType { count duration filesize scenes { ...Scene } }
-  fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } }
+  fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
   fragment VideoCaption on VideoCaption { language_code caption_type }
-  fragment VideoFile on VideoFile { id path basename parent_folder_id zip_file_id mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+  fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
   fragment ScenePathsType on ScenePathsType { screenshot preview stream webp vtt sprite funscript interactive_heatmap caption }
   fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_seconds primary_tag { id name } tags { id name } created_at updated_at stream preview screenshot }
   fragment SceneGroup on SceneGroup { group { id name } scene_index }
@@ -3657,9 +3974,9 @@ findDuplicateScenes <- function(distance = NA, durationdiff = NA, ...) {
   query <- ghql::Query$new()
   query$query('findDuplicateScenes', '
   query findDuplicateScenes($distance: Int $durationdiff: Float) { findDuplicateScenes(distance: $distance duration_diff: $durationdiff) { ...Scene } }
-  fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } }
+  fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
   fragment VideoCaption on VideoCaption { language_code caption_type }
-  fragment VideoFile on VideoFile { id path basename parent_folder_id zip_file_id mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+  fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
   fragment ScenePathsType on ScenePathsType { screenshot preview stream webp vtt sprite funscript interactive_heatmap caption }
   fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_seconds primary_tag { id name } tags { id name } created_at updated_at stream preview screenshot }
   fragment SceneGroup on SceneGroup { group { id name } scene_index }
@@ -3786,11 +4103,11 @@ findImage <- function(id = NA, checksum = NA, ...) {
   query <- ghql::Query$new()
   query$query('findImage', '
   query findImage($id: ID $checksum: String) { findImage(id: $id checksum: $checksum) { ...Image } }
-  fragment Image on Image { id title code rating100 urls date details photographer o_counter organized created_at updated_at visual_files { ...VisualFile } paths { ...ImagePathsType } galleries { id title } studio { id name } tags { id name } performers { id name gender } }
+  fragment Image on Image { id title code rating100 urls date details photographer o_counter organized created_at updated_at visual_files { ...VisualFile } paths { ...ImagePathsType } galleries { id title } studio { id name } tags { id name } performers { id name gender } custom_fields }
   fragment VisualFile on VisualFile { ...VideoFile ...ImageFile }
   fragment ImagePathsType on ImagePathsType { thumbnail preview }
-  fragment VideoFile on VideoFile { id path basename parent_folder_id zip_file_id mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
-  fragment ImageFile on ImageFile { id path basename parent_folder_id zip_file_id mod_time size fingerprints { ...Fingerprint } width height created_at updated_at }
+  fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+  fragment ImageFile on ImageFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height created_at updated_at }
   fragment Fingerprint on Fingerprint { type value }
   ')
 
@@ -3824,11 +4141,11 @@ findImages <- function(imagefilter = NA, imageids = list(), ids = list(), filter
   query$query('findImages', '
   query findImages($imagefilter: ImageFilterType $imageids: [Int!] $ids: [ID!] $filter: FindFilterType) { findImages(image_filter: $imagefilter image_ids: $imageids ids: $ids filter: $filter) { ...FindImagesResultType } }
   fragment FindImagesResultType on FindImagesResultType { count megapixels filesize images { ...Image } }
-  fragment Image on Image { id title code rating100 urls date details photographer o_counter organized created_at updated_at visual_files { ...VisualFile } paths { ...ImagePathsType } galleries { id title } studio { id name } tags { id name } performers { id name gender } }
+  fragment Image on Image { id title code rating100 urls date details photographer o_counter organized created_at updated_at visual_files { ...VisualFile } paths { ...ImagePathsType } galleries { id title } studio { id name } tags { id name } performers { id name gender } custom_fields }
   fragment VisualFile on VisualFile { ...VideoFile ...ImageFile }
   fragment ImagePathsType on ImagePathsType { thumbnail preview }
-  fragment VideoFile on VideoFile { id path basename parent_folder_id zip_file_id mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
-  fragment ImageFile on ImageFile { id path basename parent_folder_id zip_file_id mod_time size fingerprints { ...Fingerprint } width height created_at updated_at }
+  fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+  fragment ImageFile on ImageFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height created_at updated_at }
   fragment Fingerprint on Fingerprint { type value }
   ')
 
@@ -3860,7 +4177,7 @@ findPerformer <- function(id = list(), ...) {
   query <- ghql::Query$new()
   query$query('findPerformer', '
   query findPerformer($id: ID!) { findPerformer(id: $id) { ...Performer } }
-  fragment Performer on Performer { id name disambiguation urls gender birthdate ethnicity country eye_color height_cm measurements fake_tits penis_length circumcised career_length tattoos piercings alias_list favorite tags { id name } ignore_auto_tag image_path scene_count image_count gallery_count group_count performer_count o_counter scenes { id title } stash_ids { endpoint stash_id } rating100 details death_date hair_color weight created_at updated_at groups { id name } custom_fields }
+  fragment Performer on Performer { id name disambiguation urls gender birthdate ethnicity country eye_color height_cm measurements fake_tits penis_length circumcised career_start career_end tattoos piercings alias_list favorite tags { id name } ignore_auto_tag image_path scene_count image_count gallery_count group_count performer_count o_counter scenes { id title } stash_ids { endpoint stash_id } rating100 details death_date hair_color weight created_at updated_at groups { id name } custom_fields }
   ')
 
   variables <- list()
@@ -3892,7 +4209,7 @@ findPerformers <- function(performerfilter = NA, filter = NA, performerids = lis
   query$query('findPerformers', '
   query findPerformers($performerfilter: PerformerFilterType $filter: FindFilterType $performerids: [Int!] $ids: [ID!]) { findPerformers(performer_filter: $performerfilter filter: $filter performer_ids: $performerids ids: $ids) { ...FindPerformersResultType } }
   fragment FindPerformersResultType on FindPerformersResultType { count performers { ...Performer } }
-  fragment Performer on Performer { id name disambiguation urls gender birthdate ethnicity country eye_color height_cm measurements fake_tits penis_length circumcised career_length tattoos piercings alias_list favorite tags { id name } ignore_auto_tag image_path scene_count image_count gallery_count group_count performer_count o_counter scenes { id title } stash_ids { endpoint stash_id } rating100 details death_date hair_color weight created_at updated_at groups { id name } custom_fields }
+  fragment Performer on Performer { id name disambiguation urls gender birthdate ethnicity country eye_color height_cm measurements fake_tits penis_length circumcised career_start career_end tattoos piercings alias_list favorite tags { id name } ignore_auto_tag image_path scene_count image_count gallery_count group_count performer_count o_counter scenes { id title } stash_ids { endpoint stash_id } rating100 details death_date hair_color weight created_at updated_at groups { id name } custom_fields }
   ')
 
   variables <- list()
@@ -3923,7 +4240,7 @@ findStudio <- function(id = list(), ...) {
   query <- ghql::Query$new()
   query$query('findStudio', '
   query findStudio($id: ID!) { findStudio(id: $id) { ...Studio } }
-  fragment Studio on Studio { id name url parent_studio { id name } child_studios { id name } aliases tags { id name } ignore_auto_tag image_path scene_count image_count gallery_count performer_count group_count stash_ids { endpoint stash_id } rating100 favorite details created_at updated_at groups { id name } }
+  fragment Studio on Studio { id name urls parent_studio { id name } child_studios { id name } aliases tags { id name } ignore_auto_tag organized image_path scene_count image_count gallery_count performer_count group_count stash_ids { endpoint stash_id } rating100 favorite details created_at updated_at groups { id name } o_counter custom_fields }
   ')
 
   variables <- list()
@@ -3954,7 +4271,7 @@ findStudios <- function(studiofilter = NA, filter = NA, ids = list(), ...) {
   query$query('findStudios', '
   query findStudios($studiofilter: StudioFilterType $filter: FindFilterType $ids: [ID!]) { findStudios(studio_filter: $studiofilter filter: $filter ids: $ids) { ...FindStudiosResultType } }
   fragment FindStudiosResultType on FindStudiosResultType { count studios { ...Studio } }
-  fragment Studio on Studio { id name url parent_studio { id name } child_studios { id name } aliases tags { id name } ignore_auto_tag image_path scene_count image_count gallery_count performer_count group_count stash_ids { endpoint stash_id } rating100 favorite details created_at updated_at groups { id name } }
+  fragment Studio on Studio { id name urls parent_studio { id name } child_studios { id name } aliases tags { id name } ignore_auto_tag organized image_path scene_count image_count gallery_count performer_count group_count stash_ids { endpoint stash_id } rating100 favorite details created_at updated_at groups { id name } o_counter custom_fields }
   ')
 
   variables <- list()
@@ -3984,7 +4301,7 @@ findGroup <- function(id = list(), ...) {
   query <- ghql::Query$new()
   query$query('findGroup', '
   query findGroup($id: ID!) { findGroup(id: $id) { ...Group } }
-  fragment Group on Group { id name aliases duration date rating100 studio { id name } director synopsis urls tags { id name } created_at updated_at containing_groups { ...GroupDescription } sub_groups { ...GroupDescription } front_image_path back_image_path scene_count sub_group_count scenes { id title } }
+  fragment Group on Group { id name aliases duration date rating100 studio { id name } director synopsis urls tags { id name } created_at updated_at containing_groups { ...GroupDescription } sub_groups { ...GroupDescription } front_image_path back_image_path scene_count performer_count sub_group_count scenes { id title } o_counter custom_fields }
   fragment GroupDescription on GroupDescription { group { id name } description }
   ')
 
@@ -4016,7 +4333,7 @@ findGroups <- function(groupfilter = NA, filter = NA, ids = list(), ...) {
   query$query('findGroups', '
   query findGroups($groupfilter: GroupFilterType $filter: FindFilterType $ids: [ID!]) { findGroups(group_filter: $groupfilter filter: $filter ids: $ids) { ...FindGroupsResultType } }
   fragment FindGroupsResultType on FindGroupsResultType { count groups { ...Group } }
-  fragment Group on Group { id name aliases duration date rating100 studio { id name } director synopsis urls tags { id name } created_at updated_at containing_groups { ...GroupDescription } sub_groups { ...GroupDescription } front_image_path back_image_path scene_count sub_group_count scenes { id title } }
+  fragment Group on Group { id name aliases duration date rating100 studio { id name } director synopsis urls tags { id name } created_at updated_at containing_groups { ...GroupDescription } sub_groups { ...GroupDescription } front_image_path back_image_path scene_count performer_count sub_group_count scenes { id title } o_counter custom_fields }
   fragment GroupDescription on GroupDescription { group { id name } description }
   ')
 
@@ -4047,9 +4364,8 @@ findGallery <- function(id = list(), ...) {
   query <- ghql::Query$new()
   query$query('findGallery', '
   query findGallery($id: ID!) { findGallery(id: $id) { ...Gallery } }
-  fragment Gallery on Gallery { id title code urls date details photographer rating100 organized created_at updated_at files { ...GalleryFile } folder { ...Folder } chapters { ...GalleryChapter } scenes { id title } studio { id name } image_count tags { id name } performers { id name gender } cover { id } paths { ...GalleryPathsType } }
-  fragment GalleryFile on GalleryFile { id path basename parent_folder_id zip_file_id mod_time size fingerprints { ...Fingerprint } created_at updated_at }
-  fragment Folder on Folder { id path parent_folder_id zip_file_id mod_time created_at updated_at }
+  fragment Gallery on Gallery { id title code urls date details photographer rating100 organized created_at updated_at files { ...GalleryFile } folder { id path basename } chapters { ...GalleryChapter } scenes { id title } studio { id name } image_count tags { id name } performers { id name gender } cover { id } paths { ...GalleryPathsType } custom_fields }
+  fragment GalleryFile on GalleryFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } created_at updated_at }
   fragment GalleryChapter on GalleryChapter { id gallery { id title } title image_index created_at updated_at }
   fragment GalleryPathsType on GalleryPathsType { cover preview }
   fragment Fingerprint on Fingerprint { type value }
@@ -4083,9 +4399,8 @@ findGalleries <- function(galleryfilter = NA, filter = NA, ids = list(), ...) {
   query$query('findGalleries', '
   query findGalleries($galleryfilter: GalleryFilterType $filter: FindFilterType $ids: [ID!]) { findGalleries(gallery_filter: $galleryfilter filter: $filter ids: $ids) { ...FindGalleriesResultType } }
   fragment FindGalleriesResultType on FindGalleriesResultType { count galleries { ...Gallery } }
-  fragment Gallery on Gallery { id title code urls date details photographer rating100 organized created_at updated_at files { ...GalleryFile } folder { ...Folder } chapters { ...GalleryChapter } scenes { id title } studio { id name } image_count tags { id name } performers { id name gender } cover { id } paths { ...GalleryPathsType } }
-  fragment GalleryFile on GalleryFile { id path basename parent_folder_id zip_file_id mod_time size fingerprints { ...Fingerprint } created_at updated_at }
-  fragment Folder on Folder { id path parent_folder_id zip_file_id mod_time created_at updated_at }
+  fragment Gallery on Gallery { id title code urls date details photographer rating100 organized created_at updated_at files { ...GalleryFile } folder { id path basename } chapters { ...GalleryChapter } scenes { id title } studio { id name } image_count tags { id name } performers { id name gender } cover { id } paths { ...GalleryPathsType } custom_fields }
+  fragment GalleryFile on GalleryFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } created_at updated_at }
   fragment GalleryChapter on GalleryChapter { id gallery { id title } title image_index created_at updated_at }
   fragment GalleryPathsType on GalleryPathsType { cover preview }
   fragment Fingerprint on Fingerprint { type value }
@@ -4118,7 +4433,7 @@ findTag <- function(id = list(), ...) {
   query <- ghql::Query$new()
   query$query('findTag', '
   query findTag($id: ID!) { findTag(id: $id) { ...Tag } }
-  fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag created_at updated_at favorite image_path scene_count scene_marker_count image_count gallery_count performer_count studio_count group_count parents { id name } children { id name } parent_count child_count }
+  fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag created_at updated_at favorite stash_ids { endpoint stash_id } image_path scene_count scene_marker_count image_count gallery_count performer_count studio_count group_count parents { id name } children { id name } parent_count child_count custom_fields }
   ')
 
   variables <- list()
@@ -4149,7 +4464,7 @@ findTags <- function(tagfilter = NA, filter = NA, ids = list(), ...) {
   query$query('findTags', '
   query findTags($tagfilter: TagFilterType $filter: FindFilterType $ids: [ID!]) { findTags(tag_filter: $tagfilter filter: $filter ids: $ids) { ...FindTagsResultType } }
   fragment FindTagsResultType on FindTagsResultType { count tags { ...Tag } }
-  fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag created_at updated_at favorite image_path scene_count scene_marker_count image_count gallery_count performer_count studio_count group_count parents { id name } children { id name } parent_count child_count }
+  fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag created_at updated_at favorite stash_ids { endpoint stash_id } image_path scene_count scene_marker_count image_count gallery_count performer_count studio_count group_count parents { id name } children { id name } parent_count child_count custom_fields }
   ')
 
   variables <- list()
@@ -4207,9 +4522,9 @@ sceneWall <- function(q = NA, ...) {
   query <- ghql::Query$new()
   query$query('sceneWall', '
   query sceneWall($q: String) { sceneWall(q: $q) { ...Scene } }
-  fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } }
+  fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
   fragment VideoCaption on VideoCaption { language_code caption_type }
-  fragment VideoFile on VideoFile { id path basename parent_folder_id zip_file_id mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+  fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
   fragment ScenePathsType on ScenePathsType { screenshot preview stream webp vtt sprite funscript interactive_heatmap caption }
   fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_seconds primary_tag { id name } tags { id name } created_at updated_at stream preview screenshot }
   fragment SceneGroup on SceneGroup { group { id name } scene_index }
@@ -4384,8 +4699,8 @@ scrapeSingleScene <- function(source = NA, input = NA, ...) {
   query scrapeSingleScene($source: ScraperSourceInput! $input: ScrapeSingleSceneInput!) { scrapeSingleScene(source: $source input: $input) { ...ScrapedScene } }
   fragment ScrapedScene on ScrapedScene { ScrapedScene_title: title ScrapedScene_code: code ScrapedScene_details: details ScrapedScene_director: director ScrapedScene_urls: urls ScrapedScene_date: date file { ...SceneFileType } studio { stored_id name } tags { ...ScrapedTag } performers { ...ScrapedPerformer } groups { ...ScrapedGroup } ScrapedScene_remote_site_id: remote_site_id ScrapedScene_duration: duration fingerprints { ...StashBoxFingerprint } }
   fragment SceneFileType on SceneFileType { size duration video_codec audio_codec width height framerate bitrate }
-  fragment ScrapedTag on ScrapedTag { stored_id name }
-  fragment ScrapedPerformer on ScrapedPerformer { ScrapedPerformer_stored_id: stored_id ScrapedPerformer_name: name ScrapedPerformer_disambiguation: disambiguation ScrapedPerformer_gender: gender ScrapedPerformer_urls: urls ScrapedPerformer_birthdate: birthdate ScrapedPerformer_ethnicity: ethnicity ScrapedPerformer_country: country ScrapedPerformer_eye_color: eye_color ScrapedPerformer_height: height ScrapedPerformer_measurements: measurements ScrapedPerformer_fake_tits: fake_tits ScrapedPerformer_penis_length: penis_length ScrapedPerformer_circumcised: circumcised ScrapedPerformer_career_length: career_length ScrapedPerformer_tattoos: tattoos ScrapedPerformer_piercings: piercings ScrapedPerformer_aliases: aliases tags { ...ScrapedTag } ScrapedPerformer_images: images ScrapedPerformer_details: details ScrapedPerformer_death_date: death_date ScrapedPerformer_hair_color: hair_color ScrapedPerformer_weight: weight ScrapedPerformer_remote_site_id: remote_site_id }
+  fragment ScrapedTag on ScrapedTag { ScrapedTag_stored_id: stored_id ScrapedTag_name: name ScrapedTag_description: description ScrapedTag_alias_list: alias_list parent { ...ScrapedTag } ScrapedTag_remote_site_id: remote_site_id }
+  fragment ScrapedPerformer on ScrapedPerformer { ScrapedPerformer_stored_id: stored_id ScrapedPerformer_name: name ScrapedPerformer_disambiguation: disambiguation ScrapedPerformer_gender: gender ScrapedPerformer_urls: urls ScrapedPerformer_birthdate: birthdate ScrapedPerformer_ethnicity: ethnicity ScrapedPerformer_country: country ScrapedPerformer_eye_color: eye_color ScrapedPerformer_height: height ScrapedPerformer_measurements: measurements ScrapedPerformer_fake_tits: fake_tits ScrapedPerformer_penis_length: penis_length ScrapedPerformer_circumcised: circumcised ScrapedPerformer_career_start: career_start ScrapedPerformer_career_end: career_end ScrapedPerformer_tattoos: tattoos ScrapedPerformer_piercings: piercings ScrapedPerformer_aliases: aliases tags { ...ScrapedTag } ScrapedPerformer_images: images ScrapedPerformer_details: details ScrapedPerformer_death_date: death_date ScrapedPerformer_hair_color: hair_color ScrapedPerformer_weight: weight ScrapedPerformer_remote_site_id: remote_site_id }
   fragment ScrapedGroup on ScrapedGroup { ScrapedGroup_stored_id: stored_id ScrapedGroup_name: name ScrapedGroup_aliases: aliases ScrapedGroup_duration: duration ScrapedGroup_date: date ScrapedGroup_rating: rating ScrapedGroup_director: director ScrapedGroup_urls: urls ScrapedGroup_synopsis: synopsis studio { stored_id name } tags { ...ScrapedTag } ScrapedGroup_front_image: front_image ScrapedGroup_back_image: back_image }
   fragment StashBoxFingerprint on StashBoxFingerprint { algorithm hash duration }
   ')
@@ -4419,8 +4734,8 @@ scrapeMultiScenes <- function(source = NA, input = NA, ...) {
   query scrapeMultiScenes($source: ScraperSourceInput! $input: ScrapeMultiScenesInput!) { scrapeMultiScenes(source: $source input: $input) { ...ScrapedScene } }
   fragment ScrapedScene on ScrapedScene { ScrapedScene_title: title ScrapedScene_code: code ScrapedScene_details: details ScrapedScene_director: director ScrapedScene_urls: urls ScrapedScene_date: date file { ...SceneFileType } studio { stored_id name } tags { ...ScrapedTag } performers { ...ScrapedPerformer } groups { ...ScrapedGroup } ScrapedScene_remote_site_id: remote_site_id ScrapedScene_duration: duration fingerprints { ...StashBoxFingerprint } }
   fragment SceneFileType on SceneFileType { size duration video_codec audio_codec width height framerate bitrate }
-  fragment ScrapedTag on ScrapedTag { stored_id name }
-  fragment ScrapedPerformer on ScrapedPerformer { ScrapedPerformer_stored_id: stored_id ScrapedPerformer_name: name ScrapedPerformer_disambiguation: disambiguation ScrapedPerformer_gender: gender ScrapedPerformer_urls: urls ScrapedPerformer_birthdate: birthdate ScrapedPerformer_ethnicity: ethnicity ScrapedPerformer_country: country ScrapedPerformer_eye_color: eye_color ScrapedPerformer_height: height ScrapedPerformer_measurements: measurements ScrapedPerformer_fake_tits: fake_tits ScrapedPerformer_penis_length: penis_length ScrapedPerformer_circumcised: circumcised ScrapedPerformer_career_length: career_length ScrapedPerformer_tattoos: tattoos ScrapedPerformer_piercings: piercings ScrapedPerformer_aliases: aliases tags { ...ScrapedTag } ScrapedPerformer_images: images ScrapedPerformer_details: details ScrapedPerformer_death_date: death_date ScrapedPerformer_hair_color: hair_color ScrapedPerformer_weight: weight ScrapedPerformer_remote_site_id: remote_site_id }
+  fragment ScrapedTag on ScrapedTag { ScrapedTag_stored_id: stored_id ScrapedTag_name: name ScrapedTag_description: description ScrapedTag_alias_list: alias_list parent { ...ScrapedTag } ScrapedTag_remote_site_id: remote_site_id }
+  fragment ScrapedPerformer on ScrapedPerformer { ScrapedPerformer_stored_id: stored_id ScrapedPerformer_name: name ScrapedPerformer_disambiguation: disambiguation ScrapedPerformer_gender: gender ScrapedPerformer_urls: urls ScrapedPerformer_birthdate: birthdate ScrapedPerformer_ethnicity: ethnicity ScrapedPerformer_country: country ScrapedPerformer_eye_color: eye_color ScrapedPerformer_height: height ScrapedPerformer_measurements: measurements ScrapedPerformer_fake_tits: fake_tits ScrapedPerformer_penis_length: penis_length ScrapedPerformer_circumcised: circumcised ScrapedPerformer_career_start: career_start ScrapedPerformer_career_end: career_end ScrapedPerformer_tattoos: tattoos ScrapedPerformer_piercings: piercings ScrapedPerformer_aliases: aliases tags { ...ScrapedTag } ScrapedPerformer_images: images ScrapedPerformer_details: details ScrapedPerformer_death_date: death_date ScrapedPerformer_hair_color: hair_color ScrapedPerformer_weight: weight ScrapedPerformer_remote_site_id: remote_site_id }
   fragment ScrapedGroup on ScrapedGroup { ScrapedGroup_stored_id: stored_id ScrapedGroup_name: name ScrapedGroup_aliases: aliases ScrapedGroup_duration: duration ScrapedGroup_date: date ScrapedGroup_rating: rating ScrapedGroup_director: director ScrapedGroup_urls: urls ScrapedGroup_synopsis: synopsis studio { stored_id name } tags { ...ScrapedTag } ScrapedGroup_front_image: front_image ScrapedGroup_back_image: back_image }
   fragment StashBoxFingerprint on StashBoxFingerprint { algorithm hash duration }
   ')
@@ -4452,7 +4767,8 @@ scrapeSingleStudio <- function(source = NA, input = NA, ...) {
   query <- ghql::Query$new()
   query$query('scrapeSingleStudio', '
   query scrapeSingleStudio($source: ScraperSourceInput! $input: ScrapeSingleStudioInput!) { scrapeSingleStudio(source: $source input: $input) { ...ScrapedStudio } }
-  fragment ScrapedStudio on ScrapedStudio { ScrapedStudio_stored_id: stored_id ScrapedStudio_name: name ScrapedStudio_url: url parent { stored_id name } ScrapedStudio_remote_site_id: remote_site_id }
+  fragment ScrapedStudio on ScrapedStudio { ScrapedStudio_stored_id: stored_id ScrapedStudio_name: name ScrapedStudio_urls: urls parent { stored_id name } ScrapedStudio_details: details ScrapedStudio_aliases: aliases tags { ...ScrapedTag } ScrapedStudio_remote_site_id: remote_site_id }
+  fragment ScrapedTag on ScrapedTag { ScrapedTag_stored_id: stored_id ScrapedTag_name: name ScrapedTag_description: description ScrapedTag_alias_list: alias_list parent { ...ScrapedTag } ScrapedTag_remote_site_id: remote_site_id }
   ')
 
   variables <- list()
@@ -4465,6 +4781,36 @@ scrapeSingleStudio <- function(source = NA, input = NA, ...) {
     dotargs$.field <- return_default
   }
   res <- executeQuery(query = query$queries$scrapeSingleStudio, variables = variables, connection = the$connection, return_default = return_default, field = dotargs$.field)
+
+  return(res)
+}
+
+#' Call GraphQL operation: scrapeSingleTag
+#' @description Scrape for a single tag
+#' @param source   See the Playground for further details.
+#' @param input   See the Playground for further details.
+#' @param ... additional parameters like .field to retrieve only a certain field from the response
+#' @importFrom ghql Query
+#' @return processed API response
+#' @export
+scrapeSingleTag <- function(source = NA, input = NA, ...) {
+
+  query <- ghql::Query$new()
+  query$query('scrapeSingleTag', '
+  query scrapeSingleTag($source: ScraperSourceInput! $input: ScrapeSingleTagInput!) { scrapeSingleTag(source: $source input: $input) { ...ScrapedTag } }
+  fragment ScrapedTag on ScrapedTag { ScrapedTag_stored_id: stored_id ScrapedTag_name: name ScrapedTag_description: description ScrapedTag_alias_list: alias_list parent { ...ScrapedTag } ScrapedTag_remote_site_id: remote_site_id }
+  ')
+
+  variables <- list()
+  variables[['source']] <- source
+  variables[['input']] <- input
+
+  return_default <- NA_character_
+  dotargs <- list(...)
+  if(!".field" %in% names(dotargs)) {
+    dotargs$.field <- return_default
+  }
+  res <- executeQuery(query = query$queries$scrapeSingleTag, variables = variables, connection = the$connection, return_default = return_default, field = dotargs$.field)
 
   return(res)
 }
@@ -4482,8 +4828,8 @@ scrapeSinglePerformer <- function(source = NA, input = NA, ...) {
   query <- ghql::Query$new()
   query$query('scrapeSinglePerformer', '
   query scrapeSinglePerformer($source: ScraperSourceInput! $input: ScrapeSinglePerformerInput!) { scrapeSinglePerformer(source: $source input: $input) { ...ScrapedPerformer } }
-  fragment ScrapedPerformer on ScrapedPerformer { ScrapedPerformer_stored_id: stored_id ScrapedPerformer_name: name ScrapedPerformer_disambiguation: disambiguation ScrapedPerformer_gender: gender ScrapedPerformer_urls: urls ScrapedPerformer_birthdate: birthdate ScrapedPerformer_ethnicity: ethnicity ScrapedPerformer_country: country ScrapedPerformer_eye_color: eye_color ScrapedPerformer_height: height ScrapedPerformer_measurements: measurements ScrapedPerformer_fake_tits: fake_tits ScrapedPerformer_penis_length: penis_length ScrapedPerformer_circumcised: circumcised ScrapedPerformer_career_length: career_length ScrapedPerformer_tattoos: tattoos ScrapedPerformer_piercings: piercings ScrapedPerformer_aliases: aliases tags { ...ScrapedTag } ScrapedPerformer_images: images ScrapedPerformer_details: details ScrapedPerformer_death_date: death_date ScrapedPerformer_hair_color: hair_color ScrapedPerformer_weight: weight ScrapedPerformer_remote_site_id: remote_site_id }
-  fragment ScrapedTag on ScrapedTag { stored_id name }
+  fragment ScrapedPerformer on ScrapedPerformer { ScrapedPerformer_stored_id: stored_id ScrapedPerformer_name: name ScrapedPerformer_disambiguation: disambiguation ScrapedPerformer_gender: gender ScrapedPerformer_urls: urls ScrapedPerformer_birthdate: birthdate ScrapedPerformer_ethnicity: ethnicity ScrapedPerformer_country: country ScrapedPerformer_eye_color: eye_color ScrapedPerformer_height: height ScrapedPerformer_measurements: measurements ScrapedPerformer_fake_tits: fake_tits ScrapedPerformer_penis_length: penis_length ScrapedPerformer_circumcised: circumcised ScrapedPerformer_career_start: career_start ScrapedPerformer_career_end: career_end ScrapedPerformer_tattoos: tattoos ScrapedPerformer_piercings: piercings ScrapedPerformer_aliases: aliases tags { ...ScrapedTag } ScrapedPerformer_images: images ScrapedPerformer_details: details ScrapedPerformer_death_date: death_date ScrapedPerformer_hair_color: hair_color ScrapedPerformer_weight: weight ScrapedPerformer_remote_site_id: remote_site_id }
+  fragment ScrapedTag on ScrapedTag { ScrapedTag_stored_id: stored_id ScrapedTag_name: name ScrapedTag_description: description ScrapedTag_alias_list: alias_list parent { ...ScrapedTag } ScrapedTag_remote_site_id: remote_site_id }
   ')
 
   variables <- list()
@@ -4513,8 +4859,8 @@ scrapeMultiPerformers <- function(source = NA, input = NA, ...) {
   query <- ghql::Query$new()
   query$query('scrapeMultiPerformers', '
   query scrapeMultiPerformers($source: ScraperSourceInput! $input: ScrapeMultiPerformersInput!) { scrapeMultiPerformers(source: $source input: $input) { ...ScrapedPerformer } }
-  fragment ScrapedPerformer on ScrapedPerformer { ScrapedPerformer_stored_id: stored_id ScrapedPerformer_name: name ScrapedPerformer_disambiguation: disambiguation ScrapedPerformer_gender: gender ScrapedPerformer_urls: urls ScrapedPerformer_birthdate: birthdate ScrapedPerformer_ethnicity: ethnicity ScrapedPerformer_country: country ScrapedPerformer_eye_color: eye_color ScrapedPerformer_height: height ScrapedPerformer_measurements: measurements ScrapedPerformer_fake_tits: fake_tits ScrapedPerformer_penis_length: penis_length ScrapedPerformer_circumcised: circumcised ScrapedPerformer_career_length: career_length ScrapedPerformer_tattoos: tattoos ScrapedPerformer_piercings: piercings ScrapedPerformer_aliases: aliases tags { ...ScrapedTag } ScrapedPerformer_images: images ScrapedPerformer_details: details ScrapedPerformer_death_date: death_date ScrapedPerformer_hair_color: hair_color ScrapedPerformer_weight: weight ScrapedPerformer_remote_site_id: remote_site_id }
-  fragment ScrapedTag on ScrapedTag { stored_id name }
+  fragment ScrapedPerformer on ScrapedPerformer { ScrapedPerformer_stored_id: stored_id ScrapedPerformer_name: name ScrapedPerformer_disambiguation: disambiguation ScrapedPerformer_gender: gender ScrapedPerformer_urls: urls ScrapedPerformer_birthdate: birthdate ScrapedPerformer_ethnicity: ethnicity ScrapedPerformer_country: country ScrapedPerformer_eye_color: eye_color ScrapedPerformer_height: height ScrapedPerformer_measurements: measurements ScrapedPerformer_fake_tits: fake_tits ScrapedPerformer_penis_length: penis_length ScrapedPerformer_circumcised: circumcised ScrapedPerformer_career_start: career_start ScrapedPerformer_career_end: career_end ScrapedPerformer_tattoos: tattoos ScrapedPerformer_piercings: piercings ScrapedPerformer_aliases: aliases tags { ...ScrapedTag } ScrapedPerformer_images: images ScrapedPerformer_details: details ScrapedPerformer_death_date: death_date ScrapedPerformer_hair_color: hair_color ScrapedPerformer_weight: weight ScrapedPerformer_remote_site_id: remote_site_id }
+  fragment ScrapedTag on ScrapedTag { ScrapedTag_stored_id: stored_id ScrapedTag_name: name ScrapedTag_description: description ScrapedTag_alias_list: alias_list parent { ...ScrapedTag } ScrapedTag_remote_site_id: remote_site_id }
   ')
 
   variables <- list()
@@ -4545,8 +4891,8 @@ scrapeSingleGallery <- function(source = NA, input = NA, ...) {
   query$query('scrapeSingleGallery', '
   query scrapeSingleGallery($source: ScraperSourceInput! $input: ScrapeSingleGalleryInput!) { scrapeSingleGallery(source: $source input: $input) { ...ScrapedGallery } }
   fragment ScrapedGallery on ScrapedGallery { ScrapedGallery_title: title ScrapedGallery_code: code ScrapedGallery_details: details ScrapedGallery_photographer: photographer ScrapedGallery_urls: urls ScrapedGallery_date: date studio { stored_id name } tags { ...ScrapedTag } performers { ...ScrapedPerformer } }
-  fragment ScrapedTag on ScrapedTag { stored_id name }
-  fragment ScrapedPerformer on ScrapedPerformer { ScrapedPerformer_stored_id: stored_id ScrapedPerformer_name: name ScrapedPerformer_disambiguation: disambiguation ScrapedPerformer_gender: gender ScrapedPerformer_urls: urls ScrapedPerformer_birthdate: birthdate ScrapedPerformer_ethnicity: ethnicity ScrapedPerformer_country: country ScrapedPerformer_eye_color: eye_color ScrapedPerformer_height: height ScrapedPerformer_measurements: measurements ScrapedPerformer_fake_tits: fake_tits ScrapedPerformer_penis_length: penis_length ScrapedPerformer_circumcised: circumcised ScrapedPerformer_career_length: career_length ScrapedPerformer_tattoos: tattoos ScrapedPerformer_piercings: piercings ScrapedPerformer_aliases: aliases tags { ...ScrapedTag } ScrapedPerformer_images: images ScrapedPerformer_details: details ScrapedPerformer_death_date: death_date ScrapedPerformer_hair_color: hair_color ScrapedPerformer_weight: weight ScrapedPerformer_remote_site_id: remote_site_id }
+  fragment ScrapedTag on ScrapedTag { ScrapedTag_stored_id: stored_id ScrapedTag_name: name ScrapedTag_description: description ScrapedTag_alias_list: alias_list parent { ...ScrapedTag } ScrapedTag_remote_site_id: remote_site_id }
+  fragment ScrapedPerformer on ScrapedPerformer { ScrapedPerformer_stored_id: stored_id ScrapedPerformer_name: name ScrapedPerformer_disambiguation: disambiguation ScrapedPerformer_gender: gender ScrapedPerformer_urls: urls ScrapedPerformer_birthdate: birthdate ScrapedPerformer_ethnicity: ethnicity ScrapedPerformer_country: country ScrapedPerformer_eye_color: eye_color ScrapedPerformer_height: height ScrapedPerformer_measurements: measurements ScrapedPerformer_fake_tits: fake_tits ScrapedPerformer_penis_length: penis_length ScrapedPerformer_circumcised: circumcised ScrapedPerformer_career_start: career_start ScrapedPerformer_career_end: career_end ScrapedPerformer_tattoos: tattoos ScrapedPerformer_piercings: piercings ScrapedPerformer_aliases: aliases tags { ...ScrapedTag } ScrapedPerformer_images: images ScrapedPerformer_details: details ScrapedPerformer_death_date: death_date ScrapedPerformer_hair_color: hair_color ScrapedPerformer_weight: weight ScrapedPerformer_remote_site_id: remote_site_id }
   ')
 
   variables <- list()
@@ -4577,7 +4923,7 @@ scrapeSingleGroup <- function(source = NA, input = NA, ...) {
   query$query('scrapeSingleGroup', '
   query scrapeSingleGroup($source: ScraperSourceInput! $input: ScrapeSingleGroupInput!) { scrapeSingleGroup(source: $source input: $input) { ...ScrapedGroup } }
   fragment ScrapedGroup on ScrapedGroup { ScrapedGroup_stored_id: stored_id ScrapedGroup_name: name ScrapedGroup_aliases: aliases ScrapedGroup_duration: duration ScrapedGroup_date: date ScrapedGroup_rating: rating ScrapedGroup_director: director ScrapedGroup_urls: urls ScrapedGroup_synopsis: synopsis studio { stored_id name } tags { ...ScrapedTag } ScrapedGroup_front_image: front_image ScrapedGroup_back_image: back_image }
-  fragment ScrapedTag on ScrapedTag { stored_id name }
+  fragment ScrapedTag on ScrapedTag { ScrapedTag_stored_id: stored_id ScrapedTag_name: name ScrapedTag_description: description ScrapedTag_alias_list: alias_list parent { ...ScrapedTag } ScrapedTag_remote_site_id: remote_site_id }
   ')
 
   variables <- list()
@@ -4608,8 +4954,8 @@ scrapeSingleImage <- function(source = NA, input = NA, ...) {
   query$query('scrapeSingleImage', '
   query scrapeSingleImage($source: ScraperSourceInput! $input: ScrapeSingleImageInput!) { scrapeSingleImage(source: $source input: $input) { ...ScrapedImage } }
   fragment ScrapedImage on ScrapedImage { ScrapedImage_title: title ScrapedImage_code: code ScrapedImage_details: details ScrapedImage_photographer: photographer ScrapedImage_urls: urls ScrapedImage_date: date studio { stored_id name } tags { ...ScrapedTag } performers { ...ScrapedPerformer } }
-  fragment ScrapedTag on ScrapedTag { stored_id name }
-  fragment ScrapedPerformer on ScrapedPerformer { ScrapedPerformer_stored_id: stored_id ScrapedPerformer_name: name ScrapedPerformer_disambiguation: disambiguation ScrapedPerformer_gender: gender ScrapedPerformer_urls: urls ScrapedPerformer_birthdate: birthdate ScrapedPerformer_ethnicity: ethnicity ScrapedPerformer_country: country ScrapedPerformer_eye_color: eye_color ScrapedPerformer_height: height ScrapedPerformer_measurements: measurements ScrapedPerformer_fake_tits: fake_tits ScrapedPerformer_penis_length: penis_length ScrapedPerformer_circumcised: circumcised ScrapedPerformer_career_length: career_length ScrapedPerformer_tattoos: tattoos ScrapedPerformer_piercings: piercings ScrapedPerformer_aliases: aliases tags { ...ScrapedTag } ScrapedPerformer_images: images ScrapedPerformer_details: details ScrapedPerformer_death_date: death_date ScrapedPerformer_hair_color: hair_color ScrapedPerformer_weight: weight ScrapedPerformer_remote_site_id: remote_site_id }
+  fragment ScrapedTag on ScrapedTag { ScrapedTag_stored_id: stored_id ScrapedTag_name: name ScrapedTag_description: description ScrapedTag_alias_list: alias_list parent { ...ScrapedTag } ScrapedTag_remote_site_id: remote_site_id }
+  fragment ScrapedPerformer on ScrapedPerformer { ScrapedPerformer_stored_id: stored_id ScrapedPerformer_name: name ScrapedPerformer_disambiguation: disambiguation ScrapedPerformer_gender: gender ScrapedPerformer_urls: urls ScrapedPerformer_birthdate: birthdate ScrapedPerformer_ethnicity: ethnicity ScrapedPerformer_country: country ScrapedPerformer_eye_color: eye_color ScrapedPerformer_height: height ScrapedPerformer_measurements: measurements ScrapedPerformer_fake_tits: fake_tits ScrapedPerformer_penis_length: penis_length ScrapedPerformer_circumcised: circumcised ScrapedPerformer_career_start: career_start ScrapedPerformer_career_end: career_end ScrapedPerformer_tattoos: tattoos ScrapedPerformer_piercings: piercings ScrapedPerformer_aliases: aliases tags { ...ScrapedTag } ScrapedPerformer_images: images ScrapedPerformer_details: details ScrapedPerformer_death_date: death_date ScrapedPerformer_hair_color: hair_color ScrapedPerformer_weight: weight ScrapedPerformer_remote_site_id: remote_site_id }
   ')
 
   variables <- list()
@@ -4640,14 +4986,14 @@ scrapeURL <- function(url = list(), ty = NA, ...) {
   query$query('scrapeURL', '
   query scrapeURL($url: String! $ty: ScrapeContentType!) { scrapeURL(url: $url ty: $ty) { ...ScrapedContent } }
   fragment ScrapedContent on ScrapedContent { ...ScrapedStudio ...ScrapedTag ...ScrapedScene ...ScrapedGallery ...ScrapedImage ...ScrapedMovie ...ScrapedGroup ...ScrapedPerformer }
-  fragment ScrapedStudio on ScrapedStudio { ScrapedStudio_stored_id: stored_id ScrapedStudio_name: name ScrapedStudio_url: url parent { stored_id name } ScrapedStudio_remote_site_id: remote_site_id }
-  fragment ScrapedTag on ScrapedTag { stored_id name }
+  fragment ScrapedStudio on ScrapedStudio { ScrapedStudio_stored_id: stored_id ScrapedStudio_name: name ScrapedStudio_urls: urls parent { stored_id name } ScrapedStudio_details: details ScrapedStudio_aliases: aliases tags { ...ScrapedTag } ScrapedStudio_remote_site_id: remote_site_id }
+  fragment ScrapedTag on ScrapedTag { ScrapedTag_stored_id: stored_id ScrapedTag_name: name ScrapedTag_description: description ScrapedTag_alias_list: alias_list parent { ...ScrapedTag } ScrapedTag_remote_site_id: remote_site_id }
   fragment ScrapedScene on ScrapedScene { ScrapedScene_title: title ScrapedScene_code: code ScrapedScene_details: details ScrapedScene_director: director ScrapedScene_urls: urls ScrapedScene_date: date file { ...SceneFileType } studio { stored_id name } tags { ...ScrapedTag } performers { ...ScrapedPerformer } groups { ...ScrapedGroup } ScrapedScene_remote_site_id: remote_site_id ScrapedScene_duration: duration fingerprints { ...StashBoxFingerprint } }
   fragment ScrapedGallery on ScrapedGallery { ScrapedGallery_title: title ScrapedGallery_code: code ScrapedGallery_details: details ScrapedGallery_photographer: photographer ScrapedGallery_urls: urls ScrapedGallery_date: date studio { stored_id name } tags { ...ScrapedTag } performers { ...ScrapedPerformer } }
   fragment ScrapedImage on ScrapedImage { ScrapedImage_title: title ScrapedImage_code: code ScrapedImage_details: details ScrapedImage_photographer: photographer ScrapedImage_urls: urls ScrapedImage_date: date studio { stored_id name } tags { ...ScrapedTag } performers { ...ScrapedPerformer } }
   fragment ScrapedMovie on ScrapedMovie { ScrapedMovie_stored_id: stored_id ScrapedMovie_name: name ScrapedMovie_aliases: aliases ScrapedMovie_duration: duration ScrapedMovie_date: date ScrapedMovie_rating: rating ScrapedMovie_director: director ScrapedMovie_urls: urls ScrapedMovie_synopsis: synopsis studio { stored_id name } tags { ...ScrapedTag } ScrapedMovie_front_image: front_image ScrapedMovie_back_image: back_image }
   fragment ScrapedGroup on ScrapedGroup { ScrapedGroup_stored_id: stored_id ScrapedGroup_name: name ScrapedGroup_aliases: aliases ScrapedGroup_duration: duration ScrapedGroup_date: date ScrapedGroup_rating: rating ScrapedGroup_director: director ScrapedGroup_urls: urls ScrapedGroup_synopsis: synopsis studio { stored_id name } tags { ...ScrapedTag } ScrapedGroup_front_image: front_image ScrapedGroup_back_image: back_image }
-  fragment ScrapedPerformer on ScrapedPerformer { ScrapedPerformer_stored_id: stored_id ScrapedPerformer_name: name ScrapedPerformer_disambiguation: disambiguation ScrapedPerformer_gender: gender ScrapedPerformer_urls: urls ScrapedPerformer_birthdate: birthdate ScrapedPerformer_ethnicity: ethnicity ScrapedPerformer_country: country ScrapedPerformer_eye_color: eye_color ScrapedPerformer_height: height ScrapedPerformer_measurements: measurements ScrapedPerformer_fake_tits: fake_tits ScrapedPerformer_penis_length: penis_length ScrapedPerformer_circumcised: circumcised ScrapedPerformer_career_length: career_length ScrapedPerformer_tattoos: tattoos ScrapedPerformer_piercings: piercings ScrapedPerformer_aliases: aliases tags { ...ScrapedTag } ScrapedPerformer_images: images ScrapedPerformer_details: details ScrapedPerformer_death_date: death_date ScrapedPerformer_hair_color: hair_color ScrapedPerformer_weight: weight ScrapedPerformer_remote_site_id: remote_site_id }
+  fragment ScrapedPerformer on ScrapedPerformer { ScrapedPerformer_stored_id: stored_id ScrapedPerformer_name: name ScrapedPerformer_disambiguation: disambiguation ScrapedPerformer_gender: gender ScrapedPerformer_urls: urls ScrapedPerformer_birthdate: birthdate ScrapedPerformer_ethnicity: ethnicity ScrapedPerformer_country: country ScrapedPerformer_eye_color: eye_color ScrapedPerformer_height: height ScrapedPerformer_measurements: measurements ScrapedPerformer_fake_tits: fake_tits ScrapedPerformer_penis_length: penis_length ScrapedPerformer_circumcised: circumcised ScrapedPerformer_career_start: career_start ScrapedPerformer_career_end: career_end ScrapedPerformer_tattoos: tattoos ScrapedPerformer_piercings: piercings ScrapedPerformer_aliases: aliases tags { ...ScrapedTag } ScrapedPerformer_images: images ScrapedPerformer_details: details ScrapedPerformer_death_date: death_date ScrapedPerformer_hair_color: hair_color ScrapedPerformer_weight: weight ScrapedPerformer_remote_site_id: remote_site_id }
   fragment SceneFileType on SceneFileType { size duration video_codec audio_codec width height framerate bitrate }
   fragment StashBoxFingerprint on StashBoxFingerprint { algorithm hash duration }
   ')
@@ -4678,8 +5024,8 @@ scrapePerformerURL <- function(url = list(), ...) {
   query <- ghql::Query$new()
   query$query('scrapePerformerURL', '
   query scrapePerformerURL($url: String!) { scrapePerformerURL(url: $url) { ...ScrapedPerformer } }
-  fragment ScrapedPerformer on ScrapedPerformer { ScrapedPerformer_stored_id: stored_id ScrapedPerformer_name: name ScrapedPerformer_disambiguation: disambiguation ScrapedPerformer_gender: gender ScrapedPerformer_urls: urls ScrapedPerformer_birthdate: birthdate ScrapedPerformer_ethnicity: ethnicity ScrapedPerformer_country: country ScrapedPerformer_eye_color: eye_color ScrapedPerformer_height: height ScrapedPerformer_measurements: measurements ScrapedPerformer_fake_tits: fake_tits ScrapedPerformer_penis_length: penis_length ScrapedPerformer_circumcised: circumcised ScrapedPerformer_career_length: career_length ScrapedPerformer_tattoos: tattoos ScrapedPerformer_piercings: piercings ScrapedPerformer_aliases: aliases tags { ...ScrapedTag } ScrapedPerformer_images: images ScrapedPerformer_details: details ScrapedPerformer_death_date: death_date ScrapedPerformer_hair_color: hair_color ScrapedPerformer_weight: weight ScrapedPerformer_remote_site_id: remote_site_id }
-  fragment ScrapedTag on ScrapedTag { stored_id name }
+  fragment ScrapedPerformer on ScrapedPerformer { ScrapedPerformer_stored_id: stored_id ScrapedPerformer_name: name ScrapedPerformer_disambiguation: disambiguation ScrapedPerformer_gender: gender ScrapedPerformer_urls: urls ScrapedPerformer_birthdate: birthdate ScrapedPerformer_ethnicity: ethnicity ScrapedPerformer_country: country ScrapedPerformer_eye_color: eye_color ScrapedPerformer_height: height ScrapedPerformer_measurements: measurements ScrapedPerformer_fake_tits: fake_tits ScrapedPerformer_penis_length: penis_length ScrapedPerformer_circumcised: circumcised ScrapedPerformer_career_start: career_start ScrapedPerformer_career_end: career_end ScrapedPerformer_tattoos: tattoos ScrapedPerformer_piercings: piercings ScrapedPerformer_aliases: aliases tags { ...ScrapedTag } ScrapedPerformer_images: images ScrapedPerformer_details: details ScrapedPerformer_death_date: death_date ScrapedPerformer_hair_color: hair_color ScrapedPerformer_weight: weight ScrapedPerformer_remote_site_id: remote_site_id }
+  fragment ScrapedTag on ScrapedTag { ScrapedTag_stored_id: stored_id ScrapedTag_name: name ScrapedTag_description: description ScrapedTag_alias_list: alias_list parent { ...ScrapedTag } ScrapedTag_remote_site_id: remote_site_id }
   ')
 
   variables <- list()
@@ -4709,8 +5055,8 @@ scrapeSceneURL <- function(url = list(), ...) {
   query scrapeSceneURL($url: String!) { scrapeSceneURL(url: $url) { ...ScrapedScene } }
   fragment ScrapedScene on ScrapedScene { ScrapedScene_title: title ScrapedScene_code: code ScrapedScene_details: details ScrapedScene_director: director ScrapedScene_urls: urls ScrapedScene_date: date file { ...SceneFileType } studio { stored_id name } tags { ...ScrapedTag } performers { ...ScrapedPerformer } groups { ...ScrapedGroup } ScrapedScene_remote_site_id: remote_site_id ScrapedScene_duration: duration fingerprints { ...StashBoxFingerprint } }
   fragment SceneFileType on SceneFileType { size duration video_codec audio_codec width height framerate bitrate }
-  fragment ScrapedTag on ScrapedTag { stored_id name }
-  fragment ScrapedPerformer on ScrapedPerformer { ScrapedPerformer_stored_id: stored_id ScrapedPerformer_name: name ScrapedPerformer_disambiguation: disambiguation ScrapedPerformer_gender: gender ScrapedPerformer_urls: urls ScrapedPerformer_birthdate: birthdate ScrapedPerformer_ethnicity: ethnicity ScrapedPerformer_country: country ScrapedPerformer_eye_color: eye_color ScrapedPerformer_height: height ScrapedPerformer_measurements: measurements ScrapedPerformer_fake_tits: fake_tits ScrapedPerformer_penis_length: penis_length ScrapedPerformer_circumcised: circumcised ScrapedPerformer_career_length: career_length ScrapedPerformer_tattoos: tattoos ScrapedPerformer_piercings: piercings ScrapedPerformer_aliases: aliases tags { ...ScrapedTag } ScrapedPerformer_images: images ScrapedPerformer_details: details ScrapedPerformer_death_date: death_date ScrapedPerformer_hair_color: hair_color ScrapedPerformer_weight: weight ScrapedPerformer_remote_site_id: remote_site_id }
+  fragment ScrapedTag on ScrapedTag { ScrapedTag_stored_id: stored_id ScrapedTag_name: name ScrapedTag_description: description ScrapedTag_alias_list: alias_list parent { ...ScrapedTag } ScrapedTag_remote_site_id: remote_site_id }
+  fragment ScrapedPerformer on ScrapedPerformer { ScrapedPerformer_stored_id: stored_id ScrapedPerformer_name: name ScrapedPerformer_disambiguation: disambiguation ScrapedPerformer_gender: gender ScrapedPerformer_urls: urls ScrapedPerformer_birthdate: birthdate ScrapedPerformer_ethnicity: ethnicity ScrapedPerformer_country: country ScrapedPerformer_eye_color: eye_color ScrapedPerformer_height: height ScrapedPerformer_measurements: measurements ScrapedPerformer_fake_tits: fake_tits ScrapedPerformer_penis_length: penis_length ScrapedPerformer_circumcised: circumcised ScrapedPerformer_career_start: career_start ScrapedPerformer_career_end: career_end ScrapedPerformer_tattoos: tattoos ScrapedPerformer_piercings: piercings ScrapedPerformer_aliases: aliases tags { ...ScrapedTag } ScrapedPerformer_images: images ScrapedPerformer_details: details ScrapedPerformer_death_date: death_date ScrapedPerformer_hair_color: hair_color ScrapedPerformer_weight: weight ScrapedPerformer_remote_site_id: remote_site_id }
   fragment ScrapedGroup on ScrapedGroup { ScrapedGroup_stored_id: stored_id ScrapedGroup_name: name ScrapedGroup_aliases: aliases ScrapedGroup_duration: duration ScrapedGroup_date: date ScrapedGroup_rating: rating ScrapedGroup_director: director ScrapedGroup_urls: urls ScrapedGroup_synopsis: synopsis studio { stored_id name } tags { ...ScrapedTag } ScrapedGroup_front_image: front_image ScrapedGroup_back_image: back_image }
   fragment StashBoxFingerprint on StashBoxFingerprint { algorithm hash duration }
   ')
@@ -4741,8 +5087,8 @@ scrapeGalleryURL <- function(url = list(), ...) {
   query$query('scrapeGalleryURL', '
   query scrapeGalleryURL($url: String!) { scrapeGalleryURL(url: $url) { ...ScrapedGallery } }
   fragment ScrapedGallery on ScrapedGallery { ScrapedGallery_title: title ScrapedGallery_code: code ScrapedGallery_details: details ScrapedGallery_photographer: photographer ScrapedGallery_urls: urls ScrapedGallery_date: date studio { stored_id name } tags { ...ScrapedTag } performers { ...ScrapedPerformer } }
-  fragment ScrapedTag on ScrapedTag { stored_id name }
-  fragment ScrapedPerformer on ScrapedPerformer { ScrapedPerformer_stored_id: stored_id ScrapedPerformer_name: name ScrapedPerformer_disambiguation: disambiguation ScrapedPerformer_gender: gender ScrapedPerformer_urls: urls ScrapedPerformer_birthdate: birthdate ScrapedPerformer_ethnicity: ethnicity ScrapedPerformer_country: country ScrapedPerformer_eye_color: eye_color ScrapedPerformer_height: height ScrapedPerformer_measurements: measurements ScrapedPerformer_fake_tits: fake_tits ScrapedPerformer_penis_length: penis_length ScrapedPerformer_circumcised: circumcised ScrapedPerformer_career_length: career_length ScrapedPerformer_tattoos: tattoos ScrapedPerformer_piercings: piercings ScrapedPerformer_aliases: aliases tags { ...ScrapedTag } ScrapedPerformer_images: images ScrapedPerformer_details: details ScrapedPerformer_death_date: death_date ScrapedPerformer_hair_color: hair_color ScrapedPerformer_weight: weight ScrapedPerformer_remote_site_id: remote_site_id }
+  fragment ScrapedTag on ScrapedTag { ScrapedTag_stored_id: stored_id ScrapedTag_name: name ScrapedTag_description: description ScrapedTag_alias_list: alias_list parent { ...ScrapedTag } ScrapedTag_remote_site_id: remote_site_id }
+  fragment ScrapedPerformer on ScrapedPerformer { ScrapedPerformer_stored_id: stored_id ScrapedPerformer_name: name ScrapedPerformer_disambiguation: disambiguation ScrapedPerformer_gender: gender ScrapedPerformer_urls: urls ScrapedPerformer_birthdate: birthdate ScrapedPerformer_ethnicity: ethnicity ScrapedPerformer_country: country ScrapedPerformer_eye_color: eye_color ScrapedPerformer_height: height ScrapedPerformer_measurements: measurements ScrapedPerformer_fake_tits: fake_tits ScrapedPerformer_penis_length: penis_length ScrapedPerformer_circumcised: circumcised ScrapedPerformer_career_start: career_start ScrapedPerformer_career_end: career_end ScrapedPerformer_tattoos: tattoos ScrapedPerformer_piercings: piercings ScrapedPerformer_aliases: aliases tags { ...ScrapedTag } ScrapedPerformer_images: images ScrapedPerformer_details: details ScrapedPerformer_death_date: death_date ScrapedPerformer_hair_color: hair_color ScrapedPerformer_weight: weight ScrapedPerformer_remote_site_id: remote_site_id }
   ')
 
   variables <- list()
@@ -4771,8 +5117,8 @@ scrapeImageURL <- function(url = list(), ...) {
   query$query('scrapeImageURL', '
   query scrapeImageURL($url: String!) { scrapeImageURL(url: $url) { ...ScrapedImage } }
   fragment ScrapedImage on ScrapedImage { ScrapedImage_title: title ScrapedImage_code: code ScrapedImage_details: details ScrapedImage_photographer: photographer ScrapedImage_urls: urls ScrapedImage_date: date studio { stored_id name } tags { ...ScrapedTag } performers { ...ScrapedPerformer } }
-  fragment ScrapedTag on ScrapedTag { stored_id name }
-  fragment ScrapedPerformer on ScrapedPerformer { ScrapedPerformer_stored_id: stored_id ScrapedPerformer_name: name ScrapedPerformer_disambiguation: disambiguation ScrapedPerformer_gender: gender ScrapedPerformer_urls: urls ScrapedPerformer_birthdate: birthdate ScrapedPerformer_ethnicity: ethnicity ScrapedPerformer_country: country ScrapedPerformer_eye_color: eye_color ScrapedPerformer_height: height ScrapedPerformer_measurements: measurements ScrapedPerformer_fake_tits: fake_tits ScrapedPerformer_penis_length: penis_length ScrapedPerformer_circumcised: circumcised ScrapedPerformer_career_length: career_length ScrapedPerformer_tattoos: tattoos ScrapedPerformer_piercings: piercings ScrapedPerformer_aliases: aliases tags { ...ScrapedTag } ScrapedPerformer_images: images ScrapedPerformer_details: details ScrapedPerformer_death_date: death_date ScrapedPerformer_hair_color: hair_color ScrapedPerformer_weight: weight ScrapedPerformer_remote_site_id: remote_site_id }
+  fragment ScrapedTag on ScrapedTag { ScrapedTag_stored_id: stored_id ScrapedTag_name: name ScrapedTag_description: description ScrapedTag_alias_list: alias_list parent { ...ScrapedTag } ScrapedTag_remote_site_id: remote_site_id }
+  fragment ScrapedPerformer on ScrapedPerformer { ScrapedPerformer_stored_id: stored_id ScrapedPerformer_name: name ScrapedPerformer_disambiguation: disambiguation ScrapedPerformer_gender: gender ScrapedPerformer_urls: urls ScrapedPerformer_birthdate: birthdate ScrapedPerformer_ethnicity: ethnicity ScrapedPerformer_country: country ScrapedPerformer_eye_color: eye_color ScrapedPerformer_height: height ScrapedPerformer_measurements: measurements ScrapedPerformer_fake_tits: fake_tits ScrapedPerformer_penis_length: penis_length ScrapedPerformer_circumcised: circumcised ScrapedPerformer_career_start: career_start ScrapedPerformer_career_end: career_end ScrapedPerformer_tattoos: tattoos ScrapedPerformer_piercings: piercings ScrapedPerformer_aliases: aliases tags { ...ScrapedTag } ScrapedPerformer_images: images ScrapedPerformer_details: details ScrapedPerformer_death_date: death_date ScrapedPerformer_hair_color: hair_color ScrapedPerformer_weight: weight ScrapedPerformer_remote_site_id: remote_site_id }
   ')
 
   variables <- list()
@@ -4801,7 +5147,7 @@ scrapeGroupURL <- function(url = list(), ...) {
   query$query('scrapeGroupURL', '
   query scrapeGroupURL($url: String!) { scrapeGroupURL(url: $url) { ...ScrapedGroup } }
   fragment ScrapedGroup on ScrapedGroup { ScrapedGroup_stored_id: stored_id ScrapedGroup_name: name ScrapedGroup_aliases: aliases ScrapedGroup_duration: duration ScrapedGroup_date: date ScrapedGroup_rating: rating ScrapedGroup_director: director ScrapedGroup_urls: urls ScrapedGroup_synopsis: synopsis studio { stored_id name } tags { ...ScrapedTag } ScrapedGroup_front_image: front_image ScrapedGroup_back_image: back_image }
-  fragment ScrapedTag on ScrapedTag { stored_id name }
+  fragment ScrapedTag on ScrapedTag { ScrapedTag_stored_id: stored_id ScrapedTag_name: name ScrapedTag_description: description ScrapedTag_alias_list: alias_list parent { ...ScrapedTag } ScrapedTag_remote_site_id: remote_site_id }
   ')
 
   variables <- list()
@@ -4947,22 +5293,22 @@ configuration <- function(...) {
   query$query('configuration', '
   query configuration { configuration { ...ConfigResult } }
   fragment ConfigResult on ConfigResult { general { ...ConfigGeneralResult } interface { ...ConfigInterfaceResult } dlna { ...ConfigDLNAResult } scraping { ...ConfigScrapingResult } defaults { ...ConfigDefaultSettingsResult } ui plugins }
-  fragment ConfigGeneralResult on ConfigGeneralResult { stashes { ...StashConfig } databasePath backupDirectoryPath generatedPath metadataPath configFilePath scrapersPath pluginsPath cachePath blobsPath blobsStorage ffmpegPath ffprobePath calculateMD5 videoFileNamingAlgorithm parallelTasks previewAudio previewSegments previewSegmentDuration previewExcludeStart previewExcludeEnd previewPreset transcodeHardwareAcceleration maxTranscodeSize maxStreamingTranscodeSize transcodeInputArgs transcodeOutputArgs liveTranscodeInputArgs liveTranscodeOutputArgs drawFunscriptHeatmapRange writeImageThumbnails createImageClipsFromVideos apiKey username password maxSessionAge logFile logOut logLevel logAccess videoExtensions imageExtensions galleryExtensions createGalleriesFromFolders galleryCoverRegex excludes imageExcludes customPerformerImageLocation stashBoxes { ...StashBox } pythonPath scraperPackageSources { ...PackageSource } pluginPackageSources { ...PackageSource } }
-  fragment ConfigInterfaceResult on ConfigInterfaceResult { menuItems soundOnPreview wallShowTitle wallPlayback showScrubber maximumLoopDuration noBrowser notificationsEnabled autostartVideo autostartVideoOnPlaySelected continuePlaylistDefault showStudioAsText css cssEnabled javascript javascriptEnabled customLocales customLocalesEnabled language imageLightbox { ...ConfigImageLightboxResult } disableDropdownCreate { ...ConfigDisableDropdownCreate } handyKey funscriptOffset useStashHostedFunscript }
+  fragment ConfigGeneralResult on ConfigGeneralResult { stashes { ...StashConfig } databasePath backupDirectoryPath deleteTrashPath generatedPath metadataPath configFilePath scrapersPath pluginsPath cachePath blobsPath blobsStorage ffmpegPath ffprobePath calculateMD5 videoFileNamingAlgorithm parallelTasks previewAudio previewSegments previewSegmentDuration previewExcludeStart previewExcludeEnd previewPreset transcodeHardwareAcceleration maxTranscodeSize maxStreamingTranscodeSize transcodeInputArgs transcodeOutputArgs liveTranscodeInputArgs liveTranscodeOutputArgs drawFunscriptHeatmapRange writeImageThumbnails createImageClipsFromVideos apiKey username password maxSessionAge logFile logOut logLevel logAccess logFileMaxSize useCustomSpriteInterval spriteInterval minimumSprites maximumSprites spriteScreenshotSize videoExtensions imageExtensions galleryExtensions createGalleriesFromFolders galleryCoverRegex excludes imageExcludes customPerformerImageLocation stashBoxes { ...StashBox } pythonPath scraperPackageSources { ...PackageSource } pluginPackageSources { ...PackageSource } }
+  fragment ConfigInterfaceResult on ConfigInterfaceResult { sfwContentMode menuItems soundOnPreview wallShowTitle wallPlayback showScrubber maximumLoopDuration noBrowser notificationsEnabled autostartVideo autostartVideoOnPlaySelected continuePlaylistDefault showStudioAsText css cssEnabled javascript javascriptEnabled customLocales customLocalesEnabled disableCustomizations language imageLightbox { ...ConfigImageLightboxResult } disableDropdownCreate { ...ConfigDisableDropdownCreate } handyKey funscriptOffset useStashHostedFunscript }
   fragment ConfigDLNAResult on ConfigDLNAResult { serverName enabled port whitelistedIPs interfaces videoSortOrder }
   fragment ConfigScrapingResult on ConfigScrapingResult { scraperUserAgent scraperCDPPath scraperCertCheck excludeTagPatterns }
   fragment ConfigDefaultSettingsResult on ConfigDefaultSettingsResult { scan { ...ScanMetadataOptions } identify { ...IdentifyMetadataTaskOptions } autoTag { ...AutoTagMetadataOptions } generate { ...GenerateMetadataOptions } deleteFile deleteGenerated }
   fragment StashConfig on StashConfig { path excludeVideo excludeImage }
-  fragment StashBox on StashBox { endpoint api_key name }
+  fragment StashBox on StashBox { endpoint api_key name max_requests_per_minute }
   fragment PackageSource on PackageSource { name url local_path }
-  fragment ConfigImageLightboxResult on ConfigImageLightboxResult { slideshowDelay displayMode scaleUp resetZoomOnNav scrollMode scrollAttemptsBeforeChange }
-  fragment ConfigDisableDropdownCreate on ConfigDisableDropdownCreate { performer tag studio movie }
-  fragment ScanMetadataOptions on ScanMetadataOptions { rescan scanGenerateCovers scanGeneratePreviews scanGenerateImagePreviews scanGenerateSprites scanGeneratePhashes scanGenerateThumbnails scanGenerateClipPreviews }
+  fragment ConfigImageLightboxResult on ConfigImageLightboxResult { slideshowDelay displayMode scaleUp resetZoomOnNav scrollMode scrollAttemptsBeforeChange disableAnimation }
+  fragment ConfigDisableDropdownCreate on ConfigDisableDropdownCreate { performer tag studio movie gallery }
+  fragment ScanMetadataOptions on ScanMetadataOptions { rescan scanGenerateCovers scanGeneratePreviews scanGenerateImagePreviews scanGenerateSprites scanGeneratePhashes scanGenerateImagePhashes scanGenerateThumbnails scanGenerateClipPreviews }
   fragment IdentifyMetadataTaskOptions on IdentifyMetadataTaskOptions { sources { ...IdentifySource } options { ...IdentifyMetadataOptions } }
   fragment AutoTagMetadataOptions on AutoTagMetadataOptions { performers studios tags }
   fragment GenerateMetadataOptions on GenerateMetadataOptions { covers sprites previews imagePreviews previewOptions { ...GeneratePreviewOptions } markers markerImagePreviews markerScreenshots transcodes phashes interactiveHeatmapsSpeeds imageThumbnails clipPreviews }
   fragment IdentifySource on IdentifySource { source { ...ScraperSource } options { ...IdentifyMetadataOptions } }
-  fragment IdentifyMetadataOptions on IdentifyMetadataOptions { fieldOptions { ...IdentifyFieldOptions } setCoverImage setOrganized includeMalePerformers skipMultipleMatches skipMultipleMatchTag skipSingleNamePerformers skipSingleNamePerformerTag }
+  fragment IdentifyMetadataOptions on IdentifyMetadataOptions { fieldOptions { ...IdentifyFieldOptions } setCoverImage setOrganized performerGenders skipMultipleMatches skipMultipleMatchTag skipSingleNamePerformers skipSingleNamePerformerTag }
   fragment ScraperSource on ScraperSource { stash_box_endpoint scraper_id }
   fragment IdentifyFieldOptions on IdentifyFieldOptions { field strategy createMissing }
   fragment GeneratePreviewOptions on GeneratePreviewOptions { previewSegments previewSegmentDuration previewExcludeStart previewExcludeEnd previewPreset }
@@ -5156,7 +5502,7 @@ allPerformers <- function(...) {
   query <- ghql::Query$new()
   query$query('allPerformers', '
   query allPerformers { allPerformers { ...Performer } }
-  fragment Performer on Performer { id name disambiguation urls gender birthdate ethnicity country eye_color height_cm measurements fake_tits penis_length circumcised career_length tattoos piercings alias_list favorite tags { id name } ignore_auto_tag image_path scene_count image_count gallery_count group_count performer_count o_counter scenes { id title } stash_ids { endpoint stash_id } rating100 details death_date hair_color weight created_at updated_at groups { id name } custom_fields }
+  fragment Performer on Performer { id name disambiguation urls gender birthdate ethnicity country eye_color height_cm measurements fake_tits penis_length circumcised career_start career_end tattoos piercings alias_list favorite tags { id name } ignore_auto_tag image_path scene_count image_count gallery_count group_count performer_count o_counter scenes { id title } stash_ids { endpoint stash_id } rating100 details death_date hair_color weight created_at updated_at groups { id name } custom_fields }
   ')
 
   variables <- list()
