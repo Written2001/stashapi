@@ -287,7 +287,8 @@ fragment_overrides <- c(
     ScrapedStudio = "{ stored_id name }",
     StashID = "{ endpoint stash_id }",
     Folder = "{ id path basename }",
-    BasicFile = "{ id path basename }"
+    BasicFile = "{ id path basename }",
+    ScrapedTag = "{ stored_id name description alias_list remote_site_id }"
 )
 
 field_overrides <- c(
