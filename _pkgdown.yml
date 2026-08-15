@@ -1,0 +1,18 @@
+url: https://written2001.github.io/stashapi
+
+template:
+  bootstrap: 5
+
+home:
+  title: stashapi
+  description: An R wrapper for the Stash GraphQL API.
+
+navbar:
+  structure:
+    left: [reference, articles, news]
+    right: [github]
+  components:
+    github:
+      icon: fab fa-github
+      href: https://github.com/Written2001/stashapi
+      aria-label: GitHub

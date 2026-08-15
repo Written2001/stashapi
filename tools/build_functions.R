@@ -102,6 +102,12 @@ write_function <- function(schema_requests, outpath){
 }
 
 source("tools/build_schema.R")
+
+generate_functions <- function(outpath) {
+  write_function(schema_requests = schema_requests, outpath = outpath)
+}
+
 args <- commandArgs(trailingOnly = TRUE)
-outpath <- args[1]
-write_function(schema_requests = schema_requests, outpath = outpath)
+if (length(args) > 0) {
+  generate_functions(args[[1]])
+}
