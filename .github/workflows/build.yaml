@@ -28,18 +28,12 @@ jobs:
         with:
           extra-packages: |
             any::rcmdcheck
-            any::dplyr
-            any::glue
-            any::magrittr
-            any::purrr
             any::stringr
             any::tidyr
           needs: check
 
       - name: Check generated wrappers
-        run: |
-          Rscript --vanilla -e 'stopifnot(requireNamespace("magrittr"), requireNamespace("stringr"))'
-          Rscript --vanilla tools/check_generated.R
+        run: Rscript tools/check_generated.R
 
       - name: Build package
         run: R CMD build .
