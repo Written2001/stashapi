@@ -3,8 +3,22 @@ name: R-CMD-check.yaml
 on:
   push:
     branches: [ main ]
+    paths:
+      - DESCRIPTION
+      - NAMESPACE
+      - R/**
+      - inst/**
+      - man/**
+      - tests/**
   pull_request:
     branches: [ main ]
+    paths:
+      - DESCRIPTION
+      - NAMESPACE
+      - R/**
+      - inst/**
+      - man/**
+      - tests/**
   workflow_dispatch:
 
 permissions:

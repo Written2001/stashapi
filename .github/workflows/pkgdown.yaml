@@ -3,6 +3,11 @@ name: pkgdown
 on:
   push:
     branches: [main]
+    paths:
+      - DESCRIPTION
+      - README.md
+      - _pkgdown.yml
+      - man/**
   workflow_dispatch:
 
 permissions:

@@ -37,3 +37,14 @@ Do not hand-edit generated wrapper functions or their generated man pages.
 - Keep credentials and live Stash data out of commits and CI logs.
 
 This project is distributed from GitHub and is not intended for CRAN publication.
+
+## Releases
+
+Use three-part semantic versions in `DESCRIPTION` and matching tags in the `vMAJOR.MINOR.PATCH` format. Update `NEWS.md` with the release changes, then push the matching tag to start the release workflow.
+
+For example:
+
+```sh
+git tag v0.1.3
+git push origin v0.1.3
+```
