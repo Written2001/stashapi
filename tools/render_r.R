@@ -96,7 +96,7 @@ render_r_wrapper <- function(operation, document) {
     "  res <- executeQuery(\n",
     "    query = query$queries$", query_name, ",\n",
     "    variables = variables,\n",
-    "    connection = the$connection,\n",
+    "    connection = get_stash_connection(),\n",
     "    return_default = return_default,\n",
     "    field = dotargs$.field\n",
     "  )\n\n",

@@ -16,7 +16,7 @@ Validates whether a connection to the GraphQL endpoint of Stash can be establish
 }
 \examples{
 \dontrun{
-has_connection()
+	hasConnection()
 }
 
 }

@@ -22,7 +22,7 @@ fragment SavedFilter on SavedFilter { id mode name find_filter { ...SavedFindFil
   res <- executeQuery(
     query = query$queries$findSavedFilter,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -50,7 +50,7 @@ fragment SavedFilter on SavedFilter { id mode name find_filter { ...SavedFindFil
   res <- executeQuery(
     query = query$queries$findSavedFilters,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -83,7 +83,7 @@ fragment BaseFile on BaseFile { ...BasicFile ...VideoFile ...ImageFile ...Galler
   res <- executeQuery(
     query = query$queries$findFile,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -118,7 +118,7 @@ fragment FindFilesResultType on FindFilesResultType { count megapixels duration 
   res <- executeQuery(
     query = query$queries$findFiles,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -146,7 +146,7 @@ fragment Folder on Folder { id path basename parent_folder { id path basename } 
   res <- executeQuery(
     query = query$queries$findFolder,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -176,7 +176,7 @@ fragment FindFoldersResultType on FindFoldersResultType { count folders { ...Fol
   res <- executeQuery(
     query = query$queries$findFolders,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -210,7 +210,7 @@ fragment Scene on Scene { id title code details director urls date rating100 org
   res <- executeQuery(
     query = query$queries$findScene,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -247,7 +247,7 @@ fragment Scene on Scene { id title code details director urls date rating100 org
   res <- executeQuery(
     query = query$queries$findSceneByHash,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -284,7 +284,7 @@ fragment FindScenesResultType on FindScenesResultType { count duration filesize 
   res <- executeQuery(
     query = query$queries$findScenes,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -318,7 +318,7 @@ fragment FindScenesResultType on FindScenesResultType { count duration filesize 
   res <- executeQuery(
     query = query$queries$findScenesByPathRegex,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -352,7 +352,7 @@ fragment Scene on Scene { id title code details director urls date rating100 org
   res <- executeQuery(
     query = query$queries$findDuplicateScenes,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -379,7 +379,7 @@ fragment SceneStreamEndpoint on SceneStreamEndpoint { url mime_type label }
   res <- executeQuery(
     query = query$queries$sceneStreams,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -413,7 +413,7 @@ fragment SceneParserResultType on SceneParserResultType { count results { ...Sce
   res <- executeQuery(
     query = query$queries$parseSceneFilenames,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -443,7 +443,7 @@ fragment FindSceneMarkersResultType on FindSceneMarkersResultType { count scene_
   res <- executeQuery(
     query = query$queries$findSceneMarkers,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -476,7 +476,7 @@ fragment Image on Image { id title code rating100 urls date details photographer
   res <- executeQuery(
     query = query$queries$findImage,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -512,7 +512,7 @@ fragment FindImagesResultType on FindImagesResultType { count megapixels filesiz
   res <- executeQuery(
     query = query$queries$findImages,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -543,7 +543,7 @@ fragment Performer on Performer { id name disambiguation urls gender birthdate e
   res <- executeQuery(
     query = query$queries$findPerformer,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -574,7 +574,7 @@ fragment FindPerformersResultType on FindPerformersResultType { count performers
   res <- executeQuery(
     query = query$queries$findPerformers,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -605,7 +605,7 @@ fragment Studio on Studio { id name urls parent_studio { id name } child_studios
   res <- executeQuery(
     query = query$queries$findStudio,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -635,7 +635,7 @@ fragment FindStudiosResultType on FindStudiosResultType { count studios { ...Stu
   res <- executeQuery(
     query = query$queries$findStudios,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -667,7 +667,7 @@ fragment Group on Group { id name aliases duration date rating100 studio { id na
   res <- executeQuery(
     query = query$queries$findGroup,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -698,7 +698,7 @@ fragment FindGroupsResultType on FindGroupsResultType { count groups { ...Group 
   res <- executeQuery(
     query = query$queries$findGroups,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -733,7 +733,7 @@ fragment Gallery on Gallery { id title code urls date details photographer ratin
   res <- executeQuery(
     query = query$queries$findGallery,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -767,7 +767,7 @@ fragment FindGalleriesResultType on FindGalleriesResultType { count galleries { 
   res <- executeQuery(
     query = query$queries$findGalleries,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -798,7 +798,7 @@ fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag crea
   res <- executeQuery(
     query = query$queries$findTag,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -828,7 +828,7 @@ fragment FindTagsResultType on FindTagsResultType { count tags { ...Tag } }
   res <- executeQuery(
     query = query$queries$findTags,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -855,7 +855,7 @@ fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_se
   res <- executeQuery(
     query = query$queries$markerWall,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -888,7 +888,7 @@ fragment Scene on Scene { id title code details director urls date rating100 org
   res <- executeQuery(
     query = query$queries$sceneWall,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -916,7 +916,7 @@ fragment MarkerStringsResultType on MarkerStringsResultType { count id title }
   res <- executeQuery(
     query = query$queries$markerStrings,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -942,7 +942,7 @@ fragment StatsResultType on StatsResultType { scene_count scenes_size scenes_dur
   res <- executeQuery(
     query = query$queries$stats,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -974,7 +974,7 @@ fragment SceneMarkerTag on SceneMarkerTag { tag { id name } scene_markers { ...S
   res <- executeQuery(
     query = query$queries$sceneMarkerTags,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1000,7 +1000,7 @@ fragment LogEntry on LogEntry { time level message }
   res <- executeQuery(
     query = query$queries$logs,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1032,7 +1032,7 @@ fragment Scraper on Scraper { id name performer { ...ScraperSpec } scene { ...Sc
   res <- executeQuery(
     query = query$queries$listScrapers,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1071,7 +1071,7 @@ fragment ScrapedScene on ScrapedScene { title code details director urls date fi
   res <- executeQuery(
     query = query$queries$scrapeSingleScene,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1110,7 +1110,7 @@ fragment ScrapedScene on ScrapedScene { title code details director urls date fi
   res <- executeQuery(
     query = query$queries$scrapeMultiScenes,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1145,7 +1145,7 @@ fragment ScrapedStudio on ScrapedStudio { stored_id name urls parent { stored_id
   res <- executeQuery(
     query = query$queries$scrapeSingleStudio,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1180,7 +1180,7 @@ fragment ScrapedTag on ScrapedTag { stored_id name description alias_list parent
   res <- executeQuery(
     query = query$queries$scrapeSingleTag,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1215,7 +1215,7 @@ fragment ScrapedPerformer on ScrapedPerformer { stored_id name disambiguation ge
   res <- executeQuery(
     query = query$queries$scrapeSinglePerformer,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1250,7 +1250,7 @@ fragment ScrapedPerformer on ScrapedPerformer { stored_id name disambiguation ge
   res <- executeQuery(
     query = query$queries$scrapeMultiPerformers,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1286,7 +1286,7 @@ fragment ScrapedGallery on ScrapedGallery { title code details photographer urls
   res <- executeQuery(
     query = query$queries$scrapeSingleGallery,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1321,7 +1321,7 @@ fragment ScrapedGroup on ScrapedGroup { stored_id name aliases duration date rat
   res <- executeQuery(
     query = query$queries$scrapeSingleGroup,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1357,7 +1357,7 @@ fragment ScrapedImage on ScrapedImage { title code details photographer urls dat
   res <- executeQuery(
     query = query$queries$scrapeSingleImage,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1402,7 +1402,7 @@ fragment ScrapedContent on ScrapedContent { ...ScrapedStudio ...ScrapedTag ...Sc
   res <- executeQuery(
     query = query$queries$scrapeURL,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1433,7 +1433,7 @@ fragment ScrapedPerformer on ScrapedPerformer { stored_id name disambiguation ge
   res <- executeQuery(
     query = query$queries$scrapePerformerURL,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1468,7 +1468,7 @@ fragment ScrapedScene on ScrapedScene { title code details director urls date fi
   res <- executeQuery(
     query = query$queries$scrapeSceneURL,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1500,7 +1500,7 @@ fragment ScrapedGallery on ScrapedGallery { title code details photographer urls
   res <- executeQuery(
     query = query$queries$scrapeGalleryURL,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1532,7 +1532,7 @@ fragment ScrapedImage on ScrapedImage { title code details photographer urls dat
   res <- executeQuery(
     query = query$queries$scrapeImageURL,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1563,7 +1563,7 @@ fragment ScrapedGroup on ScrapedGroup { stored_id name aliases duration date rat
   res <- executeQuery(
     query = query$queries$scrapeGroupURL,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1593,7 +1593,7 @@ fragment Plugin on Plugin { id name description url version enabled settings { .
   res <- executeQuery(
     query = query$queries$plugins,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1623,7 +1623,7 @@ fragment PluginTask on PluginTask { name description }
   res <- executeQuery(
     query = query$queries$pluginTasks,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1654,7 +1654,7 @@ fragment Package on Package { package_id name version date sourceURL metadata }
   res <- executeQuery(
     query = query$queries$installedPackages,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1689,7 +1689,7 @@ fragment Package on Package { package_id name version date sourceURL metadata }
   res <- executeQuery(
     query = query$queries$availablePackages,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1734,7 +1734,7 @@ fragment ConfigResult on ConfigResult { general { ...ConfigGeneralResult } inter
   res <- executeQuery(
     query = query$queries$configuration,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1762,7 +1762,7 @@ fragment Directory on Directory { path parent directories }
   res <- executeQuery(
     query = query$queries$directory,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1793,7 +1793,7 @@ fragment StashBoxValidationResult on StashBoxValidationResult { valid status }
   res <- executeQuery(
     query = query$queries$validateStashBoxCredentials,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1819,7 +1819,7 @@ fragment SystemStatus on SystemStatus { databaseSchema databasePath configPath a
   res <- executeQuery(
     query = query$queries$systemStatus,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1845,7 +1845,7 @@ fragment Job on Job { id status subTasks description progress startTime endTime 
   res <- executeQuery(
     query = query$queries$jobQueue,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1876,7 +1876,7 @@ fragment Job on Job { id status subTasks description progress startTime endTime 
   res <- executeQuery(
     query = query$queries$findJob,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1903,7 +1903,7 @@ fragment DLNAStatus on DLNAStatus { running until recentIPAddresses allowedIPAdd
   res <- executeQuery(
     query = query$queries$dlnaStatus,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1929,7 +1929,7 @@ fragment Performer on Performer { id name disambiguation urls gender birthdate e
   res <- executeQuery(
     query = query$queries$allPerformers,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1955,7 +1955,7 @@ fragment Version on Version { version hash build_time }
   res <- executeQuery(
     query = query$queries$version,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -1981,7 +1981,7 @@ fragment LatestVersion on LatestVersion { version shorthash release_date url }
   res <- executeQuery(
     query = query$queries$latestversion,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2011,7 +2011,7 @@ setup <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$setup,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2041,7 +2041,7 @@ migrate <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$migrate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2066,7 +2066,7 @@ downloadFFMpeg <- function(...) {
   res <- executeQuery(
     query = query$queries$downloadFFMpeg,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2103,7 +2103,7 @@ fragment Scene on Scene { id title code details director urls date rating100 org
   res <- executeQuery(
     query = query$queries$sceneCreate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2140,7 +2140,7 @@ fragment Scene on Scene { id title code details director urls date rating100 org
   res <- executeQuery(
     query = query$queries$sceneUpdate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2177,7 +2177,7 @@ fragment Scene on Scene { id title code details director urls date rating100 org
   res <- executeQuery(
     query = query$queries$sceneMerge,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2214,7 +2214,7 @@ fragment Scene on Scene { id title code details director urls date rating100 org
   res <- executeQuery(
     query = query$queries$bulkSceneUpdate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2244,7 +2244,7 @@ sceneDestroy <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$sceneDestroy,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2274,7 +2274,7 @@ scenesDestroy <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$scenesDestroy,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2311,7 +2311,7 @@ fragment Scene on Scene { id title code details director urls date rating100 org
   res <- executeQuery(
     query = query$queries$scenesUpdate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2343,7 +2343,7 @@ fragment HistoryMutationResult on HistoryMutationResult { count history }
   res <- executeQuery(
     query = query$queries$sceneAddO,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2375,7 +2375,7 @@ fragment HistoryMutationResult on HistoryMutationResult { count history }
   res <- executeQuery(
     query = query$queries$sceneDeleteO,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2405,7 +2405,7 @@ sceneResetO <- function(id = list(), ...) {
   res <- executeQuery(
     query = query$queries$sceneResetO,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2437,7 +2437,7 @@ sceneSaveActivity <- function(id = list(), resumetime = NA, playDuration = NA, .
   res <- executeQuery(
     query = query$queries$sceneSaveActivity,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2469,7 +2469,7 @@ sceneResetActivity <- function(id = list(), resetresume = NA, resetduration = NA
   res <- executeQuery(
     query = query$queries$sceneResetActivity,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2501,7 +2501,7 @@ fragment HistoryMutationResult on HistoryMutationResult { count history }
   res <- executeQuery(
     query = query$queries$sceneAddPlay,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2533,7 +2533,7 @@ fragment HistoryMutationResult on HistoryMutationResult { count history }
   res <- executeQuery(
     query = query$queries$sceneDeletePlay,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2563,7 +2563,7 @@ sceneResetPlayCount <- function(id = list(), ...) {
   res <- executeQuery(
     query = query$queries$sceneResetPlayCount,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2594,7 +2594,7 @@ sceneGenerateScreenshot <- function(id = list(), at = NA, ...) {
   res <- executeQuery(
     query = query$queries$sceneGenerateScreenshot,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2625,7 +2625,7 @@ fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_se
   res <- executeQuery(
     query = query$queries$sceneMarkerCreate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2656,7 +2656,7 @@ fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_se
   res <- executeQuery(
     query = query$queries$sceneMarkerUpdate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2687,7 +2687,7 @@ fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_se
   res <- executeQuery(
     query = query$queries$bulkSceneMarkerUpdate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2717,7 +2717,7 @@ sceneMarkerDestroy <- function(id = list(), ...) {
   res <- executeQuery(
     query = query$queries$sceneMarkerDestroy,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2747,7 +2747,7 @@ sceneMarkersDestroy <- function(ids = list(), ...) {
   res <- executeQuery(
     query = query$queries$sceneMarkersDestroy,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2777,7 +2777,7 @@ sceneAssignFile <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$sceneAssignFile,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2813,7 +2813,7 @@ fragment Image on Image { id title code rating100 urls date details photographer
   res <- executeQuery(
     query = query$queries$imageUpdate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2849,7 +2849,7 @@ fragment Image on Image { id title code rating100 urls date details photographer
   res <- executeQuery(
     query = query$queries$bulkImageUpdate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2879,7 +2879,7 @@ imageDestroy <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$imageDestroy,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2909,7 +2909,7 @@ imagesDestroy <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$imagesDestroy,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2945,7 +2945,7 @@ fragment Image on Image { id title code rating100 urls date details photographer
   res <- executeQuery(
     query = query$queries$imagesUpdate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -2975,7 +2975,7 @@ imageIncrementO <- function(id = list(), ...) {
   res <- executeQuery(
     query = query$queries$imageIncrementO,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3005,7 +3005,7 @@ imageDecrementO <- function(id = list(), ...) {
   res <- executeQuery(
     query = query$queries$imageDecrementO,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3035,7 +3035,7 @@ imageResetO <- function(id = list(), ...) {
   res <- executeQuery(
     query = query$queries$imageResetO,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3070,7 +3070,7 @@ fragment Gallery on Gallery { id title code urls date details photographer ratin
   res <- executeQuery(
     query = query$queries$galleryCreate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3105,7 +3105,7 @@ fragment Gallery on Gallery { id title code urls date details photographer ratin
   res <- executeQuery(
     query = query$queries$galleryUpdate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3140,7 +3140,7 @@ fragment Gallery on Gallery { id title code urls date details photographer ratin
   res <- executeQuery(
     query = query$queries$bulkGalleryUpdate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3170,7 +3170,7 @@ galleryDestroy <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$galleryDestroy,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3205,7 +3205,7 @@ fragment Gallery on Gallery { id title code urls date details photographer ratin
   res <- executeQuery(
     query = query$queries$galleriesUpdate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3235,7 +3235,7 @@ addGalleryImages <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$addGalleryImages,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3265,7 +3265,7 @@ removeGalleryImages <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$removeGalleryImages,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3295,7 +3295,7 @@ setGalleryCover <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$setGalleryCover,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3325,7 +3325,7 @@ resetGalleryCover <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$resetGalleryCover,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3356,7 +3356,7 @@ fragment GalleryChapter on GalleryChapter { id gallery { id title } title image_
   res <- executeQuery(
     query = query$queries$galleryChapterCreate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3387,7 +3387,7 @@ fragment GalleryChapter on GalleryChapter { id gallery { id title } title image_
   res <- executeQuery(
     query = query$queries$galleryChapterUpdate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3417,7 +3417,7 @@ galleryChapterDestroy <- function(id = list(), ...) {
   res <- executeQuery(
     query = query$queries$galleryChapterDestroy,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3448,7 +3448,7 @@ fragment Performer on Performer { id name disambiguation urls gender birthdate e
   res <- executeQuery(
     query = query$queries$performerCreate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3479,7 +3479,7 @@ fragment Performer on Performer { id name disambiguation urls gender birthdate e
   res <- executeQuery(
     query = query$queries$performerUpdate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3509,7 +3509,7 @@ performerDestroy <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$performerDestroy,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3539,7 +3539,7 @@ performersDestroy <- function(ids = list(), ...) {
   res <- executeQuery(
     query = query$queries$performersDestroy,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3570,7 +3570,7 @@ fragment Performer on Performer { id name disambiguation urls gender birthdate e
   res <- executeQuery(
     query = query$queries$bulkPerformerUpdate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3601,7 +3601,7 @@ fragment Performer on Performer { id name disambiguation urls gender birthdate e
   res <- executeQuery(
     query = query$queries$performerMerge,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3632,7 +3632,7 @@ fragment Studio on Studio { id name urls parent_studio { id name } child_studios
   res <- executeQuery(
     query = query$queries$studioCreate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3663,7 +3663,7 @@ fragment Studio on Studio { id name urls parent_studio { id name } child_studios
   res <- executeQuery(
     query = query$queries$studioUpdate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3693,7 +3693,7 @@ studioDestroy <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$studioDestroy,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3723,7 +3723,7 @@ studiosDestroy <- function(ids = list(), ...) {
   res <- executeQuery(
     query = query$queries$studiosDestroy,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3754,7 +3754,7 @@ fragment Studio on Studio { id name urls parent_studio { id name } child_studios
   res <- executeQuery(
     query = query$queries$bulkStudioUpdate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3786,7 +3786,7 @@ fragment Group on Group { id name aliases duration date rating100 studio { id na
   res <- executeQuery(
     query = query$queries$groupCreate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3818,7 +3818,7 @@ fragment Group on Group { id name aliases duration date rating100 studio { id na
   res <- executeQuery(
     query = query$queries$groupUpdate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3848,7 +3848,7 @@ groupDestroy <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$groupDestroy,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3878,7 +3878,7 @@ groupsDestroy <- function(ids = list(), ...) {
   res <- executeQuery(
     query = query$queries$groupsDestroy,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3910,7 +3910,7 @@ fragment Group on Group { id name aliases duration date rating100 studio { id na
   res <- executeQuery(
     query = query$queries$bulkGroupUpdate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3940,7 +3940,7 @@ addGroupSubGroups <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$addGroupSubGroups,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -3970,7 +3970,7 @@ removeGroupSubGroups <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$removeGroupSubGroups,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4000,7 +4000,7 @@ reorderSubGroups <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$reorderSubGroups,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4031,7 +4031,7 @@ fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag crea
   res <- executeQuery(
     query = query$queries$tagCreate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4062,7 +4062,7 @@ fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag crea
   res <- executeQuery(
     query = query$queries$tagUpdate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4092,7 +4092,7 @@ tagDestroy <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$tagDestroy,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4122,7 +4122,7 @@ tagsDestroy <- function(ids = list(), ...) {
   res <- executeQuery(
     query = query$queries$tagsDestroy,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4153,7 +4153,7 @@ fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag crea
   res <- executeQuery(
     query = query$queries$tagsMerge,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4184,7 +4184,7 @@ fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag crea
   res <- executeQuery(
     query = query$queries$bulkTagUpdate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4214,7 +4214,7 @@ moveFiles <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$moveFiles,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4244,7 +4244,7 @@ deleteFiles <- function(ids = list(), ...) {
   res <- executeQuery(
     query = query$queries$deleteFiles,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4274,7 +4274,7 @@ destroyFiles <- function(ids = list(), ...) {
   res <- executeQuery(
     query = query$queries$destroyFiles,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4304,7 +4304,7 @@ fileSetFingerprints <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$fileSetFingerprints,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4334,7 +4334,7 @@ revealFileInFileManager <- function(id = list(), ...) {
   res <- executeQuery(
     query = query$queries$revealFileInFileManager,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4364,7 +4364,7 @@ revealFolderInFileManager <- function(id = list(), ...) {
   res <- executeQuery(
     query = query$queries$revealFolderInFileManager,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4396,7 +4396,7 @@ fragment SavedFilter on SavedFilter { id mode name find_filter { ...SavedFindFil
   res <- executeQuery(
     query = query$queries$saveFilter,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4426,7 +4426,7 @@ destroySavedFilter <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$destroySavedFilter,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4460,7 +4460,7 @@ fragment ConfigGeneralResult on ConfigGeneralResult { stashes { ...StashConfig }
   res <- executeQuery(
     query = query$queries$configureGeneral,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4493,7 +4493,7 @@ fragment ConfigInterfaceResult on ConfigInterfaceResult { sfwContentMode menuIte
   res <- executeQuery(
     query = query$queries$configureInterface,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4524,7 +4524,7 @@ fragment ConfigDLNAResult on ConfigDLNAResult { serverName enabled port whitelis
   res <- executeQuery(
     query = query$queries$configureDLNA,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4555,7 +4555,7 @@ fragment ConfigScrapingResult on ConfigScrapingResult { scraperUserAgent scraper
   res <- executeQuery(
     query = query$queries$configureScraping,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4595,7 +4595,7 @@ fragment ConfigDefaultSettingsResult on ConfigDefaultSettingsResult { scan { ...
   res <- executeQuery(
     query = query$queries$configureDefaults,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4629,7 +4629,7 @@ configurePlugin <- function(pluginid = list(), input = list(), ...) {
   res <- executeQuery(
     query = query$queries$configurePlugin,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4656,7 +4656,7 @@ configureUI <- function(input = NA, partial = NA, ...) {
   res <- executeQuery(
     query = query$queries$configureUI,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4687,7 +4687,7 @@ configureUISetting <- function(key = list(), value = NA, ...) {
   res <- executeQuery(
     query = query$queries$configureUISetting,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4717,7 +4717,7 @@ generateAPIKey <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$generateAPIKey,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4747,7 +4747,7 @@ exportObjects <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$exportObjects,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4777,7 +4777,7 @@ importObjects <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$importObjects,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4802,7 +4802,7 @@ metadataImport <- function(...) {
   res <- executeQuery(
     query = query$queries$metadataImport,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4827,7 +4827,7 @@ metadataExport <- function(...) {
   res <- executeQuery(
     query = query$queries$metadataExport,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4857,7 +4857,7 @@ metadataScan <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$metadataScan,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4887,7 +4887,7 @@ metadataGenerate <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$metadataGenerate,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4917,7 +4917,7 @@ metadataAutoTag <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$metadataAutoTag,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4947,7 +4947,7 @@ metadataClean <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$metadataClean,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -4977,7 +4977,7 @@ metadataCleanGenerated <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$metadataCleanGenerated,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -5007,7 +5007,7 @@ metadataIdentify <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$metadataIdentify,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -5032,7 +5032,7 @@ migrateHashNaming <- function(...) {
   res <- executeQuery(
     query = query$queries$migrateHashNaming,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -5062,7 +5062,7 @@ migrateSceneScreenshots <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$migrateSceneScreenshots,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -5092,7 +5092,7 @@ migrateBlobs <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$migrateBlobs,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -5122,7 +5122,7 @@ anonymiseDatabase <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$anonymiseDatabase,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -5147,7 +5147,7 @@ optimiseDatabase <- function(...) {
   res <- executeQuery(
     query = query$queries$optimiseDatabase,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -5172,7 +5172,7 @@ reloadScrapers <- function(...) {
   res <- executeQuery(
     query = query$queries$reloadScrapers,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -5202,7 +5202,7 @@ setPluginsEnabled <- function(enabledMap = list(), ...) {
   res <- executeQuery(
     query = query$queries$setPluginsEnabled,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -5236,7 +5236,7 @@ runPluginTask <- function(pluginid = list(), taskname = NA, description = NA, ar
   res <- executeQuery(
     query = query$queries$runPluginTask,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -5267,7 +5267,7 @@ runPluginOperation <- function(pluginid = list(), args = NA, ...) {
   res <- executeQuery(
     query = query$queries$runPluginOperation,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -5292,7 +5292,7 @@ reloadPlugins <- function(...) {
   res <- executeQuery(
     query = query$queries$reloadPlugins,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -5326,7 +5326,7 @@ installPackages <- function(type = NA, packages = NA, ...) {
   res <- executeQuery(
     query = query$queries$installPackages,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -5357,7 +5357,7 @@ updatePackages <- function(type = NA, packages = NA, ...) {
   res <- executeQuery(
     query = query$queries$updatePackages,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -5391,7 +5391,7 @@ uninstallPackages <- function(type = NA, packages = NA, ...) {
   res <- executeQuery(
     query = query$queries$uninstallPackages,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -5421,7 +5421,7 @@ stopJob <- function(jobid = list(), ...) {
   res <- executeQuery(
     query = query$queries$stopJob,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -5446,7 +5446,7 @@ stopAllJobs <- function(...) {
   res <- executeQuery(
     query = query$queries$stopAllJobs,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -5476,7 +5476,7 @@ submitStashBoxFingerprints <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$submitStashBoxFingerprints,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -5506,7 +5506,7 @@ submitStashBoxSceneDraft <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$submitStashBoxSceneDraft,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -5536,7 +5536,7 @@ submitStashBoxPerformerDraft <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$submitStashBoxPerformerDraft,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -5566,7 +5566,7 @@ backupDatabase <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$backupDatabase,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -5598,7 +5598,7 @@ fragment SQLQueryResult on SQLQueryResult { columns rows }
   res <- executeQuery(
     query = query$queries$querySQL,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -5630,7 +5630,7 @@ fragment SQLExecResult on SQLExecResult { rows_affected last_insert_id }
   res <- executeQuery(
     query = query$queries$execSQL,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -5660,7 +5660,7 @@ stashBoxBatchPerformerTag <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$stashBoxBatchPerformerTag,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -5690,7 +5690,7 @@ stashBoxBatchStudioTag <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$stashBoxBatchStudioTag,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -5720,7 +5720,7 @@ stashBoxBatchTagTag <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$stashBoxBatchTagTag,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -5750,7 +5750,7 @@ enableDLNA <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$enableDLNA,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -5780,7 +5780,7 @@ disableDLNA <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$disableDLNA,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -5810,7 +5810,7 @@ addTempDLNAIP <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$addTempDLNAIP,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )
@@ -5840,7 +5840,7 @@ removeTempDLNAIP <- function(input = NA, ...) {
   res <- executeQuery(
     query = query$queries$removeTempDLNAIP,
     variables = variables,
-    connection = the$connection,
+    connection = get_stash_connection(),
     return_default = return_default,
     field = dotargs$.field
   )

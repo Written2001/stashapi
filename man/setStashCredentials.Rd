@@ -26,7 +26,7 @@ Establishes a connection to the Stash GraphQL endpoint using credentials stored 
 
 }
 \seealso{
-[has_connection()] for connection validation
+[hasConnection()] for connection validation
 }
 \keyword{connection}
 \keyword{credentials}
