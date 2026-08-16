@@ -17,3 +17,11 @@ A named list suitable for `findSceneMarkers(scenemarkerfilter = ...)`.
 \description{
 Build a scene marker filter.
 }
+\details{
+Allowed fields: `tags`, `scene_tags`, `performers`, `scenes`, `duration`,
+`created_at`, `updated_at`, `scene_date`, `scene_created_at`, `scene_updated_at`,
+and `scene_filter`.
+}
+\examples{
+marker_filter(tags = includes(182), duration = greater_than(30))
+}

@@ -13,3 +13,4 @@ between(value, value2)
 \description{
 Build a BETWEEN criterion.
 }
+\examples{between(1, 10)}

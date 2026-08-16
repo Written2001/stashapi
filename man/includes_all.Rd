@@ -7,3 +7,4 @@
 \arguments{\item{value}{Criterion value.}\item{depth}{Optional hierarchy depth.}\item{excludes}{Optional IDs to exclude.}}
 \value{A named criterion list.}
 \description{Builds a GraphQL INCLUDES_ALL criterion.}
+\examples{includes_all(c(84, 85))}

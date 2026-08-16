@@ -14,3 +14,4 @@ excludes(value, depth = NULL)
 \description{
 Build an EXCLUDES criterion.
 }
+\examples{excludes(182, depth = -1)}

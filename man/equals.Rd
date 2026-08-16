@@ -7,3 +7,4 @@
 \arguments{\item{value}{Criterion value.}}
 \value{A named criterion list.}
 \description{Builds a GraphQL EQUALS criterion.}
+\examples{equals("4k")}

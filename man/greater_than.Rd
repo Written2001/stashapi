@@ -10,3 +10,4 @@ greater_than(value)
 \description{
 The helper name matches the GraphQL schema modifier.
 }
+\examples{greater_than("FULL_HD")}

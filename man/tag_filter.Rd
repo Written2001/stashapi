@@ -17,3 +17,15 @@ A named list suitable for `findTags(tagfilter = ...)`.
 \description{
 Build a tag filter.
 }
+\details{
+Allowed fields: `AND`, `OR`, `NOT`, `name`, `sort_name`, `aliases`, `favorite`,
+`description`, `is_missing`, `scene_count`, `image_count`, `gallery_count`,
+`performer_count`, `studio_count`, `movie_count`, `group_count`, `marker_count`,
+`parents`, `children`, `parent_count`, `child_count`, `ignore_auto_tag`,
+`stash_id_endpoint`, `stash_ids_endpoint`, `scenes_filter`, `images_filter`,
+`galleries_filter`, `groups_filter`, `performers_filter`, `studios_filter`,
+`markers_filter`, `created_at`, `updated_at`, and `custom_fields`.
+}
+\examples{
+tag_filter(name = equals("4k"), favorite = is_null(FALSE))
+}

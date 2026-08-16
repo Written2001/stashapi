@@ -17,3 +17,16 @@ A named list suitable for `findGalleries(galleryfilter = ...)`.
 \description{
 Build a gallery filter.
 }
+\details{
+Allowed fields: `AND`, `OR`, `NOT`, `id`, `title`, `details`, `checksum`, `path`,
+`file_count`, `is_missing`, `is_zip`, `rating100`, `organized`,
+`average_resolution`, `has_chapters`, `scenes`, `studios`, `tags`, `tag_count`,
+`performer_tags`, `performers`, `performer_count`, `performer_favorite`,
+`performer_age`, `image_count`, `url`, `date`, `created_at`, `updated_at`, `code`,
+`photographer`, `scenes_filter`, `images_filter`, `performers_filter`,
+`studios_filter`, `tags_filter`, `files_filter`, `folders_filter`, `parent_folder`,
+and `custom_fields`.
+}
+\examples{
+gallery_filter(title = includes("Concert"), organized = equals(TRUE))
+}

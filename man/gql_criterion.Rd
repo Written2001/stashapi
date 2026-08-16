@@ -30,6 +30,11 @@ A named list containing only the supplied GraphQL criterion fields.
 Criterion helpers return ordinary named lists that can be passed directly to
 generated Stash API functions.
 }
+\details{
+Use criterion helpers as values inside a typed filter, for example
+`scene_filter(tags = includes(182))`. The returned value is an ordinary named
+list containing GraphQL criterion fields.
+}
 \examples{
 equals("4k")
 includes(182, depth = -1)

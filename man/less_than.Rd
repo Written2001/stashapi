@@ -10,3 +10,4 @@ less_than(value)
 \description{
 Build a less-than criterion.
 }
+\examples{less_than(720)}

@@ -1,138 +1,449 @@
 ---
 title: "Filters and Input Builders"
 output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Filters and Input Builders}
+  %\VignetteEngine{knitr::rmarkdown}
 ---
-%\VignetteIndexEntry{Filters and Input Builders}
-%\VignetteEngine{knitr::rmarkdown}
 
 ```{r, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, comment = "#>")
 ```
 
-The generated Stash operations keep their existing names and arguments. You can continue to pass ordinary nested lists, or use the typed helper functions for common filters.
+The generated Stash operations accept ordinary GraphQL input lists. The typed
+helpers in `stashapi` make those inputs easier to discover, compose, and check
+before a request is sent. They do not create a special runtime object: every
+helper returns an ordinary named list.
 
-## Legacy lists remain valid
+This vignette uses scenes in most examples, but the same patterns apply to
+images, galleries, groups, performers, studios, tags, and scene markers.
 
-```r
-findScenes(
-  scenefilter = list(
-    tags = list(value = 182, modifier = "INCLUDES"),
-    performers = list(value = 84, modifier = "INCLUDES_ALL")
-  )
-)
-```
+## The basic pattern
 
-The helper form creates the same ordinary list:
+A generated find operation has two different kinds of inputs:
+
+- an entity filter, such as `scenefilter` for `findScenes()`;
+- a pagination and search filter, called `filter` by the generated operations.
 
 ```r
 findScenes(
   scenefilter = scene_filter(
     tags = includes(182),
-    performers = includes_all(84)
+    organized = equals(TRUE)
+  ),
+  filter = find_filter(per_page = 50)
+)
+```
+
+The outer helper names follow the generated function arguments. For example,
+`findGalleries()` uses `galleryfilter`, while `findPerformers()` uses
+`performerfilter`.
+
+## Criteria
+
+Criteria are the smallest building blocks. They describe how one filter field
+should be compared. The general shape is:
+
+```r
+list(value = ..., modifier = "...")
+```
+
+The helper form is easier to read and preserves the GraphQL modifier names:
+
+```r
+equals("4k")
+not_equals("4k")
+includes(182)
+includes_all(c(84, 85))
+between(1, 10)
+greater_than(80)
+less_than(720)
+matches_regex("^4k")
+not_matches_regex("sample")
+is_null()
+not_null()
+```
+
+Use criteria as values inside a typed filter:
+
+```r
+tag_filter(name = equals("4k"))
+performer_filter(name = includes("Leah"))
+gallery_filter(title = includes("Concert"))
+group_filter(name = includes("Collection"))
+marker_filter(duration = greater_than(30))
+```
+
+The same criterion can be used in a raw list when a generated operation does
+not yet have a curated helper:
+
+```r
+findScenes(
+  scenefilter = list(
+    rating100 = greater_than(80)
   )
 )
 ```
 
-The helpers do not create a new runtime object. They make the shape easier to read and validate field names before a request is sent.
+### Null and boolean criteria
 
-## Common criterion helpers
-
-```r
-equals("4k")
-includes(182)
-includes_all(c(84, 85))
-is_null()
-not_null()
-not_equals("4k")
-between(1, 10)
-```
-
-These return lists with `value` and `modifier` fields, so they can be composed inside any compatible filter:
-
-```r
-tag_filter(name = equals("4k"))
-performer_filter(tags = includes(182))
-gallery_filter(title = equals("Album"))
-group_filter(tags = includes(182))
-marker_filter(tags = includes(182))
-```
-
-## Hierarchy depth and exclusions
-
-Hierarchical criteria keep the server-side `depth` and `excludes` controls from
-the GraphQL schema. A depth of `-1` means unlimited traversal, matching the
-legacy nested-list calls:
+`is_null()` defaults to the GraphQL `IS_NULL` value `TRUE`. Pass `FALSE` when
+the schema field should be non-null according to that criterion:
 
 ```r
 scene_filter(
-  tags = includes(182, depth = -1, excludes = c(183, 184))
+  organized = is_null(FALSE),
+  details = not_null()
+)
+```
+
+### Ranges and comparisons
+
+Use range and comparison helpers for numeric values and schema enum values:
+
+```r
+scene_filter(
+  duration = between(60, 600),
+  rating100 = greater_than(75)
+)
+
+image_filter(
+  resolution = greater_than("FULL_HD")
+)
+```
+
+The value must match what the GraphQL schema expects. For enum fields, use the
+schema enum spelling such as `FULL_HD`, `FOUR_K`, or `R360P`.
+
+### Hierarchy depth and exclusions
+
+Hierarchy-aware criteria accept `depth` and, for inclusion criteria,
+`excludes`. A depth of `-1` means unlimited traversal:
+
+```r
+scene_filter(
+  tags = includes(
+    value = 182,
+    depth = -1,
+    excludes = c(183, 184)
+  )
 )
 
 scene_filter(tags = excludes(182, depth = -1))
 ```
 
-These values are sent as fields of the criterion input. They do not change the
-client-side fragment depth or recursively alter the generated selection set.
+These values control Stash's server-side hierarchy traversal. They do not
+change the depth of the generated GraphQL selection fragments.
 
-## Pagination and search
+## Combining filters with `AND`, `OR`, and `NOT`
 
-Use `find_filter()` for common pagination and search fields:
+The boolean fields are recursive. Each one receives another filter list of the
+same type, so use a second `scene_filter()` inside a `scene_filter()`.
+
+### `AND`
+
+Require all conditions in the nested filter:
+
+```r
+scene_filter(
+  AND = scene_filter(
+    organized = equals(TRUE),
+    rating100 = greater_than(80)
+  )
+)
+```
+
+This represents:
+
+```text
+organized == TRUE AND rating100 > 80
+```
+
+### `OR`
+
+Match either condition in the nested filter:
+
+```r
+scene_filter(
+  OR = scene_filter(
+    title = includes("concert"),
+    details = includes("live")
+  )
+)
+```
+
+This represents:
+
+```text
+title contains "concert" OR details contains "live"
+```
+
+### `NOT`
+
+Exclude anything matching the nested filter:
+
+```r
+scene_filter(
+  NOT = scene_filter(
+    tags = includes(182)
+  )
+)
+```
+
+This represents:
+
+```text
+NOT (tags includes 182)
+```
+
+### A complete boolean expression
+
+Boolean filters can be combined with ordinary fields and with one another:
+
+```r
+scene_filter(
+  organized = equals(TRUE),
+  OR = scene_filter(
+    rating100 = greater_than(80),
+    performers = includes(84)
+  ),
+  NOT = scene_filter(
+    tags = includes(182)
+  )
+)
+```
+
+The expression means:
+
+```text
+organized == TRUE
+AND (rating100 > 80 OR performers includes 84)
+AND NOT (tags includes 182)
+```
+
+## The available filter helpers
+
+Each helper validates field names against the corresponding GraphQL input
+type. The full field list is also shown on each helper's help page.
+
+### Scenes
+
+```r
+findScenes(
+  scenefilter = scene_filter(
+    title = includes("concert"),
+    performers = includes_all(c(84, 85)),
+    organized = equals(TRUE)
+  )
+)
+```
+
+### Images
+
+```r
+findImages(
+  imagefilter = image_filter(
+    studios = includes(25),
+    rating100 = greater_than(80),
+    organized = equals(TRUE)
+  )
+)
+```
+
+### Galleries
+
+```r
+findGalleries(
+  galleryfilter = gallery_filter(
+    title = includes("Concert"),
+    has_chapters = equals(TRUE),
+    performers = includes(84)
+  )
+)
+```
+
+### Performers
+
+```r
+findPerformers(
+  performerfilter = performer_filter(
+    name = includes("Leah"),
+    gender = equals("FEMALE"),
+    rating100 = greater_than(75)
+  )
+)
+```
+
+### Studios
+
+```r
+findStudios(
+  studiofilter = studio_filter(
+    name = includes("Dream"),
+    favorite = equals(TRUE)
+  )
+)
+```
+
+### Tags
+
+```r
+findTags(
+  tagfilter = tag_filter(
+    name = includes("4k"),
+    favorite = equals(TRUE)
+  )
+)
+```
+
+### Groups
+
+```r
+findGroups(
+  groupfilter = group_filter(
+    name = includes("Collection"),
+    rating100 = greater_than(70)
+  )
+)
+```
+
+### Scene markers
+
+```r
+findSceneMarkers(
+  scenemarkerfilter = marker_filter(
+    tags = includes(182),
+    duration = greater_than(30)
+  )
+)
+```
+
+## Pagination, search, and unlimited results
+
+Use `find_filter()` for the shared pagination and search fields:
+
+```r
+find_filter(q = "Leah", per_page = 250, page = 2)
+```
+
+Pass it as the operation's `filter` argument:
 
 ```r
 findScenes(
   scenefilter = scene_filter(tags = includes(182)),
   filter = find_filter(per_page = 250, page = 2)
 )
-
-findPerformers(filter = find_filter(q = "Leah", per_page = -1))
 ```
 
-## Resolution and Stash IDs
-
-Resolution is an enum criterion. The value must use a schema enum such as
-`FULL_HD`, `FOUR_K`, or `R360P`:
+Use `per_page = -1` when you want all results. The package fetches the pages
+and combines them into one result:
 
 ```r
-findImages(
-  imagefilter = image_filter(
-    resolution = greater_than("FULL_HD")
-  )
+all_performers <- findPerformers(
+  filter = find_filter(q = "Leah", per_page = -1)
 )
 ```
 
-Stash IDs are endpoint-specific. The endpoint and ID are sent together:
+The available `find_filter()` fields are `q`, `page`, `per_page`, `sort`, and
+`direction`.
+
+## Stash IDs
+
+Stash IDs are tied to an endpoint. Build a single-ID criterion with
+`stash_id()`:
 
 ```r
 findStudios(
   studiofilter = studio_filter(
-    stash_id = stash_id("https://stashdb.org", "abc123")
+    stash_id = stash_id(endpoint_url, "abc123")
   )
 )
 ```
 
-The `stash_id` argument is a compatibility alias in `studio_filter()` and is
-translated to the schema field `stash_id_endpoint`.
+For multiple IDs, use `stash_ids()`:
 
-## Strict field checking
+```r
+findStudios(
+  studiofilter = studio_filter(
+    stash_ids_endpoint = stash_ids(
+      endpoint_url,
+      c("abc123", "def456")
+    )
+  )
+)
+```
 
-The curated helpers reject unknown fields by default:
+`studio_filter()` accepts `stash_id` as a user-friendly compatibility alias and
+translates it to the schema field `stash_id_endpoint`.
+
+## Strict field checking and legacy lists
+
+Curated helpers reject unknown fields by default:
 
 ```r
 scene_filter(not_a_schema_field = 1)
 #> Error: unknown fields for SceneFilterType: not_a_schema_field
 ```
 
-For schema additions that are not covered by a curated helper yet, the existing raw-list form remains available. Helper validation can also be disabled deliberately with `.strict = FALSE`.
-
-## Selecting response fields
-
-Generated operations continue to support `.field`:
+Set `.strict = FALSE` deliberately when using a schema field that is newer than
+the helper's curated list:
 
 ```r
-findTags(
-  tagfilter = tag_filter(name = equals("4k")),
+scene_filter(new_schema_field = 1, .strict = FALSE)
+```
+
+You can always use the original nested-list form. This is useful for a schema
+field that is not yet covered by a typed helper:
+
+```r
+findScenes(
+  scenefilter = list(
+    tags = list(value = 182, modifier = "INCLUDES")
+  )
+)
+```
+
+The typed and legacy forms produce the same kind of GraphQL input values.
+
+## Selecting response shapes
+
+Generated operations return their result data by default. `.field` continues to
+select a nested field:
+
+```r
+scenes <- findScenes(
+  scenefilter = scene_filter(tags = includes(182))
+)
+
+count <- findScenes(
+  scenefilter = scene_filter(tags = includes(182)),
   .field = "count"
 )
 ```
 
-The helper layer only constructs variables. Connection setup, GraphQL execution, pagination, and response extraction remain the responsibility of the existing operation functions.
+Use `.response = "object"` when you want selected data together with response
+metadata:
+
+```r
+result <- findScenes(
+  scenefilter = scene_filter(tags = includes(182)),
+  .response = "object"
+)
+
+result$data
+result$meta$count
+```
+
+Use `.response = "raw"` to inspect the decoded GraphQL envelope. Raw mode does
+not accept `.field`, because it returns the complete response rather than a
+selected data path:
+
+```r
+raw <- findScenes(.response = "raw")
+raw$data
+raw$errors
+```
+
+The helper layer only constructs input values. Connection setup, GraphQL
+execution, pagination, and response extraction remain the responsibility of the
+generated operation functions.

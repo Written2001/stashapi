@@ -17,3 +17,15 @@ A named list suitable for `findStudios(studiofilter = ...)`.
 \description{
 Build a studio filter.
 }
+\details{
+Allowed fields: `AND`, `OR`, `NOT`, `name`, `details`, `parents`,
+`stash_id_endpoint`, `stash_ids_endpoint`, `tags`, `is_missing`, `rating100`,
+`favorite`, `scene_count`, `image_count`, `gallery_count`, `group_count`,
+`tag_count`, `url`, `aliases`, `child_count`, `ignore_auto_tag`, `organized`,
+`scenes_filter`, `images_filter`, `galleries_filter`, `groups_filter`,
+`created_at`, `updated_at`, and `custom_fields`. `stash_id` is also accepted as
+a compatibility alias for `stash_id_endpoint`.
+}
+\examples{
+studio_filter(name = includes("Dream"), stash_id = stash_id("https://stashdb.org", "abc123"))
+}

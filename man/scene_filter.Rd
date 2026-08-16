@@ -17,3 +17,20 @@ A named list suitable for `findScenes(scenefilter = ...)`.
 \description{
 Build a scene filter.
 }
+\details{
+Allowed fields: `AND`, `OR`, `NOT`, `id`, `title`, `code`, `details`, `director`,
+`oshash`, `checksum`, `phash`, `phash_distance`, `path`, `file_count`,
+`rating100`, `organized`, `o_counter`, `duplicated`, `resolution`, `orientation`,
+`framerate`, `bitrate`, `video_codec`, `audio_codec`, `duration`, `has_markers`,
+`is_missing`, `studios`, `movies`, `groups`, `galleries`, `tags`, `tag_count`,
+`performer_tags`, `performer_favorite`, `performer_age`, `performers`,
+`performer_count`, `stash_id_endpoint`, `stash_ids_endpoint`, `stash_id_count`,
+`url`, `interactive`, `interactive_speed`, `captions`, `resume_time`, `play_count`,
+`play_duration`, `last_played_at`, `date`, `created_at`, `updated_at`,
+`galleries_filter`, `performers_filter`, `studios_filter`, `tags_filter`,
+`movies_filter`, `groups_filter`, `markers_filter`, `files_filter`, and
+`custom_fields`.
+}
+\examples{
+scene_filter(tags = includes(182), rating100 = greater_than(80))
+}

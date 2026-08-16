@@ -17,3 +17,7 @@ A named list suitable for generated find functions.
 \description{
 Build a find/pagination filter.
 }
+\details{Allowed fields are `q`, `page`, `per_page`, `sort`, and `direction`.}
+\examples{
+find_filter(q = "Leah", per_page = 250, page = 2)
+}

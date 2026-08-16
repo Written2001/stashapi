@@ -17,3 +17,13 @@ A named list suitable for `findGroups(groupfilter = ...)`.
 \description{
 Build a group filter.
 }
+\details{
+Allowed fields: `AND`, `OR`, `NOT`, `name`, `director`, `synopsis`, `duration`,
+`rating100`, `studios`, `is_missing`, `url`, `performers`, `tags`, `tag_count`,
+`date`, `created_at`, `updated_at`, `o_counter`, `containing_groups`, `sub_groups`,
+`containing_group_count`, `sub_group_count`, `scene_count`, `scenes_filter`,
+`studios_filter`, and `custom_fields`.
+}
+\examples{
+group_filter(name = includes("Collection"), rating100 = greater_than(70))
+}

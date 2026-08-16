@@ -1,3 +1,7 @@
+# stashapi 0.4.1
+
+- Replace the real StashDB URL in vignette examples with an `endpoint_url` placeholder.
+
 # stashapi 0.4.0
 
 - Make `stash_connect()` discover `.stash_credentials` by default and auto-connect generated API calls when no connection is active.

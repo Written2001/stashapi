@@ -7,3 +7,4 @@
 \arguments{\item{value}{Boolean null criterion value.}}
 \value{A named criterion list.}
 \description{Builds a GraphQL IS_NULL criterion.}
+\examples{is_null()}

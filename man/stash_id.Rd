@@ -17,3 +17,5 @@ stash_id(endpoint, stash_id, modifier = "EQUALS")
 A named Stash ID criterion list.
 }
 \description{Builds a criterion for a Stash ID at a specific endpoint.}
+\details{The returned list contains `endpoint`, `stash_id`, and `modifier`.}
+\examples{stash_id("https://stashdb.org", "abc123")}

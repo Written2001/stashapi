@@ -17,3 +17,15 @@ A named list suitable for `findImages(imagefilter = ...)`.
 \description{
 Build an image filter.
 }
+\details{
+Allowed fields: `AND`, `OR`, `NOT`, `title`, `details`, `id`, `checksum`,
+`phash_distance`, `path`, `file_count`, `rating100`, `date`, `url`, `organized`,
+`o_counter`, `resolution`, `orientation`, `is_missing`, `studios`, `tags`,
+`tag_count`, `performer_tags`, `performers`, `performer_count`,
+`performer_favorite`, `performer_age`, `galleries`, `created_at`, `updated_at`,
+`code`, `photographer`, `galleries_filter`, `performers_filter`, `studios_filter`,
+`tags_filter`, `files_filter`, and `custom_fields`.
+}
+\examples{
+image_filter(studios = includes(25), rating100 = greater_than(80))
+}

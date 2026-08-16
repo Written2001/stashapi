@@ -17,3 +17,18 @@ A named list suitable for `findPerformers(performerfilter = ...)`.
 \description{
 Build a performer filter.
 }
+\details{
+Allowed fields: `AND`, `OR`, `NOT`, `name`, `disambiguation`, `details`,
+`filter_favorites`, `birth_year`, `age`, `ethnicity`, `country`, `eye_color`,
+`height_cm`, `measurements`, `fake_tits`, `penis_length`, `circumcised`,
+`career_length`, `career_start`, `career_end`, `tattoos`, `piercings`, `aliases`,
+`gender`, `is_missing`, `tags`, `tag_count`, `scene_count`, `marker_count`,
+`image_count`, `gallery_count`, `play_count`, `o_counter`, `stash_id_endpoint`,
+`stash_ids_endpoint`, `rating100`, `url`, `hair_color`, `weight`, `death_year`,
+`death_date`, `studios`, `groups`, `performers`, `ignore_auto_tag`, `birthdate`,
+`scenes_filter`, `images_filter`, `galleries_filter`, `tags_filter`,
+`markers_filter`, `created_at`, `updated_at`, and `custom_fields`.
+}
+\examples{
+performer_filter(name = includes("Leah"), gender = equals("FEMALE"))
+}
