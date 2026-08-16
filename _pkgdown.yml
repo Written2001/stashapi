@@ -16,3 +16,11 @@ navbar:
       icon: fab fa-github
       href: https://github.com/Written2001/stashapi
       aria-label: GitHub
+
+articles:
+  - title: User Guides
+    contents:
+      - filters-and-input-builders
+  - title: Maintainer Guides
+    contents:
+      - generator-workflow

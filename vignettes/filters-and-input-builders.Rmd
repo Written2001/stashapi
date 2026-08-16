@@ -1,0 +1,138 @@
+---
+title: "Filters and Input Builders"
+output: rmarkdown::html_vignette
+---
+%\VignetteIndexEntry{Filters and Input Builders}
+%\VignetteEngine{knitr::rmarkdown}
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The generated Stash operations keep their existing names and arguments. You can continue to pass ordinary nested lists, or use the typed helper functions for common filters.
+
+## Legacy lists remain valid
+
+```r
+findScenes(
+  scenefilter = list(
+    tags = list(value = 182, modifier = "INCLUDES"),
+    performers = list(value = 84, modifier = "INCLUDES_ALL")
+  )
+)
+```
+
+The helper form creates the same ordinary list:
+
+```r
+findScenes(
+  scenefilter = scene_filter(
+    tags = includes(182),
+    performers = includes_all(84)
+  )
+)
+```
+
+The helpers do not create a new runtime object. They make the shape easier to read and validate field names before a request is sent.
+
+## Common criterion helpers
+
+```r
+equals("4k")
+includes(182)
+includes_all(c(84, 85))
+is_null()
+not_null()
+not_equals("4k")
+between(1, 10)
+```
+
+These return lists with `value` and `modifier` fields, so they can be composed inside any compatible filter:
+
+```r
+tag_filter(name = equals("4k"))
+performer_filter(tags = includes(182))
+gallery_filter(title = equals("Album"))
+group_filter(tags = includes(182))
+marker_filter(tags = includes(182))
+```
+
+## Hierarchy depth and exclusions
+
+Hierarchical criteria keep the server-side `depth` and `excludes` controls from
+the GraphQL schema. A depth of `-1` means unlimited traversal, matching the
+legacy nested-list calls:
+
+```r
+scene_filter(
+  tags = includes(182, depth = -1, excludes = c(183, 184))
+)
+
+scene_filter(tags = excludes(182, depth = -1))
+```
+
+These values are sent as fields of the criterion input. They do not change the
+client-side fragment depth or recursively alter the generated selection set.
+
+## Pagination and search
+
+Use `find_filter()` for common pagination and search fields:
+
+```r
+findScenes(
+  scenefilter = scene_filter(tags = includes(182)),
+  filter = find_filter(per_page = 250, page = 2)
+)
+
+findPerformers(filter = find_filter(q = "Leah", per_page = -1))
+```
+
+## Resolution and Stash IDs
+
+Resolution is an enum criterion. The value must use a schema enum such as
+`FULL_HD`, `FOUR_K`, or `R360P`:
+
+```r
+findImages(
+  imagefilter = image_filter(
+    resolution = greater_than("FULL_HD")
+  )
+)
+```
+
+Stash IDs are endpoint-specific. The endpoint and ID are sent together:
+
+```r
+findStudios(
+  studiofilter = studio_filter(
+    stash_id = stash_id("https://stashdb.org", "abc123")
+  )
+)
+```
+
+The `stash_id` argument is a compatibility alias in `studio_filter()` and is
+translated to the schema field `stash_id_endpoint`.
+
+## Strict field checking
+
+The curated helpers reject unknown fields by default:
+
+```r
+scene_filter(not_a_schema_field = 1)
+#> Error: unknown fields for SceneFilterType: not_a_schema_field
+```
+
+For schema additions that are not covered by a curated helper yet, the existing raw-list form remains available. Helper validation can also be disabled deliberately with `.strict = FALSE`.
+
+## Selecting response fields
+
+Generated operations continue to support `.field`:
+
+```r
+findTags(
+  tagfilter = tag_filter(name = equals("4k")),
+  .field = "count"
+)
+```
+
+The helper layer only constructs variables. Connection setup, GraphQL execution, pagination, and response extraction remain the responsibility of the existing operation functions.

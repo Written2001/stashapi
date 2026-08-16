@@ -10,7 +10,7 @@ Describe the change and its motivation.
 ## Verification
 
 - [ ] `testthat::test_local()`
-- [ ] `Rscript --vanilla tools/check_generated.R`
+- [ ] `Rscript tools/check_generated.R`
 - [ ] `R CMD check --no-manual .`
 - [ ] Lint completed
 

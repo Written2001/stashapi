@@ -1,21 +1,23 @@
 Package: stashapi
 Type: Package
 Title: API Wrapper for Stash
-Version: 0.1.3
+Version: 0.2.0
 Authors@R: person("Written", "2001", email = "example@example.com", role = c("aut", "cre"))
 Author: Written2001 <example@example.com> [aut, cre]
 Maintainer: Written2001 <example@example.com>
-Description: An API wrapper for the GraphQL endpoint of your local StashApp instance.
+Description: An R API wrapper for the GraphQL endpoint of a local StashApp instance, with schema-driven wrapper generation and typed filter helpers.
 License: MIT + file LICENSE
 URL: https://github.com/Written2001/stashapi, https://written2001.github.io/stashapi
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.3
+VignetteBuilder: knitr
 Config/Needs/coverage: covr
 Config/Needs/lint: lintr
 Config/Needs/website: pkgdown
 Suggests: 
     glue,
+    knitr,
     stringr,
     testthat (>= 3.0.0),
     tidyr

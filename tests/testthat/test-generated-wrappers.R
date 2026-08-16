@@ -1,7 +1,7 @@
 package_root <- normalizePath(testthat::test_path("..", ".."), mustWork = TRUE)
 generated_wrapper_path <- file.path(package_root, "R", "stashapi_functions.R")
 schema_path <- file.path(package_root, "inst", "extdata", "schema.json")
-generator_path <- file.path(package_root, "tools", "build_functions.R")
+generator_path <- file.path(package_root, "tools", "generate_migrated.R")
 
 testthat::test_that("generated wrappers match the checked-in schema output", {
   testthat::skip_if_not(
@@ -19,7 +19,7 @@ testthat::test_that("generated wrappers match the checked-in schema output", {
 
   generator_environment <- new.env(parent = globalenv())
   sys.source(generator_path, envir = generator_environment)
-  generator_environment$generate_functions(generated_path)
+  writeLines(generator_environment$build_migrated_wrappers(), generated_path)
 
   expected <- readLines(generated_wrapper_path, warn = FALSE)
   actual <- readLines(generated_path, warn = FALSE)
@@ -48,10 +48,50 @@ testthat::test_that("findScenes preserves its schema-derived contract", {
   generated_source <- paste(readLines(generated_wrapper_path, warn = FALSE), collapse = "\n")
   testthat::expect_match(
     generated_source,
-    "query findScenes\\(\\$scenefilter: SceneFilterType \\$sceneids: \\[Int!\\] \\$ids: \\[ID!\\] \\$filter: FindFilterType\\)"
+    paste0(
+      "query findScenes\\(\\$scenefilter: SceneFilterType \\$sceneids: \\[Int!] ",
+      "\\$ids: \\[ID!] \\$filter: FindFilterType\\)"
+    )
   )
   testthat::expect_match(generated_source, "scene_filter: \\$scenefilter")
   testthat::expect_match(generated_source, "fragment FindScenesResultType on FindScenesResultType")
   testthat::expect_match(generated_source, "return_default <- \"scenes\"")
   testthat::expect_match(generated_source, "dotargs\\$\\.field")
+})
+
+testthat::test_that("findScenes preserves legacy nested-list calls", {
+  testthat::skip_if_not(
+    requireNamespace("stashapi", quietly = TRUE),
+    "The installed package namespace is unavailable."
+  )
+
+  observed_variables <- NULL
+  connection <- list(
+    exec = function(query, variables) {
+      observed_variables <<- variables
+      '{"data":{"findScenes":{"count":1,"duration":0,"filesize":0,"scenes":[{"id":"1"}]}}}'
+    }
+  )
+
+  package_namespace <- asNamespace("stashapi")
+  connection_environment <- get("the", envir = package_namespace)
+  connection_environment$connection <- connection
+  on.exit(rm(connection, envir = connection_environment), add = TRUE)
+
+  result <- get("findScenes", envir = package_namespace)(
+    scenefilter = list(tags = list(value = 182, modifier = "INCLUDES")),
+    filter = list(per_page = 25)
+  )
+
+  testthat::expect_identical(
+    observed_variables,
+    list(
+      scenefilter = list(tags = list(value = 182, modifier = "INCLUDES")),
+      sceneids = list(),
+      ids = list(),
+      filter = list(per_page = 25)
+    )
+  )
+  testthat::expect_type(result, "list")
+  testthat::expect_identical(result[[1]], "1")
 })
