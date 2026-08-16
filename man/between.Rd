@@ -10,5 +10,6 @@ between(value, value2)
 \item{value}{Lower or first criterion value.}
 \item{value2}{Upper or second criterion value.}
 }
-\value{A named criterion list.}
-\description{Builds a GraphQL BETWEEN criterion.}
+\description{
+Build a BETWEEN criterion.
+}

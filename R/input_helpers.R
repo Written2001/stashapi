@@ -30,36 +30,30 @@ gql_criterion <- function(
   result
 }
 
-#' @rdname gql_criterion
 #' @export
 equals <- function(value) gql_criterion(value, "EQUALS")
 
-#' @rdname gql_criterion
 #' @export
 includes <- function(value, depth = NULL, excludes = NULL) {
   gql_criterion(value, "INCLUDES", depth = depth, excludes = excludes)
 }
 
-#' @rdname gql_criterion
 #' @export
 includes_all <- function(value, depth = NULL, excludes = NULL) {
   gql_criterion(value, "INCLUDES_ALL", depth = depth, excludes = excludes)
 }
 
-#' @rdname gql_criterion
 #' @param value Boolean null criterion value.
 #' @export
 is_null <- function(value = TRUE) gql_criterion(value, "IS_NULL")
 
 #' Build a NOT_NULL criterion.
 #'
-#' @rdname gql_criterion
 #' @export
 not_null <- function(value = NULL) gql_criterion(value, "NOT_NULL")
 
 #' Build an EXCLUDES criterion.
 #'
-#' @rdname gql_criterion
 #' @param value IDs or values to exclude.
 #' @param depth Optional hierarchy depth. `-1` means unlimited depth.
 #' @export
@@ -69,13 +63,11 @@ excludes <- function(value, depth = NULL) {
 
 #' Build a NOT_EQUALS criterion.
 #'
-#' @rdname gql_criterion
 #' @export
 not_equals <- function(value) gql_criterion(value, "NOT_EQUALS")
 
 #' Build a BETWEEN criterion.
 #'
-#' @rdname gql_criterion
 #' @export
 between <- function(value, value2) {
   list(value = value, modifier = "BETWEEN", value2 = value2)
@@ -85,25 +77,21 @@ between <- function(value, value2) {
 #'
 #' The helper name matches the GraphQL schema modifier.
 #'
-#' @rdname gql_criterion
 #' @export
 greater_than <- function(value) gql_criterion(value, "GREATER_THAN")
 
 #' Build a less-than criterion.
 #'
-#' @rdname gql_criterion
 #' @export
 less_than <- function(value) gql_criterion(value, "LESS_THAN")
 
 #' Build a regular-expression match criterion.
 #'
-#' @rdname gql_criterion
 #' @export
 matches_regex <- function(value) gql_criterion(value, "MATCHES_REGEX")
 
 #' Build a negated regular-expression match criterion.
 #'
-#' @rdname gql_criterion
 #' @export
 not_matches_regex <- function(value) gql_criterion(value, "NOT_MATCHES_REGEX")
 

@@ -3,6 +3,17 @@
 \name{gallery_filter}
 \alias{gallery_filter}
 \title{Build a gallery filter.}
-\usage{gallery_filter(..., .strict = TRUE)}
-\arguments{\item{...}{Filter fields from the Stash `GalleryFilterType` input.}\item{.strict}{Whether unknown fields should cause an error.}}
-\value{A named list suitable for `findGalleries(galleryfilter = ...)`.}
+\usage{
+gallery_filter(..., .strict = TRUE)
+}
+\arguments{
+\item{...}{Filter fields from the Stash `GalleryFilterType` input.}
+
+\item{.strict}{Whether unknown fields should cause an error.}
+}
+\value{
+A named list suitable for `findGalleries(galleryfilter = ...)`.
+}
+\description{
+Build a gallery filter.
+}

@@ -3,6 +3,17 @@
 \name{group_filter}
 \alias{group_filter}
 \title{Build a group filter.}
-\usage{group_filter(..., .strict = TRUE)}
-\arguments{\item{...}{Filter fields from the Stash `GroupFilterType` input.}\item{.strict}{Whether unknown fields should cause an error.}}
-\value{A named list suitable for `findGroups(groupfilter = ...)`.}
+\usage{
+group_filter(..., .strict = TRUE)
+}
+\arguments{
+\item{...}{Filter fields from the Stash `GroupFilterType` input.}
+
+\item{.strict}{Whether unknown fields should cause an error.}
+}
+\value{
+A named list suitable for `findGroups(groupfilter = ...)`.
+}
+\description{
+Build a group filter.
+}

@@ -2,46 +2,15 @@
 % Please edit documentation in R/input_helpers.R
 \name{gql_criterion}
 \alias{gql_criterion}
-\alias{equals}
-\alias{includes}
-\alias{includes_all}
-\alias{is_null}
-\alias{not_null}
-\alias{excludes}
-\alias{not_equals}
-\alias{between}
-\alias{greater_than}
-\alias{less_than}
-\alias{matches_regex}
-\alias{not_matches_regex}
 \title{Build a GraphQL criterion.}
 \usage{
-gql_criterion(value = NULL, modifier, value2 = NULL, depth = NULL,
-excludes = NULL)
-
-equals(value)
-
-includes(value, depth = NULL, excludes = NULL)
-
-includes_all(value, depth = NULL, excludes = NULL)
-
-is_null(value = TRUE)
-
-not_null(value = NULL)
-
-excludes(value, depth = NULL)
-
-not_equals(value)
-
-between(value, value2)
-
-greater_than(value)
-
-less_than(value)
-
-matches_regex(value)
-
-not_matches_regex(value)
+gql_criterion(
+  value = NULL,
+  modifier,
+  value2 = NULL,
+  depth = NULL,
+  excludes = NULL
+)
 }
 \arguments{
 \item{value}{Criterion value. Omit it for unary modifiers such as `IS_NULL`.}

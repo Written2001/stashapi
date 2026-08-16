@@ -6,8 +6,7 @@
 \usage{
 not_null(value = NULL)
 }
-\arguments{
-\item{value}{Criterion value.}
+\arguments{\item{value}{Optional criterion value.}}
+\description{
+Build a NOT_NULL criterion.
 }
-\value{A named criterion list.}
-\description{Builds a GraphQL NOT_NULL criterion.}

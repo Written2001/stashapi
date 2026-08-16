@@ -8,7 +8,9 @@ excludes(value, depth = NULL)
 }
 \arguments{
 \item{value}{IDs or values to exclude.}
+
 \item{depth}{Optional hierarchy depth. `-1` means unlimited depth.}
 }
-\value{A named criterion list.}
-\description{Builds a GraphQL EXCLUDES criterion.}
+\description{
+Build an EXCLUDES criterion.
+}

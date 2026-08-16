@@ -3,9 +3,17 @@
 \name{image_filter}
 \alias{image_filter}
 \title{Build an image filter.}
-\usage{image_filter(..., .strict = TRUE)}
+\usage{
+image_filter(..., .strict = TRUE)
+}
 \arguments{
 \item{...}{Filter fields from the Stash `ImageFilterType` input.}
+
 \item{.strict}{Whether unknown fields should cause an error.}
 }
-\value{A named list suitable for `findImages(imagefilter = ...)`.}
+\value{
+A named list suitable for `findImages(imagefilter = ...)`.
+}
+\description{
+Build an image filter.
+}

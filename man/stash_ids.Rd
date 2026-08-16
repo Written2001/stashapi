@@ -3,10 +3,17 @@
 \name{stash_ids}
 \alias{stash_ids}
 \title{Build a multiple Stash ID criterion.}
-\usage{stash_ids(endpoint, stash_ids, modifier = "EQUALS")}
+\usage{
+stash_ids(endpoint, stash_ids, modifier = "EQUALS")
+}
 \arguments{
 \item{endpoint}{Stash endpoint URL.}
+
 \item{stash_ids}{Endpoint-specific Stash IDs.}
+
 \item{modifier}{GraphQL criterion modifier.}
 }
-\value{A named multiple Stash ID criterion list.}
+\value{
+A named multiple Stash ID criterion list.
+}
+\description{Builds a criterion for multiple Stash IDs at a specific endpoint.}

@@ -3,6 +3,17 @@
 \name{marker_filter}
 \alias{marker_filter}
 \title{Build a scene marker filter.}
-\usage{marker_filter(..., .strict = TRUE)}
-\arguments{\item{...}{Filter fields from the Stash `SceneMarkerFilterType` input.}\item{.strict}{Whether unknown fields should cause an error.}}
-\value{A named list suitable for `findSceneMarkers(scenemarkerfilter = ...)`.}
+\usage{
+marker_filter(..., .strict = TRUE)
+}
+\arguments{
+\item{...}{Filter fields from the Stash `SceneMarkerFilterType` input.}
+
+\item{.strict}{Whether unknown fields should cause an error.}
+}
+\value{
+A named list suitable for `findSceneMarkers(scenemarkerfilter = ...)`.
+}
+\description{
+Build a scene marker filter.
+}

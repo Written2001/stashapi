@@ -3,9 +3,17 @@
 \name{studio_filter}
 \alias{studio_filter}
 \title{Build a studio filter.}
-\usage{studio_filter(..., .strict = TRUE)}
+\usage{
+studio_filter(..., .strict = TRUE)
+}
 \arguments{
 \item{...}{Filter fields from the Stash `StudioFilterType` input.}
+
 \item{.strict}{Whether unknown fields should cause an error.}
 }
-\value{A named list suitable for `findStudios(studiofilter = ...)`.}
+\value{
+A named list suitable for `findStudios(studiofilter = ...)`.
+}
+\description{
+Build a studio filter.
+}

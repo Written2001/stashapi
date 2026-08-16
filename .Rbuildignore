@@ -9,6 +9,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
+^Makefile$
 .Rhistory
 .Rprofile
 .gitignore
