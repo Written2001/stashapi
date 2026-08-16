@@ -25,7 +25,7 @@ R CMD check --no-manual .
 
 ## Generated wrappers
 
-The public GraphQL wrappers in `R/stashapi_functions.R` are generated from `inst/extdata/schema.json` by `tools/build_functions.R`. Update the schema fixture and generator inputs deliberately, regenerate the wrappers, and include the generated changes in the same pull request.
+The public GraphQL wrappers in `R/stashapi_functions.R` are generated from `inst/extdata/schema.json` by the schema-driven pipeline in `tools/generate_wrappers.R`. Update the schema fixture deliberately, regenerate the wrappers and filter documentation, and include the generated changes in the same pull request.
 
 Do not hand-edit generated wrapper functions or their generated man pages.
 

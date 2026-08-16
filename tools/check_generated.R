@@ -1,9 +1,9 @@
-source("tools/generate_migrated.R")
+source("tools/generate_wrappers.R")
 
 check_generated <- function() {
   output_path <- tempfile(fileext = ".R")
   on.exit(unlink(output_path), add = TRUE)
-  generator <- get("build_migrated_wrappers", mode = "function")
+  generator <- get("build_wrappers", mode = "function")
   writeLines(generator(), output_path)
 
   expected <- readLines("R/stashapi_functions.R", warn = FALSE)

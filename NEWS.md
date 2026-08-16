@@ -1,3 +1,9 @@
+# stashapi 0.5.0
+
+- Remove the legacy GraphQL generator and old/new generator comparison layer.
+- Keep the schema-driven generator and generated wrapper/documentation checks as the single source of truth.
+- Remove tests that only covered legacy generator internals while retaining schema, artifact, wrapper, and documentation coverage.
+
 # stashapi 0.4.4
 
 - Add a reproducible development container with system libraries, renv-managed runtime and development dependencies, and automatic `languageserver` setup.

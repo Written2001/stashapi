@@ -5,7 +5,7 @@ source("tools/schema_selection.R")
 source("tools/schema_render.R")
 source("tools/render_r.R")
 
-build_migrated_wrappers <- function(schema_path = "inst/extdata/schema.json") {
+build_wrappers <- function(schema_path = "inst/extdata/schema.json") {
   normalize_registry <- get("normalize_schema_registry", mode = "function")
   build_operations <- get("build_operation_ir", mode = "function")
   build_fragments <- get("build_fragment_graph", mode = "function")
@@ -30,4 +30,4 @@ build_migrated_wrappers <- function(schema_path = "inst/extdata/schema.json") {
 }
 
 args <- commandArgs(trailingOnly = TRUE)
-if (length(args) > 0L) writeLines(build_migrated_wrappers(), args[[1]])
+if (length(args) > 0L) writeLines(build_wrappers(), args[[1]])

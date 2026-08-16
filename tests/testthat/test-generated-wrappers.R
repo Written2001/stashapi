@@ -1,7 +1,7 @@
 package_root <- normalizePath(testthat::test_path("..", ".."), mustWork = TRUE)
 generated_wrapper_path <- file.path(package_root, "R", "stashapi_functions.R")
 schema_path <- file.path(package_root, "inst", "extdata", "schema.json")
-generator_path <- file.path(package_root, "tools", "generate_migrated.R")
+generator_path <- file.path(package_root, "tools", "generate_wrappers.R")
 
 testthat::test_that("generated wrappers match the checked-in schema output", {
   testthat::skip_if_not(
@@ -19,7 +19,7 @@ testthat::test_that("generated wrappers match the checked-in schema output", {
 
   generator_environment <- new.env(parent = globalenv())
   sys.source(generator_path, envir = generator_environment)
-  writeLines(generator_environment$build_migrated_wrappers(), generated_path)
+  writeLines(generator_environment$build_wrappers(), generated_path)
 
   expected <- readLines(generated_wrapper_path, warn = FALSE)
   actual <- readLines(generated_path, warn = FALSE)
