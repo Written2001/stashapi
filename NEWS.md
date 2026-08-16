@@ -1,3 +1,8 @@
+# stashapi 0.4.4
+
+- Add a reproducible development container with system libraries, renv-managed runtime and development dependencies, and automatic `languageserver` setup.
+- Align Makefile setup and checks with the activated renv project library.
+
 # stashapi 0.4.3
 
 - Improve generated filter help examples by selecting meaningful schema fields instead of arbitrary IDs.

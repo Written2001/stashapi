@@ -1,0 +1,32 @@
+{
+  "name": "stashapi",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "remoteUser": "vscode",
+  "updateRemoteUserUID": true,
+  "mounts": [
+    "source=stashapi-ssh,target=/home/vscode/.ssh,type=volume"
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "REditorSupport.r",
+        "RDebugger.r-debugger",
+        "ms-vscode.makefile-tools",
+        "GitHub.vscode-pull-request-github"
+      ],
+      "settings": {
+        "r.rterm.linux": "/usr/local/bin/R",
+        "r.bracketedPaste": true,
+        "r.plot.useHttpgd": false,
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  },
+  "postCreateCommand": "make setup",
+  "containerEnv": {
+    "R_LIBS_USER": "/home/vscode/R/library"
+  }
+}
