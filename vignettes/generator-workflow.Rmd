@@ -9,7 +9,7 @@ output: rmarkdown::html_vignette
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-The generated operation functions are derived from GraphQL introspection data. The checked-in `inst/extdata/schema.json` makes generation reproducible without requiring a live Stash instance.
+The generated operation functions are derived from GraphQL introspection data. The checked-in `inst/extdata/schema.json` makes generation reproducible without requiring a live Stash instance. The wrapper generator lives in `tools/generate_wrappers.R`.
 
 ## Pipeline
 
@@ -72,7 +72,7 @@ Paginated result objects receive a default response field when the schema struct
 
 ## Compatibility layer
 
-The wrapper renderer preserves operation names, GraphQL argument names, sanitized R formals, `...`, `.field`, `the$connection`, and `executeQuery`. Existing nested-list calls remain valid. Typed filter helpers are additive and return ordinary lists accepted by the same wrappers.
+The wrapper renderer preserves operation names, GraphQL argument names, sanitized R formals, `...`, `.field`, the configured connection accessor, and `executeQuery`. Existing nested-list calls remain valid. Typed filter helpers are additive and return ordinary lists accepted by the same wrappers.
 
 Required GraphQL arguments receive local checks before execution. The validator
 distinguishes `T!`, `[T!]`, `[T]!`, and `[T!]!`, and can validate required fields
@@ -100,9 +100,7 @@ The schema-analysis tests use synthetic type fixtures and the checked-in schema.
 
 Keep transformations pure and update the nearest focused test when changing behavior. Add schema policy overrides only when the behavior cannot be derived from introspection. Review operation names, variable types, selections, fragments, response policies, and generated source together.
 
-Do not delete the legacy generator or replace the checked-in generated file until old and new outputs have been compared structurally and all intentional differences are recorded.
-
-The current branch has completed that comparison. Both pipelines cover 187
-operations with no operation or argument mapping drift. The two intentional
-semantic improvements are interface-aware `findFile` selection and structural
-`findFiles` response-field detection.
+The legacy generator has been removed. The schema-driven pipeline is now the
+single source for generated wrappers and filter documentation. The checked-in
+artifacts must be regenerated and reviewed whenever the schema or generation
+policy changes.
