@@ -1,3 +1,14 @@
+# stashapi 0.7.0
+
+- Add `prepare_mutations()` for dry-run mutation planning with explicit missing-value policies.
+- Add `execute_mutations()` with indexed results, stop/continue error handling, and dry-run defaults.
+
+# stashapi 0.6.0
+
+- Add `wait_for_job()` for polling asynchronous Stash jobs with timeout and terminal-status handling.
+- Add snake_case exact-name ID helpers for studios, tags, and performers with explicit multiple-match behavior.
+- Add offline tests for helper validation, job polling, and named lookup semantics.
+
 # stashapi 0.5.0
 
 - Remove the legacy GraphQL generator and old/new generator comparison layer.
