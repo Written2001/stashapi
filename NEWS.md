@@ -1,3 +1,13 @@
+# stashapi 0.4.3
+
+- Improve generated filter help examples by selecting meaningful schema fields instead of arbitrary IDs.
+- Add readable R input hints alongside GraphQL field types in generated filter documentation.
+- Clarify relationship matching semantics for `includes()`, `includes_all()`, and all-membership workflows in the filters vignette.
+
+# stashapi 0.4.2
+
+- Generate curated filter help pages directly from the GraphQL schema, including categorized allowed fields, GraphQL types, and deterministic examples.
+
 # stashapi 0.4.1
 
 - Replace the real StashDB URL in vignette examples with an `endpoint_url` placeholder.

@@ -135,6 +135,113 @@ scene_filter(tags = excludes(182, depth = -1))
 These values control Stash's server-side hierarchy traversal. They do not
 change the depth of the generated GraphQL selection fragments.
 
+### Nesting related filter helpers
+
+Nested filter fields use the helper that matches the GraphQL type of that
+field. For example, `performers_filter` is a field of `SceneFilterType`, and
+its value is a `PerformerFilterType`, so compose `scene_filter()` with
+`performer_filter()`:
+
+```r
+findScenes(
+  scenefilter = scene_filter(
+    performers_filter = performer_filter(
+      name = includes("Leah")
+    )
+  )
+)
+```
+
+The same pattern works for other relationships exposed by the schema:
+
+```r
+findScenes(
+  scenefilter = scene_filter(
+    studios_filter = studio_filter(name = includes("Dream")),
+    tags_filter = tag_filter(name = equals("4k"))
+  )
+)
+
+findGalleries(
+  galleryfilter = gallery_filter(
+    performers_filter = performer_filter(name = includes("Leah"))
+  )
+)
+```
+
+The nested helper must be assigned to the named `*_filter` field. Passing a
+filter helper as an unnamed argument does not create a valid GraphQL input
+object, and a field such as `performer` is not interchangeable with the
+schema's `performers_filter` field.
+
+### Matching related records: `includes()` and `includes_all()`
+
+For relationship fields such as `performers`, `tags`, or `studios`,
+`includes()` matches when the record contains **at least one** of the supplied
+IDs:
+
+```r
+matching_performer_ids <- c(101, 202, 303)
+
+findScenes(
+  scenefilter = scene_filter(
+    performers = includes(matching_performer_ids)
+  )
+)
+```
+
+This returns scenes with one or more of those performers. It does not require
+every performer in the scene to be in the supplied vector.
+
+`includes_all()` has a different meaning: the record must contain **every ID
+supplied to the criterion**:
+
+```r
+findScenes(
+  scenefilter = scene_filter(
+    performers = includes_all(c(101, 202, 303))
+  )
+)
+```
+
+This asks for scenes containing performers `101`, `202`, and `303`. It does not
+mean that all performers in a matching scene satisfy some other condition; it
+only requires that all supplied IDs are present.
+
+To find scenes where every performer satisfies a condition such as being
+female, use a two-step workflow. First find the performer IDs, then use
+`includes()` to narrow the scene candidates, and finally check every performer
+in each returned scene:
+
+```r
+matching_performers <- findPerformers(
+  performerfilter = performer_filter(gender = equals("FEMALE")),
+  filter = find_filter(per_page = -1),
+  .field = c("performers", "id")
+)
+
+candidate_scenes <- findScenes(
+  scenefilter = scene_filter(
+    performers = includes(matching_performers)
+  ),
+  filter = find_filter(per_page = -1)
+)
+
+all_performers_match <- purrr::map_lgl(
+  candidate_scenes$performers,
+  function(performers) {
+    ids <- performers$id
+    length(ids) > 0 && all(ids %in% matching_performers)
+  }
+)
+
+scenes_all_matching <- candidate_scenes[all_performers_match, ]
+```
+
+The first server-side query is a candidate filter: it requires at least one
+matching performer. The final R-side check enforces the stronger requirement
+that no performer in the scene is outside `matching_performers`.
+
 ## Combining filters with `AND`, `OR`, and `NOT`
 
 The boolean fields are recursive. Each one receives another filter list of the

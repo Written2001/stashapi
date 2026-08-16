@@ -10,4 +10,6 @@ matches_regex(value)
 \description{
 Build a regular-expression match criterion.
 }
-\examples{matches_regex("^4k")}
+\examples{
+matches_regex("^4k")
+}

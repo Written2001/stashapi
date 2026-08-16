@@ -7,12 +7,13 @@
 setStashCredentials(stash_credentials = ".stash_credentials")
 }
 \arguments{
-\item{stash_credentials}{Path to the credentials file containing connection details.
-Defaults to .stash_credentials
-The file should be a plain text file with two lines: URL and API key.}
+\item{stash_credentials}{Path to the credentials file containing connection
+details. Defaults to `.stash_credentials`. The file should be plain text
+with two lines: URL and API key.}
 }
 \value{
-Invisibly returns the GraphQL client connection object. Stores the connection in the package environment.
+Invisibly returns the configured connection. Stores it in the
+  package environment.
 }
 \description{
 Establishes a connection to the Stash GraphQL endpoint using credentials stored in a file.
@@ -20,8 +21,8 @@ Establishes a connection to the Stash GraphQL endpoint using credentials stored 
 \examples{
 \dontrun{
   # Set credentials from a default or specified credentials file
-  set_stash_credentials()
-  set_stash_credentials("path/to/credentials")
+  setStashCredentials()
+  setStashCredentials("path/to/credentials")
 }
 
 }

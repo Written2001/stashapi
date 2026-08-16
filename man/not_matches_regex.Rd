@@ -10,4 +10,6 @@ not_matches_regex(value)
 \description{
 Build a negated regular-expression match criterion.
 }
-\examples{not_matches_regex("sample")}
+\examples{
+not_matches_regex("sample")
+}

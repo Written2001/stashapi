@@ -25,5 +25,6 @@ docs:
 
 roxygen:
 	$(RSCRIPT) -e 'roxygen2::roxygenise()'
+	$(RSCRIPT) tools/generate_input_helper_docs.R
 
 ci: generate-check test lint check

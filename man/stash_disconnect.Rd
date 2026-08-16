@@ -3,6 +3,12 @@
 \name{stash_disconnect}
 \alias{stash_disconnect}
 \title{Disconnect the active Stash connection}
-\usage{stash_disconnect()}
-\value{Invisibly, `TRUE`.}
-\description{Removes the active Stash connection from the current R session.}
+\usage{
+stash_disconnect()
+}
+\value{
+Invisibly, `TRUE`.
+}
+\description{
+Disconnect the active Stash connection
+}

@@ -1,7 +1,7 @@
 Package: stashapi
 Type: Package
 Title: API Wrapper for Stash
-Version: 0.4.1
+Version: 0.4.3
 Authors@R: person("Written", "2001", email = "example@example.com", role = c("aut", "cre"))
 Author: Written2001 <example@example.com> [aut, cre]
 Maintainer: Written2001 <example@example.com>
@@ -10,7 +10,6 @@ License: MIT + file LICENSE
 URL: https://github.com/Written2001/stashapi, https://written2001.github.io/stashapi
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.3.3
 VignetteBuilder: knitr
 Config/Needs/coverage: covr
 Config/Needs/lint: lintr
@@ -31,3 +30,4 @@ Imports:
     purrr,
     tibble,
     tools
+Config/roxygen2/version: 8.1.0

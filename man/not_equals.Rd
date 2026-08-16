@@ -10,4 +10,6 @@ not_equals(value)
 \description{
 Build a NOT_EQUALS criterion.
 }
-\examples{not_equals("4k")}
+\examples{
+not_equals("4k")
+}

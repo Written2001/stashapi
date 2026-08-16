@@ -10,4 +10,6 @@ not_null(value = NULL)
 \description{
 Build a NOT_NULL criterion.
 }
-\examples{not_null()}
+\examples{
+not_null()
+}
