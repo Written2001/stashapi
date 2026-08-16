@@ -2,6 +2,7 @@
 
 - Add a reproducible development container with system libraries, renv-managed runtime and development dependencies, and automatic `languageserver` setup.
 - Align Makefile setup and checks with the activated renv project library.
+- Clean up schema-driven documentation generator lint issues and keep generated documentation checks deterministic.
 
 # stashapi 0.4.3
 

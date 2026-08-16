@@ -1,6 +1,13 @@
 sys.source("tools/schema_types.R", envir = environment())
 sys.source("tools/schema_inputs.R", envir = environment())
 
+normalize_registry <- get("normalize_schema_registry", mode = "function")
+contains_type <- get("type_ref_contains", mode = "function")
+build_input_builders <- get("build_input_builder_ir", mode = "function")
+type_to_string <- get("type_ref_to_string", mode = "function")
+named_type <- get("type_ref_named_type", mode = "function")
+builder_name <- get("input_builder_name", mode = "function")
+
 curated_types <- c(
   FindFilterType = "generated find functions",
   SceneFilterType = "findScenes(scenefilter = ...)",
@@ -35,11 +42,11 @@ escape_rd <- function(value) {
 }
 
 field_type <- function(field) {
-  type_ref_to_string(field$type)
+  type_to_string(field$type)
 }
 
 field_named_type <- function(field) {
-  type_ref_named_type(field$type)
+  named_type(field$type)
 }
 
 field_category <- function(field) {
@@ -94,12 +101,14 @@ example_expression <- function(builder, function_name = builder$function_name) {
 render_r_input_hint <- function(field, registry) {
   named_type <- field_named_type(field)
   if (field$name %in% c("AND", "OR", "NOT")) return("nested filter()")
-  if (grepl("FilterType$", named_type)) return(paste0(input_builder_name(named_type), "(...)"))
+  if (grepl("FilterType$", named_type)) return(paste0(builder_name(named_type), "(...)"))
   if (grepl("MultiCriterionInput$", named_type)) return("criterion, e.g. includes(1)")
   if (grepl("StringCriterionInput$", named_type)) return("criterion, e.g. includes(\"text\")")
   if (grepl("IntCriterionInput$|FloatCriterionInput$", named_type)) return("criterion, e.g. greater_than(1)")
   if (grepl("BooleanCriterionInput$", named_type)) return("criterion, e.g. equals(TRUE)")
-  if (grepl("DateCriterionInput$|TimestampCriterionInput$", named_type)) return("criterion, e.g. equals(\"2020-01-01\")")
+  if (grepl("DateCriterionInput$|TimestampCriterionInput$", named_type)) {
+    return("criterion, e.g. equals(\"2020-01-01\")")
+  }
   if (grepl("StashIDsCriterionInput$", named_type)) return("stash_ids(endpoint_url, ids)")
   if (grepl("StashIDCriterionInput$", named_type)) return("stash_id(endpoint_url, id)")
   if (grepl("CriterionInput$", named_type)) return("criterion helper")
@@ -108,7 +117,7 @@ render_r_input_hint <- function(field, registry) {
   if (identical(named_type, "Int")) return("integer or numeric")
   if (identical(named_type, "Float")) return("numeric")
   if (grepl("Enum$", named_type)) return("schema enum value")
-  if (type_ref_contains(field$type, "LIST")) return("vector or list")
+  if (contains_type(field$type, "LIST")) return("vector or list")
   paste0("value of type ", named_type)
 }
 
@@ -162,8 +171,8 @@ generate_input_helper_docs <- function(
   output_dir = "man"
 ) {
   raw_schema <- jsonlite::fromJSON(schema_path, flatten = FALSE)$data$`__schema`$types
-  registry <- normalize_schema_registry(raw_schema)
-  builders <- build_input_builder_ir(registry)
+  registry <- normalize_registry(raw_schema)
+  builders <- build_input_builders(registry)
   for (type_name in names(curated_types)) {
     builder <- builders[[type_name]]
     if (is.null(builder)) stop("schema input type not found: ", type_name, call. = FALSE)
