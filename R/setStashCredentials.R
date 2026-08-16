@@ -10,7 +10,7 @@ stash_state <- local({
 get_stash_connection <- function() {
   connection <- stash_state$get()
   if (is.null(connection)) {
-    stop("No active Stash connection. Call stash_connect() first.", call. = FALSE)
+    connection <- stash_connect()
   }
   connection
 }
@@ -61,7 +61,8 @@ hasConnection <- function(){
 #'
 #' @param url GraphQL endpoint URL. Falls back to `STASH_URL`.
 #' @param api_key Stash API key. Falls back to `STASH_API_KEY`.
-#' @param credentials_file Optional two-line credentials file.
+#' @param credentials_file Optional two-line credentials file. Defaults to
+#'   `.stash_credentials` and is ignored when that default file is absent.
 #' @param verify_ssl Whether to verify TLS certificates and hostnames.
 #' @param cainfo Optional path to a custom CA certificate bundle.
 #' @return Invisibly, the configured connection.
@@ -77,10 +78,11 @@ hasConnection <- function(){
 stash_connect <- function(
   url = NULL,
   api_key = NULL,
-  credentials_file = NULL,
+  credentials_file = ".stash_credentials",
   verify_ssl = TRUE,
   cainfo = NULL
 ) {
+  credentials_file_default <- missing(credentials_file)
   validate_connection_input(url, "url")
   validate_connection_input(api_key, "api_key")
   validate_connection_input(credentials_file, "credentials_file")
@@ -89,7 +91,10 @@ stash_connect <- function(
   }
   validate_connection_input(cainfo, "cainfo")
 
-  file_credentials <- read_credentials_file(credentials_file)
+  file_credentials <- read_credentials_file(
+    credentials_file,
+    optional = credentials_file_default
+  )
   url <- first_connection_value(url, file_credentials$url, Sys.getenv("STASH_URL"))
   api_key <- first_connection_value(api_key, file_credentials$api_key, Sys.getenv("STASH_API_KEY"))
 
@@ -162,9 +167,10 @@ first_connection_value <- function(...) {
   NULL
 }
 
-read_credentials_file <- function(credentials_file) {
+read_credentials_file <- function(credentials_file, optional = FALSE) {
   if (is.null(credentials_file)) return(list(url = NULL, api_key = NULL))
   if (!file.exists(credentials_file)) {
+    if (isTRUE(optional)) return(list(url = NULL, api_key = NULL))
     stop("Credentials file does not exist: ", credentials_file, call. = FALSE)
   }
   path <- tools::file_path_as_absolute(credentials_file)

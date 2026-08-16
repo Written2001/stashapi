@@ -4,13 +4,13 @@
 \alias{stash_connect}
 \title{Connect to a Stash GraphQL endpoint}
 \usage{
-stash_connect(url = NULL, api_key = NULL, credentials_file = NULL,
+stash_connect(url = NULL, api_key = NULL, credentials_file = ".stash_credentials",
   verify_ssl = TRUE, cainfo = NULL)
 }
 \arguments{
 \item{url}{GraphQL endpoint URL. Falls back to `STASH_URL`.}
 \item{api_key}{Stash API key. Falls back to `STASH_API_KEY`.}
-\item{credentials_file}{Optional two-line credentials file.}
+\item{credentials_file}{Optional two-line credentials file. Defaults to `.stash_credentials` and is ignored when that default file is absent.}
 \item{verify_ssl}{Whether to verify TLS certificates and hostnames.}
 \item{cainfo}{Optional path to a custom CA certificate bundle.}
 }

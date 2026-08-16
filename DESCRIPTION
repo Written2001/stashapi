@@ -1,7 +1,7 @@
 Package: stashapi
 Type: Package
 Title: API Wrapper for Stash
-Version: 0.3.0
+Version: 0.4.0
 Authors@R: person("Written", "2001", email = "example@example.com", role = c("aut", "cre"))
 Author: Written2001 <example@example.com> [aut, cre]
 Maintainer: Written2001 <example@example.com>

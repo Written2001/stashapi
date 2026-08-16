@@ -23,8 +23,12 @@ Connect using the new API:
 
 ```R
 library(stashapi)
-stash_connect(credentials_file = ".stash_credentials")
+stash_connect()
 ```
+
+With no arguments, `stash_connect()` looks for `.stash_credentials` in the
+current working directory. Generated API functions such as `findScenes()` also
+attempt this connection automatically when no connection is active.
 
 For CI or environments without a credentials file, use environment variables:
 

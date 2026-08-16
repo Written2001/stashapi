@@ -1,3 +1,7 @@
+# stashapi 0.4.0
+
+- Make `stash_connect()` discover `.stash_credentials` by default and auto-connect generated API calls when no connection is active.
+
 # stashapi 0.3.0
 
 - Add `stash_connect()` with explicit, credentials-file, and environment-based authentication configuration.

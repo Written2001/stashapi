@@ -69,8 +69,31 @@ testthat::test_that("connection adapter forwards configured curl options", {
 
 testthat::test_that("disconnect removes the active connection", {
   stashapi::stash_disconnect()
+  testthat::expect_false(stashapi::hasConnection())
+})
+
+testthat::test_that("missing connections auto-load the default credentials file", {
+  old_directory <- getwd()
+  directory <- tempfile()
+  dir.create(directory)
+  on.exit(setwd(old_directory), add = TRUE)
+  setwd(directory)
+  writeLines(c("http://localhost:9999/graphql", "test-key"), ".stash_credentials")
+  stashapi::stash_disconnect()
+
+  connection <- stashapi:::get_stash_connection()
+
+  testthat::expect_s3_class(connection, "stashapi_connection")
+  stashapi::stash_disconnect()
+})
+
+testthat::test_that("the default credentials file is optional but explicit files are required", {
+  testthat::expect_equal(
+    stashapi:::read_credentials_file(tempfile(), optional = TRUE),
+    list(url = NULL, api_key = NULL)
+  )
   testthat::expect_error(
-    stashapi:::get_stash_connection(),
-    "No active Stash connection"
+    stashapi:::read_credentials_file(tempfile()),
+    "Credentials file does not exist"
   )
 })
