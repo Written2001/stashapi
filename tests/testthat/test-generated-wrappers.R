@@ -74,9 +74,8 @@ testthat::test_that("findScenes preserves legacy nested-list calls", {
   )
 
   package_namespace <- asNamespace("stashapi")
-  connection_environment <- get("the", envir = package_namespace)
-  connection_environment$connection <- connection
-  on.exit(rm(connection, envir = connection_environment), add = TRUE)
+  get("set_stash_connection", envir = package_namespace)(connection)
+  on.exit(get("stash_disconnect", envir = package_namespace)(), add = TRUE)
 
   result <- get("findScenes", envir = package_namespace)(
     scenefilter = list(tags = list(value = 182, modifier = "INCLUDES")),

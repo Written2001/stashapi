@@ -56,7 +56,7 @@ testthat::test_that("R wrapper source preserves execution and field-selection be
   ))
   testthat::expect_match(result, "query\\$query\\('findScenes'")
   testthat::expect_match(result, "query = query\\$queries\\$findScenes")
-  testthat::expect_match(result, "connection = the\\$connection")
+  testthat::expect_match(result, "connection = get_stash_connection\\(\\)")
   testthat::expect_match(result, "dotargs\\$\\.field")
 })
 

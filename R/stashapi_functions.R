@@ -16,15 +16,23 @@ fragment SavedFilter on SavedFilter { id mode name find_filter { ...SavedFindFil
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$findSavedFilter,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -44,15 +52,23 @@ fragment SavedFilter on SavedFilter { id mode name find_filter { ...SavedFindFil
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$findSavedFilters,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -77,15 +93,23 @@ fragment BaseFile on BaseFile { ...BasicFile ...VideoFile ...ImageFile ...Galler
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$findFile,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -112,15 +136,23 @@ fragment FindFilesResultType on FindFilesResultType { count megapixels duration 
 
   return_default <- "files"
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$findFiles,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -140,15 +172,23 @@ fragment Folder on Folder { id path basename parent_folder { id path basename } 
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$findFolder,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -170,15 +210,23 @@ fragment FindFoldersResultType on FindFoldersResultType { count folders { ...Fol
 
   return_default <- "folders"
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$findFolders,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -204,15 +252,23 @@ fragment Scene on Scene { id title code details director urls date rating100 org
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$findScene,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -241,15 +297,23 @@ fragment Scene on Scene { id title code details director urls date rating100 org
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$findSceneByHash,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -278,15 +342,23 @@ fragment FindScenesResultType on FindScenesResultType { count duration filesize 
 
   return_default <- "scenes"
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$findScenes,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -312,15 +384,23 @@ fragment FindScenesResultType on FindScenesResultType { count duration filesize 
 
   return_default <- "scenes"
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$findScenesByPathRegex,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -346,15 +426,23 @@ fragment Scene on Scene { id title code details director urls date rating100 org
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$findDuplicateScenes,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -373,15 +461,23 @@ fragment SceneStreamEndpoint on SceneStreamEndpoint { url mime_type label }
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$sceneStreams,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -407,15 +503,23 @@ fragment SceneParserResultType on SceneParserResultType { count results { ...Sce
 
   return_default <- "results"
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$parseSceneFilenames,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -437,15 +541,23 @@ fragment FindSceneMarkersResultType on FindSceneMarkersResultType { count scene_
 
   return_default <- "scene_markers"
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$findSceneMarkers,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -470,15 +582,23 @@ fragment Image on Image { id title code rating100 urls date details photographer
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$findImage,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -506,15 +626,23 @@ fragment FindImagesResultType on FindImagesResultType { count megapixels filesiz
 
   return_default <- "images"
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$findImages,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -537,15 +665,23 @@ fragment Performer on Performer { id name disambiguation urls gender birthdate e
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$findPerformer,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -568,15 +704,23 @@ fragment FindPerformersResultType on FindPerformersResultType { count performers
 
   return_default <- "performers"
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$findPerformers,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -599,15 +743,23 @@ fragment Studio on Studio { id name urls parent_studio { id name } child_studios
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$findStudio,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -629,15 +781,23 @@ fragment FindStudiosResultType on FindStudiosResultType { count studios { ...Stu
 
   return_default <- "studios"
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$findStudios,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -661,15 +821,23 @@ fragment Group on Group { id name aliases duration date rating100 studio { id na
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$findGroup,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -692,15 +860,23 @@ fragment FindGroupsResultType on FindGroupsResultType { count groups { ...Group 
 
   return_default <- "groups"
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$findGroups,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -727,15 +903,23 @@ fragment Gallery on Gallery { id title code urls date details photographer ratin
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$findGallery,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -761,15 +945,23 @@ fragment FindGalleriesResultType on FindGalleriesResultType { count galleries { 
 
   return_default <- "galleries"
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$findGalleries,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -792,15 +984,23 @@ fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag crea
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$findTag,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -822,15 +1022,23 @@ fragment FindTagsResultType on FindTagsResultType { count tags { ...Tag } }
 
   return_default <- "tags"
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$findTags,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -849,15 +1057,23 @@ fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_se
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$markerWall,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -882,15 +1098,23 @@ fragment Scene on Scene { id title code details director urls date rating100 org
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$sceneWall,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -910,15 +1134,23 @@ fragment MarkerStringsResultType on MarkerStringsResultType { count id title }
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$markerStrings,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -936,15 +1168,23 @@ fragment StatsResultType on StatsResultType { scene_count scenes_size scenes_dur
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$stats,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -968,15 +1208,23 @@ fragment SceneMarkerTag on SceneMarkerTag { tag { id name } scene_markers { ...S
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$sceneMarkerTags,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -994,15 +1242,23 @@ fragment LogEntry on LogEntry { time level message }
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$logs,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1026,15 +1282,23 @@ fragment Scraper on Scraper { id name performer { ...ScraperSpec } scene { ...Sc
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$listScrapers,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1065,15 +1329,23 @@ fragment ScrapedScene on ScrapedScene { title code details director urls date fi
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$scrapeSingleScene,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1104,15 +1376,23 @@ fragment ScrapedScene on ScrapedScene { title code details director urls date fi
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$scrapeMultiScenes,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1139,15 +1419,23 @@ fragment ScrapedStudio on ScrapedStudio { stored_id name urls parent { stored_id
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$scrapeSingleStudio,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1174,15 +1462,23 @@ fragment ScrapedTag on ScrapedTag { stored_id name description alias_list parent
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$scrapeSingleTag,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1209,15 +1505,23 @@ fragment ScrapedPerformer on ScrapedPerformer { stored_id name disambiguation ge
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$scrapeSinglePerformer,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1244,15 +1548,23 @@ fragment ScrapedPerformer on ScrapedPerformer { stored_id name disambiguation ge
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$scrapeMultiPerformers,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1280,15 +1592,23 @@ fragment ScrapedGallery on ScrapedGallery { title code details photographer urls
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$scrapeSingleGallery,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1315,15 +1635,23 @@ fragment ScrapedGroup on ScrapedGroup { stored_id name aliases duration date rat
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$scrapeSingleGroup,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1351,15 +1679,23 @@ fragment ScrapedImage on ScrapedImage { title code details photographer urls dat
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$scrapeSingleImage,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1396,15 +1732,23 @@ fragment ScrapedContent on ScrapedContent { ...ScrapedStudio ...ScrapedTag ...Sc
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$scrapeURL,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1427,15 +1771,23 @@ fragment ScrapedPerformer on ScrapedPerformer { stored_id name disambiguation ge
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$scrapePerformerURL,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1462,15 +1814,23 @@ fragment ScrapedScene on ScrapedScene { title code details director urls date fi
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$scrapeSceneURL,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1494,15 +1854,23 @@ fragment ScrapedGallery on ScrapedGallery { title code details photographer urls
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$scrapeGalleryURL,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1526,15 +1894,23 @@ fragment ScrapedImage on ScrapedImage { title code details photographer urls dat
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$scrapeImageURL,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1557,15 +1933,23 @@ fragment ScrapedGroup on ScrapedGroup { stored_id name aliases duration date rat
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$scrapeGroupURL,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1587,15 +1971,23 @@ fragment Plugin on Plugin { id name description url version enabled settings { .
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$plugins,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1617,15 +2009,23 @@ fragment PluginTask on PluginTask { name description }
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$pluginTasks,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1648,15 +2048,23 @@ fragment Package on Package { package_id name version date sourceURL metadata }
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$installedPackages,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1683,15 +2091,23 @@ fragment Package on Package { package_id name version date sourceURL metadata }
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$availablePackages,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1728,15 +2144,23 @@ fragment ConfigResult on ConfigResult { general { ...ConfigGeneralResult } inter
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$configuration,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1756,15 +2180,23 @@ fragment Directory on Directory { path parent directories }
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$directory,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1787,15 +2219,23 @@ fragment StashBoxValidationResult on StashBoxValidationResult { valid status }
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$validateStashBoxCredentials,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1813,15 +2253,23 @@ fragment SystemStatus on SystemStatus { databaseSchema databasePath configPath a
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$systemStatus,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1839,15 +2287,23 @@ fragment Job on Job { id status subTasks description progress startTime endTime 
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$jobQueue,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1870,15 +2326,23 @@ fragment Job on Job { id status subTasks description progress startTime endTime 
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$findJob,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1897,15 +2361,23 @@ fragment DLNAStatus on DLNAStatus { running until recentIPAddresses allowedIPAdd
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$dlnaStatus,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1923,15 +2395,23 @@ fragment Performer on Performer { id name disambiguation urls gender birthdate e
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$allPerformers,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1949,15 +2429,23 @@ fragment Version on Version { version hash build_time }
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$version,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -1975,15 +2463,23 @@ fragment LatestVersion on LatestVersion { version shorthash release_date url }
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$latestversion,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2005,15 +2501,23 @@ setup <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$setup,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2035,15 +2539,23 @@ migrate <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$migrate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2060,15 +2572,23 @@ downloadFFMpeg <- function(...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$downloadFFMpeg,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2097,15 +2617,23 @@ fragment Scene on Scene { id title code details director urls date rating100 org
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$sceneCreate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2134,15 +2662,23 @@ fragment Scene on Scene { id title code details director urls date rating100 org
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$sceneUpdate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2171,15 +2707,23 @@ fragment Scene on Scene { id title code details director urls date rating100 org
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$sceneMerge,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2208,15 +2752,23 @@ fragment Scene on Scene { id title code details director urls date rating100 org
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$bulkSceneUpdate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2238,15 +2790,23 @@ sceneDestroy <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$sceneDestroy,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2268,15 +2828,23 @@ scenesDestroy <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$scenesDestroy,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2305,15 +2873,23 @@ fragment Scene on Scene { id title code details director urls date rating100 org
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$scenesUpdate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2337,15 +2913,23 @@ fragment HistoryMutationResult on HistoryMutationResult { count history }
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$sceneAddO,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2369,15 +2953,23 @@ fragment HistoryMutationResult on HistoryMutationResult { count history }
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$sceneDeleteO,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2399,15 +2991,23 @@ sceneResetO <- function(id = list(), ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$sceneResetO,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2431,15 +3031,23 @@ sceneSaveActivity <- function(id = list(), resumetime = NA, playDuration = NA, .
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$sceneSaveActivity,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2463,15 +3071,23 @@ sceneResetActivity <- function(id = list(), resetresume = NA, resetduration = NA
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$sceneResetActivity,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2495,15 +3111,23 @@ fragment HistoryMutationResult on HistoryMutationResult { count history }
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$sceneAddPlay,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2527,15 +3151,23 @@ fragment HistoryMutationResult on HistoryMutationResult { count history }
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$sceneDeletePlay,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2557,15 +3189,23 @@ sceneResetPlayCount <- function(id = list(), ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$sceneResetPlayCount,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2588,15 +3228,23 @@ sceneGenerateScreenshot <- function(id = list(), at = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$sceneGenerateScreenshot,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2619,15 +3267,23 @@ fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_se
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$sceneMarkerCreate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2650,15 +3306,23 @@ fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_se
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$sceneMarkerUpdate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2681,15 +3345,23 @@ fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_se
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$bulkSceneMarkerUpdate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2711,15 +3383,23 @@ sceneMarkerDestroy <- function(id = list(), ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$sceneMarkerDestroy,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2741,15 +3421,23 @@ sceneMarkersDestroy <- function(ids = list(), ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$sceneMarkersDestroy,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2771,15 +3459,23 @@ sceneAssignFile <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$sceneAssignFile,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2807,15 +3503,23 @@ fragment Image on Image { id title code rating100 urls date details photographer
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$imageUpdate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2843,15 +3547,23 @@ fragment Image on Image { id title code rating100 urls date details photographer
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$bulkImageUpdate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2873,15 +3585,23 @@ imageDestroy <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$imageDestroy,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2903,15 +3623,23 @@ imagesDestroy <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$imagesDestroy,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2939,15 +3667,23 @@ fragment Image on Image { id title code rating100 urls date details photographer
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$imagesUpdate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2969,15 +3705,23 @@ imageIncrementO <- function(id = list(), ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$imageIncrementO,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -2999,15 +3743,23 @@ imageDecrementO <- function(id = list(), ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$imageDecrementO,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3029,15 +3781,23 @@ imageResetO <- function(id = list(), ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$imageResetO,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3064,15 +3824,23 @@ fragment Gallery on Gallery { id title code urls date details photographer ratin
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$galleryCreate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3099,15 +3867,23 @@ fragment Gallery on Gallery { id title code urls date details photographer ratin
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$galleryUpdate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3134,15 +3910,23 @@ fragment Gallery on Gallery { id title code urls date details photographer ratin
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$bulkGalleryUpdate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3164,15 +3948,23 @@ galleryDestroy <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$galleryDestroy,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3199,15 +3991,23 @@ fragment Gallery on Gallery { id title code urls date details photographer ratin
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$galleriesUpdate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3229,15 +4029,23 @@ addGalleryImages <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$addGalleryImages,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3259,15 +4067,23 @@ removeGalleryImages <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$removeGalleryImages,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3289,15 +4105,23 @@ setGalleryCover <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$setGalleryCover,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3319,15 +4143,23 @@ resetGalleryCover <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$resetGalleryCover,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3350,15 +4182,23 @@ fragment GalleryChapter on GalleryChapter { id gallery { id title } title image_
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$galleryChapterCreate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3381,15 +4221,23 @@ fragment GalleryChapter on GalleryChapter { id gallery { id title } title image_
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$galleryChapterUpdate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3411,15 +4259,23 @@ galleryChapterDestroy <- function(id = list(), ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$galleryChapterDestroy,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3442,15 +4298,23 @@ fragment Performer on Performer { id name disambiguation urls gender birthdate e
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$performerCreate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3473,15 +4337,23 @@ fragment Performer on Performer { id name disambiguation urls gender birthdate e
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$performerUpdate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3503,15 +4375,23 @@ performerDestroy <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$performerDestroy,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3533,15 +4413,23 @@ performersDestroy <- function(ids = list(), ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$performersDestroy,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3564,15 +4452,23 @@ fragment Performer on Performer { id name disambiguation urls gender birthdate e
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$bulkPerformerUpdate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3595,15 +4491,23 @@ fragment Performer on Performer { id name disambiguation urls gender birthdate e
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$performerMerge,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3626,15 +4530,23 @@ fragment Studio on Studio { id name urls parent_studio { id name } child_studios
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$studioCreate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3657,15 +4569,23 @@ fragment Studio on Studio { id name urls parent_studio { id name } child_studios
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$studioUpdate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3687,15 +4607,23 @@ studioDestroy <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$studioDestroy,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3717,15 +4645,23 @@ studiosDestroy <- function(ids = list(), ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$studiosDestroy,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3748,15 +4684,23 @@ fragment Studio on Studio { id name urls parent_studio { id name } child_studios
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$bulkStudioUpdate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3780,15 +4724,23 @@ fragment Group on Group { id name aliases duration date rating100 studio { id na
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$groupCreate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3812,15 +4764,23 @@ fragment Group on Group { id name aliases duration date rating100 studio { id na
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$groupUpdate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3842,15 +4802,23 @@ groupDestroy <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$groupDestroy,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3872,15 +4840,23 @@ groupsDestroy <- function(ids = list(), ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$groupsDestroy,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3904,15 +4880,23 @@ fragment Group on Group { id name aliases duration date rating100 studio { id na
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$bulkGroupUpdate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3934,15 +4918,23 @@ addGroupSubGroups <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$addGroupSubGroups,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3964,15 +4956,23 @@ removeGroupSubGroups <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$removeGroupSubGroups,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -3994,15 +4994,23 @@ reorderSubGroups <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$reorderSubGroups,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4025,15 +5033,23 @@ fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag crea
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$tagCreate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4056,15 +5072,23 @@ fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag crea
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$tagUpdate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4086,15 +5110,23 @@ tagDestroy <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$tagDestroy,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4116,15 +5148,23 @@ tagsDestroy <- function(ids = list(), ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$tagsDestroy,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4147,15 +5187,23 @@ fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag crea
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$tagsMerge,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4178,15 +5226,23 @@ fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag crea
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$bulkTagUpdate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4208,15 +5264,23 @@ moveFiles <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$moveFiles,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4238,15 +5302,23 @@ deleteFiles <- function(ids = list(), ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$deleteFiles,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4268,15 +5340,23 @@ destroyFiles <- function(ids = list(), ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$destroyFiles,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4298,15 +5378,23 @@ fileSetFingerprints <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$fileSetFingerprints,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4328,15 +5416,23 @@ revealFileInFileManager <- function(id = list(), ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$revealFileInFileManager,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4358,15 +5454,23 @@ revealFolderInFileManager <- function(id = list(), ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$revealFolderInFileManager,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4390,15 +5494,23 @@ fragment SavedFilter on SavedFilter { id mode name find_filter { ...SavedFindFil
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$saveFilter,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4420,15 +5532,23 @@ destroySavedFilter <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$destroySavedFilter,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4454,15 +5574,23 @@ fragment ConfigGeneralResult on ConfigGeneralResult { stashes { ...StashConfig }
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$configureGeneral,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4487,15 +5615,23 @@ fragment ConfigInterfaceResult on ConfigInterfaceResult { sfwContentMode menuIte
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$configureInterface,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4518,15 +5654,23 @@ fragment ConfigDLNAResult on ConfigDLNAResult { serverName enabled port whitelis
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$configureDLNA,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4549,15 +5693,23 @@ fragment ConfigScrapingResult on ConfigScrapingResult { scraperUserAgent scraper
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$configureScraping,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4589,15 +5741,23 @@ fragment ConfigDefaultSettingsResult on ConfigDefaultSettingsResult { scan { ...
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$configureDefaults,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4623,15 +5783,23 @@ configurePlugin <- function(pluginid = list(), input = list(), ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$configurePlugin,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4650,15 +5818,23 @@ configureUI <- function(input = NA, partial = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$configureUI,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4681,15 +5857,23 @@ configureUISetting <- function(key = list(), value = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$configureUISetting,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4711,15 +5895,23 @@ generateAPIKey <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$generateAPIKey,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4741,15 +5933,23 @@ exportObjects <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$exportObjects,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4771,15 +5971,23 @@ importObjects <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$importObjects,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4796,15 +6004,23 @@ metadataImport <- function(...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$metadataImport,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4821,15 +6037,23 @@ metadataExport <- function(...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$metadataExport,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4851,15 +6075,23 @@ metadataScan <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$metadataScan,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4881,15 +6113,23 @@ metadataGenerate <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$metadataGenerate,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4911,15 +6151,23 @@ metadataAutoTag <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$metadataAutoTag,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4941,15 +6189,23 @@ metadataClean <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$metadataClean,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -4971,15 +6227,23 @@ metadataCleanGenerated <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$metadataCleanGenerated,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -5001,15 +6265,23 @@ metadataIdentify <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$metadataIdentify,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -5026,15 +6298,23 @@ migrateHashNaming <- function(...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$migrateHashNaming,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -5056,15 +6336,23 @@ migrateSceneScreenshots <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$migrateSceneScreenshots,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -5086,15 +6374,23 @@ migrateBlobs <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$migrateBlobs,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -5116,15 +6412,23 @@ anonymiseDatabase <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$anonymiseDatabase,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -5141,15 +6445,23 @@ optimiseDatabase <- function(...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$optimiseDatabase,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -5166,15 +6478,23 @@ reloadScrapers <- function(...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$reloadScrapers,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -5196,15 +6516,23 @@ setPluginsEnabled <- function(enabledMap = list(), ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$setPluginsEnabled,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -5230,15 +6558,23 @@ runPluginTask <- function(pluginid = list(), taskname = NA, description = NA, ar
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$runPluginTask,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -5261,15 +6597,23 @@ runPluginOperation <- function(pluginid = list(), args = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$runPluginOperation,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -5286,15 +6630,23 @@ reloadPlugins <- function(...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$reloadPlugins,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -5320,15 +6672,23 @@ installPackages <- function(type = NA, packages = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$installPackages,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -5351,15 +6711,23 @@ updatePackages <- function(type = NA, packages = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$updatePackages,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -5385,15 +6753,23 @@ uninstallPackages <- function(type = NA, packages = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$uninstallPackages,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -5415,15 +6791,23 @@ stopJob <- function(jobid = list(), ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$stopJob,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -5440,15 +6824,23 @@ stopAllJobs <- function(...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$stopAllJobs,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -5470,15 +6862,23 @@ submitStashBoxFingerprints <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$submitStashBoxFingerprints,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -5500,15 +6900,23 @@ submitStashBoxSceneDraft <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$submitStashBoxSceneDraft,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -5530,15 +6938,23 @@ submitStashBoxPerformerDraft <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$submitStashBoxPerformerDraft,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -5560,15 +6976,23 @@ backupDatabase <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$backupDatabase,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -5592,15 +7016,23 @@ fragment SQLQueryResult on SQLQueryResult { columns rows }
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$querySQL,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -5624,15 +7056,23 @@ fragment SQLExecResult on SQLExecResult { rows_affected last_insert_id }
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$execSQL,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -5654,15 +7094,23 @@ stashBoxBatchPerformerTag <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$stashBoxBatchPerformerTag,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -5684,15 +7132,23 @@ stashBoxBatchStudioTag <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$stashBoxBatchStudioTag,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -5714,15 +7170,23 @@ stashBoxBatchTagTag <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$stashBoxBatchTagTag,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -5744,15 +7208,23 @@ enableDLNA <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$enableDLNA,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -5774,15 +7246,23 @@ disableDLNA <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$disableDLNA,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -5804,15 +7284,23 @@ addTempDLNAIP <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$addTempDLNAIP,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
@@ -5834,15 +7322,23 @@ removeTempDLNAIP <- function(input = NA, ...) {
 
   return_default <- NA_character_
   dotargs <- list(...)
+  field_supplied <- ".field" %in% names(dotargs)
   if (!".field" %in% names(dotargs)) {
     dotargs$.field <- return_default
   }
+  response <- if (".response" %in% names(dotargs)) dotargs$.response else "data"
+  validate_response_mode(response)
+  if (identical(response, "raw") && field_supplied) {
+    stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
+  }
+  field <- if (identical(response, "raw")) NA_character_ else dotargs$.field
   res <- executeQuery(
     query = query$queries$removeTempDLNAIP,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
-    field = dotargs$.field
+    field = field,
+    response = response
   )
 
   return(res)
