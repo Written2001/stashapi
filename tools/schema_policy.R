@@ -64,6 +64,9 @@ build_selection_policy <- function(
   fragment_overrides = default_fragment_overrides(),
   field_overrides = default_field_overrides()
 ) {
+  if (grepl("ResultType", parent_type, fixed = TRUE)) {
+    return(list(selection = NULL, reference = referenced_type, source = "top-level"))
+  }
   if (field_name %in% names(field_overrides)) {
     return(list(selection = unname(field_overrides[[field_name]]), reference = NULL, source = "field"))
   }

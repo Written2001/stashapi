@@ -159,7 +159,8 @@ findFolders <- function(folderfilter = NA, filter = NA, ids = list(), ...) {
   query <- ghql::Query$new()
   query$query('findFolders', '
   query findFolders($folderfilter: FolderFilterType $filter: FindFilterType $ids: [ID!]) { findFolders(folder_filter: $folderfilter filter: $filter ids: $ids) { ...FindFoldersResultType } }
-fragment FindFoldersResultType on FindFoldersResultType { count folders { id path basename } }
+fragment Folder on Folder { id path basename parent_folder { id path basename } parent_folders { id path basename } zip_file { id path basename } sub_folders { id path basename } mod_time created_at updated_at }
+fragment FindFoldersResultType on FindFoldersResultType { count folders { ...Folder } }
   ')
 
   variables <- list()
@@ -259,7 +260,14 @@ findScenes <- function(scenefilter = NA, sceneids = list(), ids = list(), filter
   query <- ghql::Query$new()
   query$query('findScenes', '
   query findScenes($scenefilter: SceneFilterType $sceneids: [Int!] $ids: [ID!] $filter: FindFilterType) { findScenes(scene_filter: $scenefilter scene_ids: $sceneids ids: $ids filter: $filter) { ...FindScenesResultType } }
-fragment FindScenesResultType on FindScenesResultType { count duration filesize scenes { id title } }
+fragment VideoCaption on VideoCaption { language_code caption_type }
+fragment Fingerprint on Fingerprint { type value }
+fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+fragment ScenePathsType on ScenePathsType { screenshot preview stream webp vtt sprite funscript interactive_heatmap caption }
+fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_seconds primary_tag { id name } tags { id name } created_at updated_at stream preview screenshot }
+fragment SceneGroup on SceneGroup { group { id name } scene_index }
+fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
+fragment FindScenesResultType on FindScenesResultType { count duration filesize scenes { ...Scene } }
   ')
 
   variables <- list()
@@ -289,7 +297,14 @@ findScenesByPathRegex <- function(filter = NA, ...) {
   query <- ghql::Query$new()
   query$query('findScenesByPathRegex', '
   query findScenesByPathRegex($filter: FindFilterType) { findScenesByPathRegex(filter: $filter) { ...FindScenesResultType } }
-fragment FindScenesResultType on FindScenesResultType { count duration filesize scenes { id title } }
+fragment VideoCaption on VideoCaption { language_code caption_type }
+fragment Fingerprint on Fingerprint { type value }
+fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+fragment ScenePathsType on ScenePathsType { screenshot preview stream webp vtt sprite funscript interactive_heatmap caption }
+fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_seconds primary_tag { id name } tags { id name } created_at updated_at stream preview screenshot }
+fragment SceneGroup on SceneGroup { group { id name } scene_index }
+fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
+fragment FindScenesResultType on FindScenesResultType { count duration filesize scenes { ...Scene } }
   ')
 
   variables <- list()
@@ -474,7 +489,13 @@ findImages <- function(imagefilter = NA, imageids = list(), ids = list(), filter
   query <- ghql::Query$new()
   query$query('findImages', '
   query findImages($imagefilter: ImageFilterType $imageids: [Int!] $ids: [ID!] $filter: FindFilterType) { findImages(image_filter: $imagefilter image_ids: $imageids ids: $ids filter: $filter) { ...FindImagesResultType } }
-fragment FindImagesResultType on FindImagesResultType { count megapixels filesize images { id } }
+fragment Fingerprint on Fingerprint { type value }
+fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+fragment ImageFile on ImageFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height created_at updated_at }
+fragment VisualFile on VisualFile { ...VideoFile ...ImageFile }
+fragment ImagePathsType on ImagePathsType { thumbnail preview }
+fragment Image on Image { id title code rating100 urls date details photographer o_counter organized created_at updated_at visual_files { ...VisualFile } paths { ...ImagePathsType } galleries { id title } studio { id name } tags { id name } performers { id name gender } custom_fields }
+fragment FindImagesResultType on FindImagesResultType { count megapixels filesize images { ...Image } }
   ')
 
   variables <- list()
@@ -535,7 +556,8 @@ findPerformers <- function(performerfilter = NA, filter = NA, performerids = lis
   query <- ghql::Query$new()
   query$query('findPerformers', '
   query findPerformers($performerfilter: PerformerFilterType $filter: FindFilterType $performerids: [Int!] $ids: [ID!]) { findPerformers(performer_filter: $performerfilter filter: $filter performer_ids: $performerids ids: $ids) { ...FindPerformersResultType } }
-fragment FindPerformersResultType on FindPerformersResultType { count performers { id name gender } }
+fragment Performer on Performer { id name disambiguation urls gender birthdate ethnicity country eye_color height_cm measurements fake_tits penis_length circumcised career_start career_end tattoos piercings alias_list favorite tags { id name } ignore_auto_tag image_path scene_count image_count gallery_count group_count performer_count o_counter scenes { id title } stash_ids { endpoint stash_id } rating100 details death_date hair_color weight created_at updated_at groups { id name } custom_fields }
+fragment FindPerformersResultType on FindPerformersResultType { count performers { ...Performer } }
   ')
 
   variables <- list()
@@ -596,7 +618,8 @@ findStudios <- function(studiofilter = NA, filter = NA, ids = list(), ...) {
   query <- ghql::Query$new()
   query$query('findStudios', '
   query findStudios($studiofilter: StudioFilterType $filter: FindFilterType $ids: [ID!]) { findStudios(studio_filter: $studiofilter filter: $filter ids: $ids) { ...FindStudiosResultType } }
-fragment FindStudiosResultType on FindStudiosResultType { count studios { id name } }
+fragment Studio on Studio { id name urls parent_studio { id name } child_studios { id name } aliases tags { id name } ignore_auto_tag organized image_path scene_count image_count gallery_count performer_count group_count stash_ids { endpoint stash_id } rating100 favorite details created_at updated_at groups { id name } o_counter custom_fields }
+fragment FindStudiosResultType on FindStudiosResultType { count studios { ...Studio } }
   ')
 
   variables <- list()
@@ -657,7 +680,9 @@ findGroups <- function(groupfilter = NA, filter = NA, ids = list(), ...) {
   query <- ghql::Query$new()
   query$query('findGroups', '
   query findGroups($groupfilter: GroupFilterType $filter: FindFilterType $ids: [ID!]) { findGroups(group_filter: $groupfilter filter: $filter ids: $ids) { ...FindGroupsResultType } }
-fragment FindGroupsResultType on FindGroupsResultType { count groups { id name } }
+fragment GroupDescription on GroupDescription { group { id name } description }
+fragment Group on Group { id name aliases duration date rating100 studio { id name } director synopsis urls tags { id name } created_at updated_at containing_groups { ...GroupDescription } sub_groups { ...GroupDescription } front_image_path back_image_path scene_count performer_count sub_group_count scenes { id title } o_counter custom_fields }
+fragment FindGroupsResultType on FindGroupsResultType { count groups { ...Group } }
   ')
 
   variables <- list()
@@ -721,7 +746,12 @@ findGalleries <- function(galleryfilter = NA, filter = NA, ids = list(), ...) {
   query <- ghql::Query$new()
   query$query('findGalleries', '
   query findGalleries($galleryfilter: GalleryFilterType $filter: FindFilterType $ids: [ID!]) { findGalleries(gallery_filter: $galleryfilter filter: $filter ids: $ids) { ...FindGalleriesResultType } }
-fragment FindGalleriesResultType on FindGalleriesResultType { count galleries { id title } }
+fragment Fingerprint on Fingerprint { type value }
+fragment GalleryFile on GalleryFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } created_at updated_at }
+fragment GalleryChapter on GalleryChapter { id gallery { id title } title image_index created_at updated_at }
+fragment GalleryPathsType on GalleryPathsType { cover preview }
+fragment Gallery on Gallery { id title code urls date details photographer rating100 organized created_at updated_at files { ...GalleryFile } folder { id path basename } chapters { ...GalleryChapter } scenes { id title } studio { id name } image_count tags { id name } performers { id name gender } cover { id } paths { ...GalleryPathsType } custom_fields }
+fragment FindGalleriesResultType on FindGalleriesResultType { count galleries { ...Gallery } }
   ')
 
   variables <- list()
@@ -781,7 +811,8 @@ findTags <- function(tagfilter = NA, filter = NA, ids = list(), ...) {
   query <- ghql::Query$new()
   query$query('findTags', '
   query findTags($tagfilter: TagFilterType $filter: FindFilterType $ids: [ID!]) { findTags(tag_filter: $tagfilter filter: $filter ids: $ids) { ...FindTagsResultType } }
-fragment FindTagsResultType on FindTagsResultType { count tags { id name } }
+fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag created_at updated_at favorite stash_ids { endpoint stash_id } image_path scene_count scene_marker_count image_count gallery_count performer_count studio_count group_count parents { id name } children { id name } parent_count child_count custom_fields }
+fragment FindTagsResultType on FindTagsResultType { count tags { ...Tag } }
   ')
 
   variables <- list()

@@ -49,6 +49,16 @@ testthat::test_that("compact selection policies prevent major-object recursion",
   testthat::expect_false("image" %in% scene$selections)
 })
 
+testthat::test_that("result fragments spread broad top-level objects", {
+  registry <- build_registry()
+  graph <- schema_types$build_fragment_graph(registry, roots = "FindScenesResultType")
+
+  testthat::expect_true("Scene" %in% graph$FindScenesResultType$references)
+  testthat::expect_true("scenes { ...Scene }" %in% graph$FindScenesResultType$selections)
+  testthat::expect_true("code" %in% graph$Scene$selections)
+  testthat::expect_true("performers { id name gender }" %in% graph$Scene$selections)
+})
+
 testthat::test_that("selection policy overrides are parent-independent and explicit", {
   registry <- build_registry()
   custom_policy <- function(parent_type, field_name, referenced_type) {
