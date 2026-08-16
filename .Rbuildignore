@@ -9,6 +9,8 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
+^Makefile$
+^tools/development_dependencies\.R$
 .Rhistory
 .Rprofile
 .gitignore

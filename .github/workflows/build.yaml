@@ -46,6 +46,7 @@ jobs:
         with:
           extra-packages: |
             any::rcmdcheck
+            any::rmarkdown
             any::stringr
             any::tidyr
           needs: check

@@ -1,0 +1,108 @@
+---
+title: "How Schema Data Becomes R Wrappers"
+output: rmarkdown::html_vignette
+---
+%\VignetteIndexEntry{How Schema Data Becomes R Wrappers}
+%\VignetteEngine{knitr::rmarkdown}
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The generated operation functions are derived from GraphQL introspection data. The checked-in `inst/extdata/schema.json` makes generation reproducible without requiring a live Stash instance.
+
+## Pipeline
+
+```text
+schema.json or live introspection
+        |
+        v
+schema registry
+        |
+        v
+recursive GraphQL type AST
+        |
+        v
+operation IR and symbolic selection graph
+        |
+        v
+GraphQL document renderer + R wrapper renderer
+        |
+        v
+R/stashapi_functions.R
+```
+
+## Schema registry
+
+The registry indexes named GraphQL types once. It retains:
+
+- output fields and their arguments
+- input-object fields
+- recursive list and non-null wrappers
+- enum values
+- union and interface possible types
+- descriptions, defaults, and deprecation metadata
+
+Type wrappers are kept as an ordered recursive structure. This distinguishes `Int!`, `[Int!]`, and `[Int]!`, which cannot be represented safely by a single `is_list` flag.
+
+## Operation IR
+
+Query and Mutation root fields become operation records. Each record contains the GraphQL operation name, operation kind, R-safe argument names, exact variable types, return type, selection kind, and response policy.
+
+The IR is deliberately separate from rendered text. GraphQL and R source are produced from the same records, so the generator does not need to parse its own output with regular expressions.
+
+## Symbolic selections and fragments
+
+Object fields become symbolic references to fragments. Unions and interfaces use their possible types. Dependencies are resolved in dependency-first order, deduplicated, and checked for undefined references and cycles before a document is rendered.
+
+Common major objects use compact selection policies instead of recursively
+spreading their full fragments. For example, nested studios use `id` and `name`,
+while nested performers use `id`, `name`, and `gender`. Fields known to be
+expensive or recursively unsafe can be omitted by field policy. These policies
+are the structured replacement for the legacy `fragment_overrides` and
+`field_overrides` vectors.
+
+If a cycle remains after policy application, the graph records its path and the
+migration renderer removes a cyclic spread edge before emitting GraphQL. This
+keeps documents finite and GraphQL-valid without relying on string parsing.
+
+## Response policies
+
+Paginated result objects receive a default response field when the schema structure contains a `count` field and a list-valued object payload. Ordinary object responses retain whole-response behavior. Explicit overrides can take precedence over schema-derived policy.
+
+## Compatibility layer
+
+The wrapper renderer preserves operation names, GraphQL argument names, sanitized R formals, `...`, `.field`, `the$connection`, and `executeQuery`. Existing nested-list calls remain valid. Typed filter helpers are additive and return ordinary lists accepted by the same wrappers.
+
+Required GraphQL arguments receive local checks before execution. The validator
+distinguishes `T!`, `[T!]`, `[T]!`, and `[T!]!`, and can validate required fields
+inside input objects. The first migration keeps compatible R defaults while
+moving missing-required-value failures to the local wrapper boundary.
+
+The public helper family covers `scene_filter()`, `image_filter()`,
+`group_filter()`, `marker_filter()`, `gallery_filter()`,
+`performer_filter()`, `studio_filter()`, and `tag_filter()`.
+
+## Tests and checks
+
+Run these commands from the repository root:
+
+```sh
+Rscript tools/check_generated.R
+Rscript -e 'testthat::test_local()'
+Rscript -e 'lintr::lint_package()'
+R CMD check --no-manual .
+```
+
+The schema-analysis tests use synthetic type fixtures and the checked-in schema. They do not require network credentials. The generated-wrapper check compares the generated source against `R/stashapi_functions.R` to detect unreviewed drift.
+
+## Changing the generator
+
+Keep transformations pure and update the nearest focused test when changing behavior. Add schema policy overrides only when the behavior cannot be derived from introspection. Review operation names, variable types, selections, fragments, response policies, and generated source together.
+
+Do not delete the legacy generator or replace the checked-in generated file until old and new outputs have been compared structurally and all intentional differences are recorded.
+
+The current branch has completed that comparison. Both pipelines cover 187
+operations with no operation or argument mapping drift. The two intentional
+semantic improvements are interface-aware `findFile` selection and structural
+`findFiles` response-field detection.

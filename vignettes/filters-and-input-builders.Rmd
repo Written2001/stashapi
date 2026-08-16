@@ -1,0 +1,556 @@
+---
+title: "Filters and Input Builders"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Filters and Input Builders}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = "#>")
+```
+
+The generated Stash operations accept ordinary GraphQL input lists. The typed
+helpers in `stashapi` make those inputs easier to discover, compose, and check
+before a request is sent. They do not create a special runtime object: every
+helper returns an ordinary named list.
+
+This vignette uses scenes in most examples, but the same patterns apply to
+images, galleries, groups, performers, studios, tags, and scene markers.
+
+## The basic pattern
+
+A generated find operation has two different kinds of inputs:
+
+- an entity filter, such as `scenefilter` for `findScenes()`;
+- a pagination and search filter, called `filter` by the generated operations.
+
+```r
+findScenes(
+  scenefilter = scene_filter(
+    tags = includes(182),
+    organized = equals(TRUE)
+  ),
+  filter = find_filter(per_page = 50)
+)
+```
+
+The outer helper names follow the generated function arguments. For example,
+`findGalleries()` uses `galleryfilter`, while `findPerformers()` uses
+`performerfilter`.
+
+## Criteria
+
+Criteria are the smallest building blocks. They describe how one filter field
+should be compared. The general shape is:
+
+```r
+list(value = ..., modifier = "...")
+```
+
+The helper form is easier to read and preserves the GraphQL modifier names:
+
+```r
+equals("4k")
+not_equals("4k")
+includes(182)
+includes_all(c(84, 85))
+between(1, 10)
+greater_than(80)
+less_than(720)
+matches_regex("^4k")
+not_matches_regex("sample")
+is_null()
+not_null()
+```
+
+Use criteria as values inside a typed filter:
+
+```r
+tag_filter(name = equals("4k"))
+performer_filter(name = includes("Leah"))
+gallery_filter(title = includes("Concert"))
+group_filter(name = includes("Collection"))
+marker_filter(duration = greater_than(30))
+```
+
+The same criterion can be used in a raw list when a generated operation does
+not yet have a curated helper:
+
+```r
+findScenes(
+  scenefilter = list(
+    rating100 = greater_than(80)
+  )
+)
+```
+
+### Null and boolean criteria
+
+`is_null()` defaults to the GraphQL `IS_NULL` value `TRUE`. Pass `FALSE` when
+the schema field should be non-null according to that criterion:
+
+```r
+scene_filter(
+  organized = is_null(FALSE),
+  details = not_null()
+)
+```
+
+### Ranges and comparisons
+
+Use range and comparison helpers for numeric values and schema enum values:
+
+```r
+scene_filter(
+  duration = between(60, 600),
+  rating100 = greater_than(75)
+)
+
+image_filter(
+  resolution = greater_than("FULL_HD")
+)
+```
+
+The value must match what the GraphQL schema expects. For enum fields, use the
+schema enum spelling such as `FULL_HD`, `FOUR_K`, or `R360P`.
+
+### Hierarchy depth and exclusions
+
+Hierarchy-aware criteria accept `depth` and, for inclusion criteria,
+`excludes`. A depth of `-1` means unlimited traversal:
+
+```r
+scene_filter(
+  tags = includes(
+    value = 182,
+    depth = -1,
+    excludes = c(183, 184)
+  )
+)
+
+scene_filter(tags = excludes(182, depth = -1))
+```
+
+These values control Stash's server-side hierarchy traversal. They do not
+change the depth of the generated GraphQL selection fragments.
+
+### Nesting related filter helpers
+
+Nested filter fields use the helper that matches the GraphQL type of that
+field. For example, `performers_filter` is a field of `SceneFilterType`, and
+its value is a `PerformerFilterType`, so compose `scene_filter()` with
+`performer_filter()`:
+
+```r
+findScenes(
+  scenefilter = scene_filter(
+    performers_filter = performer_filter(
+      name = includes("Leah")
+    )
+  )
+)
+```
+
+The same pattern works for other relationships exposed by the schema:
+
+```r
+findScenes(
+  scenefilter = scene_filter(
+    studios_filter = studio_filter(name = includes("Dream")),
+    tags_filter = tag_filter(name = equals("4k"))
+  )
+)
+
+findGalleries(
+  galleryfilter = gallery_filter(
+    performers_filter = performer_filter(name = includes("Leah"))
+  )
+)
+```
+
+The nested helper must be assigned to the named `*_filter` field. Passing a
+filter helper as an unnamed argument does not create a valid GraphQL input
+object, and a field such as `performer` is not interchangeable with the
+schema's `performers_filter` field.
+
+### Matching related records: `includes()` and `includes_all()`
+
+For relationship fields such as `performers`, `tags`, or `studios`,
+`includes()` matches when the record contains **at least one** of the supplied
+IDs:
+
+```r
+matching_performer_ids <- c(101, 202, 303)
+
+findScenes(
+  scenefilter = scene_filter(
+    performers = includes(matching_performer_ids)
+  )
+)
+```
+
+This returns scenes with one or more of those performers. It does not require
+every performer in the scene to be in the supplied vector.
+
+`includes_all()` has a different meaning: the record must contain **every ID
+supplied to the criterion**:
+
+```r
+findScenes(
+  scenefilter = scene_filter(
+    performers = includes_all(c(101, 202, 303))
+  )
+)
+```
+
+This asks for scenes containing performers `101`, `202`, and `303`. It does not
+mean that all performers in a matching scene satisfy some other condition; it
+only requires that all supplied IDs are present.
+
+To find scenes where every performer satisfies a condition such as being
+female, use a two-step workflow. First find the performer IDs, then use
+`includes()` to narrow the scene candidates, and finally check every performer
+in each returned scene:
+
+```r
+matching_performers <- findPerformers(
+  performerfilter = performer_filter(gender = equals("FEMALE")),
+  filter = find_filter(per_page = -1),
+  .field = c("performers", "id")
+)
+
+candidate_scenes <- findScenes(
+  scenefilter = scene_filter(
+    performers = includes(matching_performers)
+  ),
+  filter = find_filter(per_page = -1)
+)
+
+all_performers_match <- purrr::map_lgl(
+  candidate_scenes$performers,
+  function(performers) {
+    ids <- performers$id
+    length(ids) > 0 && all(ids %in% matching_performers)
+  }
+)
+
+scenes_all_matching <- candidate_scenes[all_performers_match, ]
+```
+
+The first server-side query is a candidate filter: it requires at least one
+matching performer. The final R-side check enforces the stronger requirement
+that no performer in the scene is outside `matching_performers`.
+
+## Combining filters with `AND`, `OR`, and `NOT`
+
+The boolean fields are recursive. Each one receives another filter list of the
+same type, so use a second `scene_filter()` inside a `scene_filter()`.
+
+### `AND`
+
+Require all conditions in the nested filter:
+
+```r
+scene_filter(
+  AND = scene_filter(
+    organized = equals(TRUE),
+    rating100 = greater_than(80)
+  )
+)
+```
+
+This represents:
+
+```text
+organized == TRUE AND rating100 > 80
+```
+
+### `OR`
+
+Match either condition in the nested filter:
+
+```r
+scene_filter(
+  OR = scene_filter(
+    title = includes("concert"),
+    details = includes("live")
+  )
+)
+```
+
+This represents:
+
+```text
+title contains "concert" OR details contains "live"
+```
+
+### `NOT`
+
+Exclude anything matching the nested filter:
+
+```r
+scene_filter(
+  NOT = scene_filter(
+    tags = includes(182)
+  )
+)
+```
+
+This represents:
+
+```text
+NOT (tags includes 182)
+```
+
+### A complete boolean expression
+
+Boolean filters can be combined with ordinary fields and with one another:
+
+```r
+scene_filter(
+  organized = equals(TRUE),
+  OR = scene_filter(
+    rating100 = greater_than(80),
+    performers = includes(84)
+  ),
+  NOT = scene_filter(
+    tags = includes(182)
+  )
+)
+```
+
+The expression means:
+
+```text
+organized == TRUE
+AND (rating100 > 80 OR performers includes 84)
+AND NOT (tags includes 182)
+```
+
+## The available filter helpers
+
+Each helper validates field names against the corresponding GraphQL input
+type. The full field list is also shown on each helper's help page.
+
+### Scenes
+
+```r
+findScenes(
+  scenefilter = scene_filter(
+    title = includes("concert"),
+    performers = includes_all(c(84, 85)),
+    organized = equals(TRUE)
+  )
+)
+```
+
+### Images
+
+```r
+findImages(
+  imagefilter = image_filter(
+    studios = includes(25),
+    rating100 = greater_than(80),
+    organized = equals(TRUE)
+  )
+)
+```
+
+### Galleries
+
+```r
+findGalleries(
+  galleryfilter = gallery_filter(
+    title = includes("Concert"),
+    has_chapters = equals(TRUE),
+    performers = includes(84)
+  )
+)
+```
+
+### Performers
+
+```r
+findPerformers(
+  performerfilter = performer_filter(
+    name = includes("Leah"),
+    gender = equals("FEMALE"),
+    rating100 = greater_than(75)
+  )
+)
+```
+
+### Studios
+
+```r
+findStudios(
+  studiofilter = studio_filter(
+    name = includes("Dream"),
+    favorite = equals(TRUE)
+  )
+)
+```
+
+### Tags
+
+```r
+findTags(
+  tagfilter = tag_filter(
+    name = includes("4k"),
+    favorite = equals(TRUE)
+  )
+)
+```
+
+### Groups
+
+```r
+findGroups(
+  groupfilter = group_filter(
+    name = includes("Collection"),
+    rating100 = greater_than(70)
+  )
+)
+```
+
+### Scene markers
+
+```r
+findSceneMarkers(
+  scenemarkerfilter = marker_filter(
+    tags = includes(182),
+    duration = greater_than(30)
+  )
+)
+```
+
+## Pagination, search, and unlimited results
+
+Use `find_filter()` for the shared pagination and search fields:
+
+```r
+find_filter(q = "Leah", per_page = 250, page = 2)
+```
+
+Pass it as the operation's `filter` argument:
+
+```r
+findScenes(
+  scenefilter = scene_filter(tags = includes(182)),
+  filter = find_filter(per_page = 250, page = 2)
+)
+```
+
+Use `per_page = -1` when you want all results. The package fetches the pages
+and combines them into one result:
+
+```r
+all_performers <- findPerformers(
+  filter = find_filter(q = "Leah", per_page = -1)
+)
+```
+
+The available `find_filter()` fields are `q`, `page`, `per_page`, `sort`, and
+`direction`.
+
+## Stash IDs
+
+Stash IDs are tied to an endpoint. Build a single-ID criterion with
+`stash_id()`:
+
+```r
+findStudios(
+  studiofilter = studio_filter(
+    stash_id = stash_id(endpoint_url, "abc123")
+  )
+)
+```
+
+For multiple IDs, use `stash_ids()`:
+
+```r
+findStudios(
+  studiofilter = studio_filter(
+    stash_ids_endpoint = stash_ids(
+      endpoint_url,
+      c("abc123", "def456")
+    )
+  )
+)
+```
+
+`studio_filter()` accepts `stash_id` as a user-friendly compatibility alias and
+translates it to the schema field `stash_id_endpoint`.
+
+## Strict field checking and legacy lists
+
+Curated helpers reject unknown fields by default:
+
+```r
+scene_filter(not_a_schema_field = 1)
+#> Error: unknown fields for SceneFilterType: not_a_schema_field
+```
+
+Set `.strict = FALSE` deliberately when using a schema field that is newer than
+the helper's curated list:
+
+```r
+scene_filter(new_schema_field = 1, .strict = FALSE)
+```
+
+You can always use the original nested-list form. This is useful for a schema
+field that is not yet covered by a typed helper:
+
+```r
+findScenes(
+  scenefilter = list(
+    tags = list(value = 182, modifier = "INCLUDES")
+  )
+)
+```
+
+The typed and legacy forms produce the same kind of GraphQL input values.
+
+## Selecting response shapes
+
+Generated operations return their result data by default. `.field` continues to
+select a nested field:
+
+```r
+scenes <- findScenes(
+  scenefilter = scene_filter(tags = includes(182))
+)
+
+count <- findScenes(
+  scenefilter = scene_filter(tags = includes(182)),
+  .field = "count"
+)
+```
+
+Use `.response = "object"` when you want selected data together with response
+metadata:
+
+```r
+result <- findScenes(
+  scenefilter = scene_filter(tags = includes(182)),
+  .response = "object"
+)
+
+result$data
+result$meta$count
+```
+
+Use `.response = "raw"` to inspect the decoded GraphQL envelope. Raw mode does
+not accept `.field`, because it returns the complete response rather than a
+selected data path:
+
+```r
+raw <- findScenes(.response = "raw")
+raw$data
+raw$errors
+```
+
+The helper layer only constructs input values. Connection setup, GraphQL
+execution, pagination, and response extraction remain the responsibility of the
+generated operation functions.

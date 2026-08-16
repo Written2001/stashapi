@@ -1,6 +1,9 @@
-RSCRIPT ?= Rscript --vanilla
+RSCRIPT ?= Rscript
 
-.PHONY: test generate-check lint coverage build check docs roxygen ci
+.PHONY: setup test generate-check lint coverage build check docs roxygen ci
+
+setup:
+	Rscript -e 'renv::restore(prompt = FALSE)'
 
 test:
 	$(RSCRIPT) -e 'testthat::test_local()'
@@ -25,5 +28,6 @@ docs:
 
 roxygen:
 	$(RSCRIPT) -e 'roxygen2::roxygenise()'
+	$(RSCRIPT) tools/generate_input_helper_docs.R
 
 ci: generate-check test lint check

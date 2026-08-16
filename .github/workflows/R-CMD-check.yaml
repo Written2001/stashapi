@@ -56,7 +56,9 @@ jobs:
       - name: Setup Deps
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::rcmdcheck
+          extra-packages: |
+            any::rcmdcheck
+            any::rmarkdown
           needs: check
 
       - name: Check
