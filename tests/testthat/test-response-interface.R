@@ -1,6 +1,6 @@
 response_api <- new.env(parent = globalenv())
 sys.source(
-  file.path(testthat::test_path("..", ".."), "R", "executeQuery.R"),
+  file.path(testthat::test_path("..", ".."), "R", "execute_query.R"),
   envir = response_api
 )
 sys.source(
@@ -15,7 +15,7 @@ testthat::test_that("default response mode preserves selected data", {
     }
   )
 
-  result <- response_api$executeQuery(
+  result <- response_api$execute_query(
     query = "query",
     variables = list(),
     connection = connection,
@@ -34,7 +34,7 @@ testthat::test_that("object responses preserve data and metadata", {
     }
   )
 
-  result <- response_api$executeQuery(
+  result <- response_api$execute_query(
     query = "query",
     variables = list(),
     connection = connection,
@@ -56,7 +56,7 @@ testthat::test_that("raw responses return the decoded GraphQL envelope", {
     }
   )
 
-  result <- response_api$executeQuery(
+  result <- response_api$execute_query(
     query = "query",
     variables = list(),
     connection = connection,
@@ -67,7 +67,7 @@ testthat::test_that("raw responses return the decoded GraphQL envelope", {
 
   testthat::expect_identical(result$data$find$count, 2L)
   raw_field_error <- tryCatch(
-    response_api$executeQuery(
+    response_api$execute_query(
       query = "query",
       variables = list(),
       connection = connection,
@@ -89,7 +89,7 @@ testthat::test_that("response failures use structured error classes", {
   )
 
   error <- tryCatch(
-    response_api$fetch(
+    response_api$fetch_response(
       query = "query",
       variables = list(),
       connection = connection,

@@ -1,3 +1,12 @@
+# stashapi 0.8.0
+
+- Rename the maintainer-authored query execution implementation to
+	`R/execute_query.R` and split its pagination, response decoding, and
+	normalization responsibilities into snake_case internal helpers.
+- Stabilize generated wrapper execution while preserving response modes,
+	pagination, metadata, progress bars, and existing operation contracts.
+- Bring the shared execution path to a clean repository lint baseline.
+
 # stashapi 0.7.0
 
 - Add `prepare_mutations()` for dry-run mutation planning with explicit missing-value policies.

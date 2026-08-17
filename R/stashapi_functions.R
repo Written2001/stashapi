@@ -19,7 +19,7 @@ fragment SavedFilter on SavedFilter { id mode name find_filter { ...SavedFindFil
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$findSavedFilter,
     variables = variables,
     connection = get_stash_connection(),
@@ -49,7 +49,7 @@ fragment SavedFilter on SavedFilter { id mode name find_filter { ...SavedFindFil
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$findSavedFilters,
     variables = variables,
     connection = get_stash_connection(),
@@ -84,7 +84,7 @@ fragment BaseFile on BaseFile { ...BasicFile ...VideoFile ...ImageFile ...Galler
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$findFile,
     variables = variables,
     connection = get_stash_connection(),
@@ -121,7 +121,7 @@ fragment FindFilesResultType on FindFilesResultType { count megapixels duration 
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$findFiles,
     variables = variables,
     connection = get_stash_connection(),
@@ -151,7 +151,7 @@ fragment Folder on Folder { id path basename parent_folder { id path basename } 
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$findFolder,
     variables = variables,
     connection = get_stash_connection(),
@@ -183,7 +183,7 @@ fragment FindFoldersResultType on FindFoldersResultType { count folders { ...Fol
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$findFolders,
     variables = variables,
     connection = get_stash_connection(),
@@ -219,7 +219,7 @@ fragment Scene on Scene { id title code details director urls date rating100 org
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$findScene,
     variables = variables,
     connection = get_stash_connection(),
@@ -258,7 +258,7 @@ fragment Scene on Scene { id title code details director urls date rating100 org
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$findSceneByHash,
     variables = variables,
     connection = get_stash_connection(),
@@ -297,7 +297,7 @@ fragment FindScenesResultType on FindScenesResultType { count duration filesize 
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$findScenes,
     variables = variables,
     connection = get_stash_connection(),
@@ -333,7 +333,7 @@ fragment FindScenesResultType on FindScenesResultType { count duration filesize 
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$findScenesByPathRegex,
     variables = variables,
     connection = get_stash_connection(),
@@ -369,7 +369,7 @@ fragment Scene on Scene { id title code details director urls date rating100 org
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$findDuplicateScenes,
     variables = variables,
     connection = get_stash_connection(),
@@ -398,7 +398,7 @@ fragment SceneStreamEndpoint on SceneStreamEndpoint { url mime_type label }
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$sceneStreams,
     variables = variables,
     connection = get_stash_connection(),
@@ -434,7 +434,7 @@ fragment SceneParserResultType on SceneParserResultType { count results { ...Sce
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$parseSceneFilenames,
     variables = variables,
     connection = get_stash_connection(),
@@ -466,7 +466,7 @@ fragment FindSceneMarkersResultType on FindSceneMarkersResultType { count scene_
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$findSceneMarkers,
     variables = variables,
     connection = get_stash_connection(),
@@ -501,7 +501,7 @@ fragment Image on Image { id title code rating100 urls date details photographer
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$findImage,
     variables = variables,
     connection = get_stash_connection(),
@@ -539,7 +539,7 @@ fragment FindImagesResultType on FindImagesResultType { count megapixels filesiz
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$findImages,
     variables = variables,
     connection = get_stash_connection(),
@@ -572,7 +572,7 @@ fragment Performer on Performer { id name disambiguation urls gender birthdate e
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$findPerformer,
     variables = variables,
     connection = get_stash_connection(),
@@ -605,7 +605,7 @@ fragment FindPerformersResultType on FindPerformersResultType { count performers
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$findPerformers,
     variables = variables,
     connection = get_stash_connection(),
@@ -638,7 +638,7 @@ fragment Studio on Studio { id name urls parent_studio { id name } child_studios
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$findStudio,
     variables = variables,
     connection = get_stash_connection(),
@@ -670,7 +670,7 @@ fragment FindStudiosResultType on FindStudiosResultType { count studios { ...Stu
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$findStudios,
     variables = variables,
     connection = get_stash_connection(),
@@ -704,7 +704,7 @@ fragment Group on Group { id name aliases duration date rating100 studio { id na
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$findGroup,
     variables = variables,
     connection = get_stash_connection(),
@@ -737,7 +737,7 @@ fragment FindGroupsResultType on FindGroupsResultType { count groups { ...Group 
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$findGroups,
     variables = variables,
     connection = get_stash_connection(),
@@ -774,7 +774,7 @@ fragment Gallery on Gallery { id title code urls date details photographer ratin
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$findGallery,
     variables = variables,
     connection = get_stash_connection(),
@@ -810,7 +810,7 @@ fragment FindGalleriesResultType on FindGalleriesResultType { count galleries { 
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$findGalleries,
     variables = variables,
     connection = get_stash_connection(),
@@ -843,7 +843,7 @@ fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag crea
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$findTag,
     variables = variables,
     connection = get_stash_connection(),
@@ -875,7 +875,7 @@ fragment FindTagsResultType on FindTagsResultType { count tags { ...Tag } }
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$findTags,
     variables = variables,
     connection = get_stash_connection(),
@@ -904,7 +904,7 @@ fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_se
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$markerWall,
     variables = variables,
     connection = get_stash_connection(),
@@ -939,7 +939,7 @@ fragment Scene on Scene { id title code details director urls date rating100 org
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$sceneWall,
     variables = variables,
     connection = get_stash_connection(),
@@ -969,7 +969,7 @@ fragment MarkerStringsResultType on MarkerStringsResultType { count id title }
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$markerStrings,
     variables = variables,
     connection = get_stash_connection(),
@@ -997,7 +997,7 @@ fragment StatsResultType on StatsResultType { scene_count scenes_size scenes_dur
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$stats,
     variables = variables,
     connection = get_stash_connection(),
@@ -1031,7 +1031,7 @@ fragment SceneMarkerTag on SceneMarkerTag { tag { id name } scene_markers { ...S
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$sceneMarkerTags,
     variables = variables,
     connection = get_stash_connection(),
@@ -1059,7 +1059,7 @@ fragment LogEntry on LogEntry { time level message }
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$logs,
     variables = variables,
     connection = get_stash_connection(),
@@ -1093,7 +1093,7 @@ fragment Scraper on Scraper { id name performer { ...ScraperSpec } scene { ...Sc
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$listScrapers,
     variables = variables,
     connection = get_stash_connection(),
@@ -1134,7 +1134,7 @@ fragment ScrapedScene on ScrapedScene { title code details director urls date fi
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$scrapeSingleScene,
     variables = variables,
     connection = get_stash_connection(),
@@ -1175,7 +1175,7 @@ fragment ScrapedScene on ScrapedScene { title code details director urls date fi
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$scrapeMultiScenes,
     variables = variables,
     connection = get_stash_connection(),
@@ -1212,7 +1212,7 @@ fragment ScrapedStudio on ScrapedStudio { stored_id name urls parent { stored_id
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$scrapeSingleStudio,
     variables = variables,
     connection = get_stash_connection(),
@@ -1249,7 +1249,7 @@ fragment ScrapedTag on ScrapedTag { stored_id name description alias_list parent
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$scrapeSingleTag,
     variables = variables,
     connection = get_stash_connection(),
@@ -1286,7 +1286,7 @@ fragment ScrapedPerformer on ScrapedPerformer { stored_id name disambiguation ge
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$scrapeSinglePerformer,
     variables = variables,
     connection = get_stash_connection(),
@@ -1323,7 +1323,7 @@ fragment ScrapedPerformer on ScrapedPerformer { stored_id name disambiguation ge
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$scrapeMultiPerformers,
     variables = variables,
     connection = get_stash_connection(),
@@ -1361,7 +1361,7 @@ fragment ScrapedGallery on ScrapedGallery { title code details photographer urls
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$scrapeSingleGallery,
     variables = variables,
     connection = get_stash_connection(),
@@ -1398,7 +1398,7 @@ fragment ScrapedGroup on ScrapedGroup { stored_id name aliases duration date rat
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$scrapeSingleGroup,
     variables = variables,
     connection = get_stash_connection(),
@@ -1436,7 +1436,7 @@ fragment ScrapedImage on ScrapedImage { title code details photographer urls dat
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$scrapeSingleImage,
     variables = variables,
     connection = get_stash_connection(),
@@ -1483,7 +1483,7 @@ fragment ScrapedContent on ScrapedContent { ...ScrapedStudio ...ScrapedTag ...Sc
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$scrapeURL,
     variables = variables,
     connection = get_stash_connection(),
@@ -1516,7 +1516,7 @@ fragment ScrapedPerformer on ScrapedPerformer { stored_id name disambiguation ge
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$scrapePerformerURL,
     variables = variables,
     connection = get_stash_connection(),
@@ -1553,7 +1553,7 @@ fragment ScrapedScene on ScrapedScene { title code details director urls date fi
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$scrapeSceneURL,
     variables = variables,
     connection = get_stash_connection(),
@@ -1587,7 +1587,7 @@ fragment ScrapedGallery on ScrapedGallery { title code details photographer urls
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$scrapeGalleryURL,
     variables = variables,
     connection = get_stash_connection(),
@@ -1621,7 +1621,7 @@ fragment ScrapedImage on ScrapedImage { title code details photographer urls dat
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$scrapeImageURL,
     variables = variables,
     connection = get_stash_connection(),
@@ -1654,7 +1654,7 @@ fragment ScrapedGroup on ScrapedGroup { stored_id name aliases duration date rat
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$scrapeGroupURL,
     variables = variables,
     connection = get_stash_connection(),
@@ -1686,7 +1686,7 @@ fragment Plugin on Plugin { id name description url version enabled settings { .
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$plugins,
     variables = variables,
     connection = get_stash_connection(),
@@ -1718,7 +1718,7 @@ fragment PluginTask on PluginTask { name description }
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$pluginTasks,
     variables = variables,
     connection = get_stash_connection(),
@@ -1751,7 +1751,7 @@ fragment Package on Package { package_id name version date sourceURL metadata }
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$installedPackages,
     variables = variables,
     connection = get_stash_connection(),
@@ -1788,7 +1788,7 @@ fragment Package on Package { package_id name version date sourceURL metadata }
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$availablePackages,
     variables = variables,
     connection = get_stash_connection(),
@@ -1835,7 +1835,7 @@ fragment ConfigResult on ConfigResult { general { ...ConfigGeneralResult } inter
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$configuration,
     variables = variables,
     connection = get_stash_connection(),
@@ -1865,7 +1865,7 @@ fragment Directory on Directory { path parent directories }
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$directory,
     variables = variables,
     connection = get_stash_connection(),
@@ -1898,7 +1898,7 @@ fragment StashBoxValidationResult on StashBoxValidationResult { valid status }
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$validateStashBoxCredentials,
     variables = variables,
     connection = get_stash_connection(),
@@ -1926,7 +1926,7 @@ fragment SystemStatus on SystemStatus { databaseSchema databasePath configPath a
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$systemStatus,
     variables = variables,
     connection = get_stash_connection(),
@@ -1954,7 +1954,7 @@ fragment Job on Job { id status subTasks description progress startTime endTime 
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$jobQueue,
     variables = variables,
     connection = get_stash_connection(),
@@ -1987,7 +1987,7 @@ fragment Job on Job { id status subTasks description progress startTime endTime 
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$findJob,
     variables = variables,
     connection = get_stash_connection(),
@@ -2016,7 +2016,7 @@ fragment DLNAStatus on DLNAStatus { running until recentIPAddresses allowedIPAdd
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$dlnaStatus,
     variables = variables,
     connection = get_stash_connection(),
@@ -2044,7 +2044,7 @@ fragment Performer on Performer { id name disambiguation urls gender birthdate e
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$allPerformers,
     variables = variables,
     connection = get_stash_connection(),
@@ -2072,7 +2072,7 @@ fragment Version on Version { version hash build_time }
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$version,
     variables = variables,
     connection = get_stash_connection(),
@@ -2100,7 +2100,7 @@ fragment LatestVersion on LatestVersion { version shorthash release_date url }
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$latestversion,
     variables = variables,
     connection = get_stash_connection(),
@@ -2132,7 +2132,7 @@ setup <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$setup,
     variables = variables,
     connection = get_stash_connection(),
@@ -2164,7 +2164,7 @@ migrate <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$migrate,
     variables = variables,
     connection = get_stash_connection(),
@@ -2191,7 +2191,7 @@ downloadFFMpeg <- function(...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$downloadFFMpeg,
     variables = variables,
     connection = get_stash_connection(),
@@ -2230,7 +2230,7 @@ fragment Scene on Scene { id title code details director urls date rating100 org
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$sceneCreate,
     variables = variables,
     connection = get_stash_connection(),
@@ -2269,7 +2269,7 @@ fragment Scene on Scene { id title code details director urls date rating100 org
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$sceneUpdate,
     variables = variables,
     connection = get_stash_connection(),
@@ -2308,7 +2308,7 @@ fragment Scene on Scene { id title code details director urls date rating100 org
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$sceneMerge,
     variables = variables,
     connection = get_stash_connection(),
@@ -2347,7 +2347,7 @@ fragment Scene on Scene { id title code details director urls date rating100 org
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$bulkSceneUpdate,
     variables = variables,
     connection = get_stash_connection(),
@@ -2379,7 +2379,7 @@ sceneDestroy <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$sceneDestroy,
     variables = variables,
     connection = get_stash_connection(),
@@ -2411,7 +2411,7 @@ scenesDestroy <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$scenesDestroy,
     variables = variables,
     connection = get_stash_connection(),
@@ -2450,7 +2450,7 @@ fragment Scene on Scene { id title code details director urls date rating100 org
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$scenesUpdate,
     variables = variables,
     connection = get_stash_connection(),
@@ -2484,7 +2484,7 @@ fragment HistoryMutationResult on HistoryMutationResult { count history }
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$sceneAddO,
     variables = variables,
     connection = get_stash_connection(),
@@ -2518,7 +2518,7 @@ fragment HistoryMutationResult on HistoryMutationResult { count history }
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$sceneDeleteO,
     variables = variables,
     connection = get_stash_connection(),
@@ -2550,7 +2550,7 @@ sceneResetO <- function(id = list(), ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$sceneResetO,
     variables = variables,
     connection = get_stash_connection(),
@@ -2584,7 +2584,7 @@ sceneSaveActivity <- function(id = list(), resumetime = NA, playDuration = NA, .
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$sceneSaveActivity,
     variables = variables,
     connection = get_stash_connection(),
@@ -2618,7 +2618,7 @@ sceneResetActivity <- function(id = list(), resetresume = NA, resetduration = NA
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$sceneResetActivity,
     variables = variables,
     connection = get_stash_connection(),
@@ -2652,7 +2652,7 @@ fragment HistoryMutationResult on HistoryMutationResult { count history }
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$sceneAddPlay,
     variables = variables,
     connection = get_stash_connection(),
@@ -2686,7 +2686,7 @@ fragment HistoryMutationResult on HistoryMutationResult { count history }
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$sceneDeletePlay,
     variables = variables,
     connection = get_stash_connection(),
@@ -2718,7 +2718,7 @@ sceneResetPlayCount <- function(id = list(), ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$sceneResetPlayCount,
     variables = variables,
     connection = get_stash_connection(),
@@ -2751,7 +2751,7 @@ sceneGenerateScreenshot <- function(id = list(), at = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$sceneGenerateScreenshot,
     variables = variables,
     connection = get_stash_connection(),
@@ -2784,7 +2784,7 @@ fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_se
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$sceneMarkerCreate,
     variables = variables,
     connection = get_stash_connection(),
@@ -2817,7 +2817,7 @@ fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_se
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$sceneMarkerUpdate,
     variables = variables,
     connection = get_stash_connection(),
@@ -2850,7 +2850,7 @@ fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_se
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$bulkSceneMarkerUpdate,
     variables = variables,
     connection = get_stash_connection(),
@@ -2882,7 +2882,7 @@ sceneMarkerDestroy <- function(id = list(), ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$sceneMarkerDestroy,
     variables = variables,
     connection = get_stash_connection(),
@@ -2914,7 +2914,7 @@ sceneMarkersDestroy <- function(ids = list(), ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$sceneMarkersDestroy,
     variables = variables,
     connection = get_stash_connection(),
@@ -2946,7 +2946,7 @@ sceneAssignFile <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$sceneAssignFile,
     variables = variables,
     connection = get_stash_connection(),
@@ -2984,7 +2984,7 @@ fragment Image on Image { id title code rating100 urls date details photographer
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$imageUpdate,
     variables = variables,
     connection = get_stash_connection(),
@@ -3022,7 +3022,7 @@ fragment Image on Image { id title code rating100 urls date details photographer
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$bulkImageUpdate,
     variables = variables,
     connection = get_stash_connection(),
@@ -3054,7 +3054,7 @@ imageDestroy <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$imageDestroy,
     variables = variables,
     connection = get_stash_connection(),
@@ -3086,7 +3086,7 @@ imagesDestroy <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$imagesDestroy,
     variables = variables,
     connection = get_stash_connection(),
@@ -3124,7 +3124,7 @@ fragment Image on Image { id title code rating100 urls date details photographer
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$imagesUpdate,
     variables = variables,
     connection = get_stash_connection(),
@@ -3156,7 +3156,7 @@ imageIncrementO <- function(id = list(), ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$imageIncrementO,
     variables = variables,
     connection = get_stash_connection(),
@@ -3188,7 +3188,7 @@ imageDecrementO <- function(id = list(), ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$imageDecrementO,
     variables = variables,
     connection = get_stash_connection(),
@@ -3220,7 +3220,7 @@ imageResetO <- function(id = list(), ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$imageResetO,
     variables = variables,
     connection = get_stash_connection(),
@@ -3257,7 +3257,7 @@ fragment Gallery on Gallery { id title code urls date details photographer ratin
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$galleryCreate,
     variables = variables,
     connection = get_stash_connection(),
@@ -3294,7 +3294,7 @@ fragment Gallery on Gallery { id title code urls date details photographer ratin
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$galleryUpdate,
     variables = variables,
     connection = get_stash_connection(),
@@ -3331,7 +3331,7 @@ fragment Gallery on Gallery { id title code urls date details photographer ratin
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$bulkGalleryUpdate,
     variables = variables,
     connection = get_stash_connection(),
@@ -3363,7 +3363,7 @@ galleryDestroy <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$galleryDestroy,
     variables = variables,
     connection = get_stash_connection(),
@@ -3400,7 +3400,7 @@ fragment Gallery on Gallery { id title code urls date details photographer ratin
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$galleriesUpdate,
     variables = variables,
     connection = get_stash_connection(),
@@ -3432,7 +3432,7 @@ addGalleryImages <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$addGalleryImages,
     variables = variables,
     connection = get_stash_connection(),
@@ -3464,7 +3464,7 @@ removeGalleryImages <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$removeGalleryImages,
     variables = variables,
     connection = get_stash_connection(),
@@ -3496,7 +3496,7 @@ setGalleryCover <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$setGalleryCover,
     variables = variables,
     connection = get_stash_connection(),
@@ -3528,7 +3528,7 @@ resetGalleryCover <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$resetGalleryCover,
     variables = variables,
     connection = get_stash_connection(),
@@ -3561,7 +3561,7 @@ fragment GalleryChapter on GalleryChapter { id gallery { id title } title image_
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$galleryChapterCreate,
     variables = variables,
     connection = get_stash_connection(),
@@ -3594,7 +3594,7 @@ fragment GalleryChapter on GalleryChapter { id gallery { id title } title image_
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$galleryChapterUpdate,
     variables = variables,
     connection = get_stash_connection(),
@@ -3626,7 +3626,7 @@ galleryChapterDestroy <- function(id = list(), ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$galleryChapterDestroy,
     variables = variables,
     connection = get_stash_connection(),
@@ -3659,7 +3659,7 @@ fragment Performer on Performer { id name disambiguation urls gender birthdate e
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$performerCreate,
     variables = variables,
     connection = get_stash_connection(),
@@ -3692,7 +3692,7 @@ fragment Performer on Performer { id name disambiguation urls gender birthdate e
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$performerUpdate,
     variables = variables,
     connection = get_stash_connection(),
@@ -3724,7 +3724,7 @@ performerDestroy <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$performerDestroy,
     variables = variables,
     connection = get_stash_connection(),
@@ -3756,7 +3756,7 @@ performersDestroy <- function(ids = list(), ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$performersDestroy,
     variables = variables,
     connection = get_stash_connection(),
@@ -3789,7 +3789,7 @@ fragment Performer on Performer { id name disambiguation urls gender birthdate e
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$bulkPerformerUpdate,
     variables = variables,
     connection = get_stash_connection(),
@@ -3822,7 +3822,7 @@ fragment Performer on Performer { id name disambiguation urls gender birthdate e
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$performerMerge,
     variables = variables,
     connection = get_stash_connection(),
@@ -3855,7 +3855,7 @@ fragment Studio on Studio { id name urls parent_studio { id name } child_studios
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$studioCreate,
     variables = variables,
     connection = get_stash_connection(),
@@ -3888,7 +3888,7 @@ fragment Studio on Studio { id name urls parent_studio { id name } child_studios
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$studioUpdate,
     variables = variables,
     connection = get_stash_connection(),
@@ -3920,7 +3920,7 @@ studioDestroy <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$studioDestroy,
     variables = variables,
     connection = get_stash_connection(),
@@ -3952,7 +3952,7 @@ studiosDestroy <- function(ids = list(), ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$studiosDestroy,
     variables = variables,
     connection = get_stash_connection(),
@@ -3985,7 +3985,7 @@ fragment Studio on Studio { id name urls parent_studio { id name } child_studios
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$bulkStudioUpdate,
     variables = variables,
     connection = get_stash_connection(),
@@ -4019,7 +4019,7 @@ fragment Group on Group { id name aliases duration date rating100 studio { id na
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$groupCreate,
     variables = variables,
     connection = get_stash_connection(),
@@ -4053,7 +4053,7 @@ fragment Group on Group { id name aliases duration date rating100 studio { id na
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$groupUpdate,
     variables = variables,
     connection = get_stash_connection(),
@@ -4085,7 +4085,7 @@ groupDestroy <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$groupDestroy,
     variables = variables,
     connection = get_stash_connection(),
@@ -4117,7 +4117,7 @@ groupsDestroy <- function(ids = list(), ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$groupsDestroy,
     variables = variables,
     connection = get_stash_connection(),
@@ -4151,7 +4151,7 @@ fragment Group on Group { id name aliases duration date rating100 studio { id na
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$bulkGroupUpdate,
     variables = variables,
     connection = get_stash_connection(),
@@ -4183,7 +4183,7 @@ addGroupSubGroups <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$addGroupSubGroups,
     variables = variables,
     connection = get_stash_connection(),
@@ -4215,7 +4215,7 @@ removeGroupSubGroups <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$removeGroupSubGroups,
     variables = variables,
     connection = get_stash_connection(),
@@ -4247,7 +4247,7 @@ reorderSubGroups <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$reorderSubGroups,
     variables = variables,
     connection = get_stash_connection(),
@@ -4280,7 +4280,7 @@ fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag crea
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$tagCreate,
     variables = variables,
     connection = get_stash_connection(),
@@ -4313,7 +4313,7 @@ fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag crea
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$tagUpdate,
     variables = variables,
     connection = get_stash_connection(),
@@ -4345,7 +4345,7 @@ tagDestroy <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$tagDestroy,
     variables = variables,
     connection = get_stash_connection(),
@@ -4377,7 +4377,7 @@ tagsDestroy <- function(ids = list(), ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$tagsDestroy,
     variables = variables,
     connection = get_stash_connection(),
@@ -4410,7 +4410,7 @@ fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag crea
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$tagsMerge,
     variables = variables,
     connection = get_stash_connection(),
@@ -4443,7 +4443,7 @@ fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag crea
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$bulkTagUpdate,
     variables = variables,
     connection = get_stash_connection(),
@@ -4475,7 +4475,7 @@ moveFiles <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$moveFiles,
     variables = variables,
     connection = get_stash_connection(),
@@ -4507,7 +4507,7 @@ deleteFiles <- function(ids = list(), ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$deleteFiles,
     variables = variables,
     connection = get_stash_connection(),
@@ -4539,7 +4539,7 @@ destroyFiles <- function(ids = list(), ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$destroyFiles,
     variables = variables,
     connection = get_stash_connection(),
@@ -4571,7 +4571,7 @@ fileSetFingerprints <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$fileSetFingerprints,
     variables = variables,
     connection = get_stash_connection(),
@@ -4603,7 +4603,7 @@ revealFileInFileManager <- function(id = list(), ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$revealFileInFileManager,
     variables = variables,
     connection = get_stash_connection(),
@@ -4635,7 +4635,7 @@ revealFolderInFileManager <- function(id = list(), ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$revealFolderInFileManager,
     variables = variables,
     connection = get_stash_connection(),
@@ -4669,7 +4669,7 @@ fragment SavedFilter on SavedFilter { id mode name find_filter { ...SavedFindFil
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$saveFilter,
     variables = variables,
     connection = get_stash_connection(),
@@ -4701,7 +4701,7 @@ destroySavedFilter <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$destroySavedFilter,
     variables = variables,
     connection = get_stash_connection(),
@@ -4737,7 +4737,7 @@ fragment ConfigGeneralResult on ConfigGeneralResult { stashes { ...StashConfig }
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$configureGeneral,
     variables = variables,
     connection = get_stash_connection(),
@@ -4772,7 +4772,7 @@ fragment ConfigInterfaceResult on ConfigInterfaceResult { sfwContentMode menuIte
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$configureInterface,
     variables = variables,
     connection = get_stash_connection(),
@@ -4805,7 +4805,7 @@ fragment ConfigDLNAResult on ConfigDLNAResult { serverName enabled port whitelis
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$configureDLNA,
     variables = variables,
     connection = get_stash_connection(),
@@ -4838,7 +4838,7 @@ fragment ConfigScrapingResult on ConfigScrapingResult { scraperUserAgent scraper
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$configureScraping,
     variables = variables,
     connection = get_stash_connection(),
@@ -4880,7 +4880,7 @@ fragment ConfigDefaultSettingsResult on ConfigDefaultSettingsResult { scan { ...
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$configureDefaults,
     variables = variables,
     connection = get_stash_connection(),
@@ -4916,7 +4916,7 @@ configurePlugin <- function(pluginid = list(), input = list(), ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$configurePlugin,
     variables = variables,
     connection = get_stash_connection(),
@@ -4945,7 +4945,7 @@ configureUI <- function(input = NA, partial = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$configureUI,
     variables = variables,
     connection = get_stash_connection(),
@@ -4978,7 +4978,7 @@ configureUISetting <- function(key = list(), value = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$configureUISetting,
     variables = variables,
     connection = get_stash_connection(),
@@ -5010,7 +5010,7 @@ generateAPIKey <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$generateAPIKey,
     variables = variables,
     connection = get_stash_connection(),
@@ -5042,7 +5042,7 @@ exportObjects <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$exportObjects,
     variables = variables,
     connection = get_stash_connection(),
@@ -5074,7 +5074,7 @@ importObjects <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$importObjects,
     variables = variables,
     connection = get_stash_connection(),
@@ -5101,7 +5101,7 @@ metadataImport <- function(...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$metadataImport,
     variables = variables,
     connection = get_stash_connection(),
@@ -5128,7 +5128,7 @@ metadataExport <- function(...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$metadataExport,
     variables = variables,
     connection = get_stash_connection(),
@@ -5160,7 +5160,7 @@ metadataScan <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$metadataScan,
     variables = variables,
     connection = get_stash_connection(),
@@ -5192,7 +5192,7 @@ metadataGenerate <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$metadataGenerate,
     variables = variables,
     connection = get_stash_connection(),
@@ -5224,7 +5224,7 @@ metadataAutoTag <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$metadataAutoTag,
     variables = variables,
     connection = get_stash_connection(),
@@ -5256,7 +5256,7 @@ metadataClean <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$metadataClean,
     variables = variables,
     connection = get_stash_connection(),
@@ -5288,7 +5288,7 @@ metadataCleanGenerated <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$metadataCleanGenerated,
     variables = variables,
     connection = get_stash_connection(),
@@ -5320,7 +5320,7 @@ metadataIdentify <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$metadataIdentify,
     variables = variables,
     connection = get_stash_connection(),
@@ -5347,7 +5347,7 @@ migrateHashNaming <- function(...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$migrateHashNaming,
     variables = variables,
     connection = get_stash_connection(),
@@ -5379,7 +5379,7 @@ migrateSceneScreenshots <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$migrateSceneScreenshots,
     variables = variables,
     connection = get_stash_connection(),
@@ -5411,7 +5411,7 @@ migrateBlobs <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$migrateBlobs,
     variables = variables,
     connection = get_stash_connection(),
@@ -5443,7 +5443,7 @@ anonymiseDatabase <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$anonymiseDatabase,
     variables = variables,
     connection = get_stash_connection(),
@@ -5470,7 +5470,7 @@ optimiseDatabase <- function(...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$optimiseDatabase,
     variables = variables,
     connection = get_stash_connection(),
@@ -5497,7 +5497,7 @@ reloadScrapers <- function(...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$reloadScrapers,
     variables = variables,
     connection = get_stash_connection(),
@@ -5529,7 +5529,7 @@ setPluginsEnabled <- function(enabledMap = list(), ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$setPluginsEnabled,
     variables = variables,
     connection = get_stash_connection(),
@@ -5565,7 +5565,7 @@ runPluginTask <- function(pluginid = list(), taskname = NA, description = NA, ar
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$runPluginTask,
     variables = variables,
     connection = get_stash_connection(),
@@ -5598,7 +5598,7 @@ runPluginOperation <- function(pluginid = list(), args = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$runPluginOperation,
     variables = variables,
     connection = get_stash_connection(),
@@ -5625,7 +5625,7 @@ reloadPlugins <- function(...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$reloadPlugins,
     variables = variables,
     connection = get_stash_connection(),
@@ -5661,7 +5661,7 @@ installPackages <- function(type = NA, packages = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$installPackages,
     variables = variables,
     connection = get_stash_connection(),
@@ -5694,7 +5694,7 @@ updatePackages <- function(type = NA, packages = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$updatePackages,
     variables = variables,
     connection = get_stash_connection(),
@@ -5730,7 +5730,7 @@ uninstallPackages <- function(type = NA, packages = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$uninstallPackages,
     variables = variables,
     connection = get_stash_connection(),
@@ -5762,7 +5762,7 @@ stopJob <- function(jobid = list(), ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$stopJob,
     variables = variables,
     connection = get_stash_connection(),
@@ -5789,7 +5789,7 @@ stopAllJobs <- function(...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$stopAllJobs,
     variables = variables,
     connection = get_stash_connection(),
@@ -5821,7 +5821,7 @@ submitStashBoxFingerprints <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$submitStashBoxFingerprints,
     variables = variables,
     connection = get_stash_connection(),
@@ -5853,7 +5853,7 @@ submitStashBoxSceneDraft <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$submitStashBoxSceneDraft,
     variables = variables,
     connection = get_stash_connection(),
@@ -5885,7 +5885,7 @@ submitStashBoxPerformerDraft <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$submitStashBoxPerformerDraft,
     variables = variables,
     connection = get_stash_connection(),
@@ -5917,7 +5917,7 @@ backupDatabase <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$backupDatabase,
     variables = variables,
     connection = get_stash_connection(),
@@ -5951,7 +5951,7 @@ fragment SQLQueryResult on SQLQueryResult { columns rows }
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$querySQL,
     variables = variables,
     connection = get_stash_connection(),
@@ -5985,7 +5985,7 @@ fragment SQLExecResult on SQLExecResult { rows_affected last_insert_id }
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$execSQL,
     variables = variables,
     connection = get_stash_connection(),
@@ -6017,7 +6017,7 @@ stashBoxBatchPerformerTag <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$stashBoxBatchPerformerTag,
     variables = variables,
     connection = get_stash_connection(),
@@ -6049,7 +6049,7 @@ stashBoxBatchStudioTag <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$stashBoxBatchStudioTag,
     variables = variables,
     connection = get_stash_connection(),
@@ -6081,7 +6081,7 @@ stashBoxBatchTagTag <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$stashBoxBatchTagTag,
     variables = variables,
     connection = get_stash_connection(),
@@ -6113,7 +6113,7 @@ enableDLNA <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$enableDLNA,
     variables = variables,
     connection = get_stash_connection(),
@@ -6145,7 +6145,7 @@ disableDLNA <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$disableDLNA,
     variables = variables,
     connection = get_stash_connection(),
@@ -6177,7 +6177,7 @@ addTempDLNAIP <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$addTempDLNAIP,
     variables = variables,
     connection = get_stash_connection(),
@@ -6209,7 +6209,7 @@ removeTempDLNAIP <- function(input = NA, ...) {
   field <- options$field
   response <- options$response
   progress_bar <- options$progress_bar
-  res <- executeQuery(
+  res <- execute_query(
     query = query$queries$removeTempDLNAIP,
     variables = variables,
     connection = get_stash_connection(),

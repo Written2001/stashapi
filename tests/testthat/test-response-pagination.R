@@ -1,7 +1,7 @@
 testthat::test_that("object responses combine all pages and retain metadata", {
   response_api <- new.env(parent = globalenv())
   sys.source(
-    file.path(testthat::test_path("..", ".."), "R", "executeQuery.R"),
+    file.path(testthat::test_path("..", ".."), "R", "execute_query.R"),
     envir = response_api
   )
   sys.source(
@@ -19,7 +19,7 @@ testthat::test_that("object responses combine all pages and retain metadata", {
     }
   )
 
-  result <- response_api$executeQuery(
+  result <- response_api$execute_query(
     query = "query",
     variables = list(filter = list(per_page = -1L)),
     connection = connection,

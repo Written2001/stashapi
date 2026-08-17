@@ -93,7 +93,7 @@ render_r_wrapper <- function(operation, document) {
     "  field <- options$field\n",
     "  response <- options$response\n",
     "  progress_bar <- options$progress_bar\n",
-    "  res <- executeQuery(\n",
+    "  res <- execute_query(\n",
     "    query = query$queries$", query_name, ",\n",
     "    variables = variables,\n",
     "    connection = get_stash_connection(),\n",

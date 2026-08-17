@@ -1,4 +1,4 @@
-testthat::test_that("clean_list normalizes empty nested values", {
+testthat::test_that("clean_response_data normalizes empty nested values", {
   input <- list(
     id = 42,
     empty = list(),
@@ -6,7 +6,7 @@ testthat::test_that("clean_list normalizes empty nested values", {
     nested = list(name = "example")
   )
 
-  result <- stashapi:::clean_list(input)
+  result <- stashapi:::clean_response_data(input)
 
   testthat::expect_true(tibble::is_tibble(result))
   testthat::expect_identical(result$id, 42)
@@ -23,7 +23,7 @@ testthat::test_that("fetch reports GraphQL errors from an offline fake connectio
   )
 
   testthat::expect_error(
-    stashapi:::fetch(
+    stashapi:::fetch_response(
       query = "query",
       variables = list(),
       connection = connection,
@@ -34,14 +34,14 @@ testthat::test_that("fetch reports GraphQL errors from an offline fake connectio
   )
 })
 
-testthat::test_that("executeQuery uses the fake connection without network access", {
+testthat::test_that("execute_query uses the fake connection without network access", {
   connection <- list(
     exec = function(query, variables) {
       '{"data":{"value":"ok"}}'
     }
   )
 
-  result <- stashapi:::executeQuery(
+  result <- stashapi:::execute_query(
     query = "query",
     variables = list(),
     connection = connection,
