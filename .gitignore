@@ -3,3 +3,4 @@
 .RData
 .stash_credentials
 .vscode
+stashapi*.tar.gz

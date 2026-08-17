@@ -11,7 +11,7 @@ findScene(id = NA, checksum = NA, ...)
 
 \item{checksum}{See the Playground for further details.}
 
-\item{...}{additional parameters like .field to retrieve only a certain field from the response}
+\item{...}{additional parameters including \code{.field} for field selection, \code{.response} for response mode, and \code{.progress_bar} to show an opt-in progress bar while collecting paginated results.}
 }
 \value{
 processed API response

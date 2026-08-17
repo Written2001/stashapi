@@ -2,6 +2,8 @@
 
 - Add `prepare_mutations()` for dry-run mutation planning with explicit missing-value policies.
 - Add `execute_mutations()` with indexed results, stop/continue error handling, and dry-run defaults.
+- Replace `hasConnection()` with `is_stash_connected()` and remove the redundant `setStashCredentials()` wrapper.
+- Add opt-in progress bars for paginated generated queries and mutation plans.
 
 # stashapi 0.6.0
 

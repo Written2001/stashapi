@@ -18,7 +18,7 @@ coverage:
 	$(RSCRIPT) -e 'coverage <- covr::package_coverage(); writeLines(capture.output(print(coverage)), "coverage.txt")'
 
 build:
-	R CMD build .
+	$(RSCRIPT) -e 'renv::load(); status <- system2("R", c("CMD", "build", ".")); quit(status = status)'
 
 check:
 	$(RSCRIPT) -e 'rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")'

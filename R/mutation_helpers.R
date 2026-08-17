@@ -56,6 +56,7 @@ prepare_mutations <- function(
 #' @param dry_run Whether to skip mutation calls and return a preview.
 #' @param on_error Error policy: `"stop"` or `"continue"`.
 #' @param progress Whether to report each mutation.
+#' @param progress_bar Whether to display a progress bar.
 #' @return An object of class `stashapi_mutation_result`.
 #' @export
 execute_mutations <- function(
@@ -63,13 +64,17 @@ execute_mutations <- function(
   mutate,
   dry_run = TRUE,
   on_error = "stop",
-  progress = TRUE
+  progress = TRUE,
+  progress_bar = FALSE
 ) {
-  validate_mutation_execution(plan, mutate, dry_run, on_error, progress)
+  validate_mutation_execution(plan, mutate, dry_run, on_error, progress, progress_bar)
   results <- vector("list", length(plan$entries))
+  progress_handle <- new_stash_progress(progress_bar, length(plan$entries))
+  on.exit(close_stash_progress(progress_handle), add = TRUE)
   for (position in seq_along(plan$entries)) {
     entry <- plan$entries[[position]]
     if (isTRUE(progress)) message("Mutation row ", entry$index)
+    update_stash_progress(progress_handle, position)
     if (isTRUE(dry_run)) {
       results[[position]] <- mutation_result_entry(entry, "planned", NULL, NULL)
       next
@@ -172,7 +177,7 @@ validate_mutation_plan_inputs <- function(data, build_input, na, null, operation
   }
 }
 
-validate_mutation_execution <- function(plan, mutate, dry_run, on_error, progress) {
+validate_mutation_execution <- function(plan, mutate, dry_run, on_error, progress, progress_bar) {
   if (!inherits(plan, "stashapi_mutation_plan")) stop("plan must come from prepare_mutations()", call. = FALSE)
   if (!is.function(mutate)) stop("mutate must be a function", call. = FALSE)
   if (!is.logical(dry_run) || length(dry_run) != 1L || is.na(dry_run)) {
@@ -184,6 +189,7 @@ validate_mutation_execution <- function(plan, mutate, dry_run, on_error, progres
   if (!is.logical(progress) || length(progress) != 1L || is.na(progress)) {
     stop("progress must be a single TRUE or FALSE value", call. = FALSE)
   }
+  validate_progress_bar(progress_bar)
 }
 
 stop_mutation_missing <- function(path, value) {

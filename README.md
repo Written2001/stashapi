@@ -39,7 +39,7 @@ stash_connect()
 
 TLS certificate verification is enabled by default. For a local endpoint using a self-signed certificate, it can be disabled explicitly with `verify_ssl = FALSE`. This should not be used for untrusted remote endpoints.
 
-The legacy `setStashCredentials()` function remains available and continues to read the two-line credentials file. Connection details are stored only for the current R session.
+Use `is_stash_connected()` to validate the active connection. Connection details are stored only for the current R session.
 
 ### Response Modes
 

@@ -9,7 +9,8 @@ execute_mutations(
   mutate,
   dry_run = TRUE,
   on_error = "stop",
-  progress = TRUE
+  progress = TRUE,
+  progress_bar = FALSE
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ execute_mutations(
 \item{on_error}{Error policy: \code{"stop"} or \code{"continue"}.}
 
 \item{progress}{Whether to report each mutation.}
+
+\item{progress_bar}{Whether to display a progress bar.}
 }
 \value{An object of class \code{stashapi_mutation_result}.}
 \description{

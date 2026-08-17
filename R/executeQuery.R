@@ -19,9 +19,11 @@ executeQuery <- function(
   connection,
   return_default = NA,
   field = NA,
-  response = "data"
+  response = "data",
+  progress_bar = FALSE
 ) {
   validate_response_mode(response)
+  validate_progress_bar(progress_bar)
   if (identical(response, "raw") && !all(is.na(field))) {
     stop("`.field` cannot be used with `.response = \"raw\"`", call. = FALSE)
   }
@@ -54,8 +56,11 @@ executeQuery <- function(
         first_page
       })
 
-    message(paste("Collecting", count, "items"))
-    npages <- seq(ceiling(count / purrr::pluck(variables, "filter", "per_page")))[-1]
+    total_pages <- max(1L, ceiling(count / purrr::pluck(variables, "filter", "per_page")))
+    progress <- new_stash_progress(progress_bar, total_pages)
+    on.exit(close_stash_progress(progress), add = TRUE)
+    update_stash_progress(progress, 1L)
+    npages <- seq_len(total_pages)[-1L]
     other_pages <- purrr::map(npages, function(page){
       variables <- purrr::assign_in(variables, list("filter", "page"), page)
       res_2 <- fetch(
@@ -66,8 +71,9 @@ executeQuery <- function(
         field = field,
         response = response
       )
-      return(res_2)
-    }, .progress = TRUE)
+      update_stash_progress(progress, page)
+      res_2
+    })
 
     if (identical(response, "object")) {
       page_values <- c(list(first_page), purrr::map(other_pages, `[[`, "data"))

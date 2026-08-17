@@ -3,6 +3,10 @@ sys.source(
   file.path(testthat::test_path("..", ".."), "R", "executeQuery.R"),
   envir = response_api
 )
+sys.source(
+  file.path(testthat::test_path("..", ".."), "R", "progress_helpers.R"),
+  envir = response_api
+)
 
 testthat::test_that("default response mode preserves selected data", {
   connection <- list(

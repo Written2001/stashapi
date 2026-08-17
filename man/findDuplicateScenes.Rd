@@ -12,7 +12,7 @@ findDuplicateScenes(distance = NA, durationdiff = NA, ...)
 \item{durationdiff}{Max difference in seconds between files in order to be considered for similarity matching.
 Fractional seconds are ok: 0.5 will mean only files that have durations within 0.5 seconds between them will be matched based on PHash distance.}
 
-\item{...}{additional parameters like .field to retrieve only a certain field from the response}
+\item{...}{additional parameters including \code{.field} for field selection, \code{.response} for response mode, and \code{.progress_bar} to show an opt-in progress bar while collecting paginated results.}
 }
 \value{
 processed API response

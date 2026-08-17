@@ -55,6 +55,20 @@ testthat::test_that("execute_mutations dry-run makes no mutation calls", {
   testthat::expect_identical(vapply(result$results, `[[`, character(1), "status"), c("planned", "planned"))
 })
 
+testthat::test_that("mutation progress bars are disabled by default and configurable", {
+  plan <- stashapi::prepare_mutations(
+    list(list(id = "1")),
+    function(row, index) list(id = row$id)
+  )
+  testthat::expect_silent(
+    stashapi::execute_mutations(plan, function(input) input, progress = FALSE)
+  )
+  testthat::expect_error(
+    stashapi::execute_mutations(plan, function(input) input, progress_bar = NA),
+    "progress_bar"
+  )
+})
+
 testthat::test_that("mutation prints show compact summaries instead of inputs", {
   plan <- stashapi::prepare_mutations(
     list(list(id = "1213")),

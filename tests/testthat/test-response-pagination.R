@@ -4,6 +4,10 @@ testthat::test_that("object responses combine all pages and retain metadata", {
     file.path(testthat::test_path("..", ".."), "R", "executeQuery.R"),
     envir = response_api
   )
+  sys.source(
+    file.path(testthat::test_path("..", ".."), "R", "progress_helpers.R"),
+    envir = response_api
+  )
   connection <- list(
     exec = function(query, variables) {
       page <- if ("page" %in% names(variables$filter)) variables$filter$page else 1L
