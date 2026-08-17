@@ -7,14 +7,14 @@
 sceneGenerateScreenshot(id = list(), at = NA, ...)
 }
 \arguments{
-\item{id}{See the Playground for further details.}
+\item{id}{See the Stash Playground for details.}
 
-\item{at}{See the Playground for further details.}
+\item{at}{See the Stash Playground for details.}
 
-\item{...}{additional parameters like .field to retrieve only a certain field from the response}
+\item{...}{Additional options such as `.field`, `.response`, and `.progress_bar`.}
 }
 \value{
-processed API response
+The processed API response.
 }
 \description{
 Generates screenshot at specified time in seconds. Leave empty to generate default screenshot

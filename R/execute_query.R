@@ -10,6 +10,7 @@
 #' @importFrom purrr flatten pluck_exists pluck assign_in map map_lgl
 #' @importFrom dplyr bind_rows
 #' @importFrom tibble is_tibble
+#' @importFrom utils modifyList
 #'
 #' @returns The results of the query
 #' @noRd

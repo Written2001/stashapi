@@ -1,3 +1,10 @@
+#' Call GraphQL operation: findSavedFilter
+#'
+#' @description Executes the GraphQL operation `findSavedFilter`.
+#' @param id See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 findSavedFilter <- function(id = list(), ...) {
 
   query <- ghql::Query$new()
@@ -32,6 +39,13 @@ fragment SavedFilter on SavedFilter { id mode name find_filter { ...SavedFindFil
   return(res)
 }
 
+#' Call GraphQL operation: findSavedFilters
+#'
+#' @description Executes the GraphQL operation `findSavedFilters`.
+#' @param mode See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 findSavedFilters <- function(mode = NA, ...) {
 
   query <- ghql::Query$new()
@@ -62,6 +76,14 @@ fragment SavedFilter on SavedFilter { id mode name find_filter { ...SavedFindFil
   return(res)
 }
 
+#' Call GraphQL operation: findFile
+#'
+#' @description Find a file by its id or path
+#' @param id See the Stash Playground for details.
+#' @param path See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 findFile <- function(id = NA, path = NA, ...) {
 
   query <- ghql::Query$new()
@@ -97,6 +119,15 @@ fragment BaseFile on BaseFile { ...BasicFile ...VideoFile ...ImageFile ...Galler
   return(res)
 }
 
+#' Call GraphQL operation: findFiles
+#'
+#' @description Queries for Files
+#' @param filefilter See the Stash Playground for details.
+#' @param filter See the Stash Playground for details.
+#' @param ids See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 findFiles <- function(filefilter = NA, filter = NA, ids = list(), ...) {
 
   query <- ghql::Query$new()
@@ -134,6 +165,14 @@ fragment FindFilesResultType on FindFilesResultType { count megapixels duration 
   return(res)
 }
 
+#' Call GraphQL operation: findFolder
+#'
+#' @description Find a file by its id or path
+#' @param id See the Stash Playground for details.
+#' @param path See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 findFolder <- function(id = NA, path = NA, ...) {
 
   query <- ghql::Query$new()
@@ -164,6 +203,15 @@ fragment Folder on Folder { id path basename parent_folder { id path basename } 
   return(res)
 }
 
+#' Call GraphQL operation: findFolders
+#'
+#' @description Queries for Files
+#' @param folderfilter See the Stash Playground for details.
+#' @param filter See the Stash Playground for details.
+#' @param ids See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 findFolders <- function(folderfilter = NA, filter = NA, ids = list(), ...) {
 
   query <- ghql::Query$new()
@@ -196,6 +244,14 @@ fragment FindFoldersResultType on FindFoldersResultType { count folders { ...Fol
   return(res)
 }
 
+#' Call GraphQL operation: findScene
+#'
+#' @description Find a scene by ID or Checksum
+#' @param id See the Stash Playground for details.
+#' @param checksum See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 findScene <- function(id = NA, checksum = NA, ...) {
 
   query <- ghql::Query$new()
@@ -232,6 +288,13 @@ fragment Scene on Scene { id title code details director urls date rating100 org
   return(res)
 }
 
+#' Call GraphQL operation: findSceneByHash
+#'
+#' @description Executes the GraphQL operation `findSceneByHash`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 findSceneByHash <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -271,6 +334,16 @@ fragment Scene on Scene { id title code details director urls date rating100 org
   return(res)
 }
 
+#' Call GraphQL operation: findScenes
+#'
+#' @description A function which queries Scene objects
+#' @param scenefilter See the Stash Playground for details.
+#' @param sceneids See the Stash Playground for details.
+#' @param ids See the Stash Playground for details.
+#' @param filter See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 findScenes <- function(scenefilter = NA, sceneids = list(), ids = list(), filter = NA, ...) {
 
   query <- ghql::Query$new()
@@ -310,6 +383,13 @@ fragment FindScenesResultType on FindScenesResultType { count duration filesize 
   return(res)
 }
 
+#' Call GraphQL operation: findScenesByPathRegex
+#'
+#' @description Executes the GraphQL operation `findScenesByPathRegex`.
+#' @param filter See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 findScenesByPathRegex <- function(filter = NA, ...) {
 
   query <- ghql::Query$new()
@@ -346,6 +426,16 @@ fragment FindScenesResultType on FindScenesResultType { count duration filesize 
   return(res)
 }
 
+#' Call GraphQL operation: findDuplicateScenes
+#'
+#' @description Returns any groups of scenes that are perceptual duplicates within the queried distance
+#' and the difference between their duration is smaller than durationDiff
+#' @param distance See the Stash Playground for details.
+#' @param durationdiff Max difference in seconds between files in order to be considered for similarity matching.
+#' Fractional seconds are ok: 0.5 will mean only files that have durations within 0.5 seconds between them will be matched based on PHash distance.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 findDuplicateScenes <- function(distance = NA, durationdiff = NA, ...) {
 
   query <- ghql::Query$new()
@@ -382,6 +472,13 @@ fragment Scene on Scene { id title code details director urls date rating100 org
   return(res)
 }
 
+#' Call GraphQL operation: sceneStreams
+#'
+#' @description Return valid stream paths
+#' @param id See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 sceneStreams <- function(id = NA, ...) {
 
   query <- ghql::Query$new()
@@ -411,6 +508,14 @@ fragment SceneStreamEndpoint on SceneStreamEndpoint { url mime_type label }
   return(res)
 }
 
+#' Call GraphQL operation: parseSceneFilenames
+#'
+#' @description Executes the GraphQL operation `parseSceneFilenames`.
+#' @param filter See the Stash Playground for details.
+#' @param config See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 parseSceneFilenames <- function(filter = NA, config = NA, ...) {
 
   query <- ghql::Query$new()
@@ -447,6 +552,15 @@ fragment SceneParserResultType on SceneParserResultType { count results { ...Sce
   return(res)
 }
 
+#' Call GraphQL operation: findSceneMarkers
+#'
+#' @description A function which queries SceneMarker objects
+#' @param scenemarkerfilter See the Stash Playground for details.
+#' @param filter See the Stash Playground for details.
+#' @param ids See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 findSceneMarkers <- function(scenemarkerfilter = NA, filter = NA, ids = list(), ...) {
 
   query <- ghql::Query$new()
@@ -479,6 +593,14 @@ fragment FindSceneMarkersResultType on FindSceneMarkersResultType { count scene_
   return(res)
 }
 
+#' Call GraphQL operation: findImage
+#'
+#' @description Executes the GraphQL operation `findImage`.
+#' @param id See the Stash Playground for details.
+#' @param checksum See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 findImage <- function(id = NA, checksum = NA, ...) {
 
   query <- ghql::Query$new()
@@ -514,6 +636,16 @@ fragment Image on Image { id title code rating100 urls date details photographer
   return(res)
 }
 
+#' Call GraphQL operation: findImages
+#'
+#' @description A function which queries Scene objects
+#' @param imagefilter See the Stash Playground for details.
+#' @param imageids See the Stash Playground for details.
+#' @param ids See the Stash Playground for details.
+#' @param filter See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 findImages <- function(imagefilter = NA, imageids = list(), ids = list(), filter = NA, ...) {
 
   query <- ghql::Query$new()
@@ -552,6 +684,13 @@ fragment FindImagesResultType on FindImagesResultType { count megapixels filesiz
   return(res)
 }
 
+#' Call GraphQL operation: findPerformer
+#'
+#' @description Find a performer by ID
+#' @param id See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 findPerformer <- function(id = list(), ...) {
 
   query <- ghql::Query$new()
@@ -585,6 +724,16 @@ fragment Performer on Performer { id name disambiguation urls gender birthdate e
   return(res)
 }
 
+#' Call GraphQL operation: findPerformers
+#'
+#' @description A function which queries Performer objects
+#' @param performerfilter See the Stash Playground for details.
+#' @param filter See the Stash Playground for details.
+#' @param performerids See the Stash Playground for details.
+#' @param ids See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 findPerformers <- function(performerfilter = NA, filter = NA, performerids = list(), ids = list(), ...) {
 
   query <- ghql::Query$new()
@@ -618,6 +767,13 @@ fragment FindPerformersResultType on FindPerformersResultType { count performers
   return(res)
 }
 
+#' Call GraphQL operation: findStudio
+#'
+#' @description Find a studio by ID
+#' @param id See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 findStudio <- function(id = list(), ...) {
 
   query <- ghql::Query$new()
@@ -651,6 +807,15 @@ fragment Studio on Studio { id name urls parent_studio { id name } child_studios
   return(res)
 }
 
+#' Call GraphQL operation: findStudios
+#'
+#' @description A function which queries Studio objects
+#' @param studiofilter See the Stash Playground for details.
+#' @param filter See the Stash Playground for details.
+#' @param ids See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 findStudios <- function(studiofilter = NA, filter = NA, ids = list(), ...) {
 
   query <- ghql::Query$new()
@@ -683,6 +848,13 @@ fragment FindStudiosResultType on FindStudiosResultType { count studios { ...Stu
   return(res)
 }
 
+#' Call GraphQL operation: findGroup
+#'
+#' @description Find a group by ID
+#' @param id See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 findGroup <- function(id = list(), ...) {
 
   query <- ghql::Query$new()
@@ -717,6 +889,15 @@ fragment Group on Group { id name aliases duration date rating100 studio { id na
   return(res)
 }
 
+#' Call GraphQL operation: findGroups
+#'
+#' @description A function which queries Group objects
+#' @param groupfilter See the Stash Playground for details.
+#' @param filter See the Stash Playground for details.
+#' @param ids See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 findGroups <- function(groupfilter = NA, filter = NA, ids = list(), ...) {
 
   query <- ghql::Query$new()
@@ -750,6 +931,13 @@ fragment FindGroupsResultType on FindGroupsResultType { count groups { ...Group 
   return(res)
 }
 
+#' Call GraphQL operation: findGallery
+#'
+#' @description Executes the GraphQL operation `findGallery`.
+#' @param id See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 findGallery <- function(id = list(), ...) {
 
   query <- ghql::Query$new()
@@ -787,6 +975,15 @@ fragment Gallery on Gallery { id title code urls date details photographer ratin
   return(res)
 }
 
+#' Call GraphQL operation: findGalleries
+#'
+#' @description Executes the GraphQL operation `findGalleries`.
+#' @param galleryfilter See the Stash Playground for details.
+#' @param filter See the Stash Playground for details.
+#' @param ids See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 findGalleries <- function(galleryfilter = NA, filter = NA, ids = list(), ...) {
 
   query <- ghql::Query$new()
@@ -823,6 +1020,13 @@ fragment FindGalleriesResultType on FindGalleriesResultType { count galleries { 
   return(res)
 }
 
+#' Call GraphQL operation: findTag
+#'
+#' @description Executes the GraphQL operation `findTag`.
+#' @param id See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 findTag <- function(id = list(), ...) {
 
   query <- ghql::Query$new()
@@ -856,6 +1060,15 @@ fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag crea
   return(res)
 }
 
+#' Call GraphQL operation: findTags
+#'
+#' @description Executes the GraphQL operation `findTags`.
+#' @param tagfilter See the Stash Playground for details.
+#' @param filter See the Stash Playground for details.
+#' @param ids See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 findTags <- function(tagfilter = NA, filter = NA, ids = list(), ...) {
 
   query <- ghql::Query$new()
@@ -888,6 +1101,13 @@ fragment FindTagsResultType on FindTagsResultType { count tags { ...Tag } }
   return(res)
 }
 
+#' Call GraphQL operation: markerWall
+#'
+#' @description Retrieve random scene markers for the wall
+#' @param q See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 markerWall <- function(q = NA, ...) {
 
   query <- ghql::Query$new()
@@ -917,6 +1137,13 @@ fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_se
   return(res)
 }
 
+#' Call GraphQL operation: sceneWall
+#'
+#' @description Retrieve random scenes for the wall
+#' @param q See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 sceneWall <- function(q = NA, ...) {
 
   query <- ghql::Query$new()
@@ -952,6 +1179,14 @@ fragment Scene on Scene { id title code details director urls date rating100 org
   return(res)
 }
 
+#' Call GraphQL operation: markerStrings
+#'
+#' @description Get marker strings
+#' @param q See the Stash Playground for details.
+#' @param sort See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 markerStrings <- function(q = NA, sort = NA, ...) {
 
   query <- ghql::Query$new()
@@ -982,6 +1217,12 @@ fragment MarkerStringsResultType on MarkerStringsResultType { count id title }
   return(res)
 }
 
+#' Call GraphQL operation: stats
+#'
+#' @description Get stats
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 stats <- function(...) {
 
   query <- ghql::Query$new()
@@ -1010,6 +1251,13 @@ fragment StatsResultType on StatsResultType { scene_count scenes_size scenes_dur
   return(res)
 }
 
+#' Call GraphQL operation: sceneMarkerTags
+#'
+#' @description Organize scene markers by tag for a given scene ID
+#' @param sceneid See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 sceneMarkerTags <- function(sceneid = list(), ...) {
 
   query <- ghql::Query$new()
@@ -1044,6 +1292,12 @@ fragment SceneMarkerTag on SceneMarkerTag { tag { id name } scene_markers { ...S
   return(res)
 }
 
+#' Call GraphQL operation: logs
+#'
+#' @description Executes the GraphQL operation `logs`.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 logs <- function(...) {
 
   query <- ghql::Query$new()
@@ -1072,6 +1326,13 @@ fragment LogEntry on LogEntry { time level message }
   return(res)
 }
 
+#' Call GraphQL operation: listScrapers
+#'
+#' @description List available scrapers
+#' @param types See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 listScrapers <- function(types = NA, ...) {
 
   query <- ghql::Query$new()
@@ -1106,6 +1367,14 @@ fragment Scraper on Scraper { id name performer { ...ScraperSpec } scene { ...Sc
   return(res)
 }
 
+#' Call GraphQL operation: scrapeSingleScene
+#'
+#' @description Scrape for a single scene
+#' @param source See the Stash Playground for details.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 scrapeSingleScene <- function(source = NA, input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -1147,6 +1416,14 @@ fragment ScrapedScene on ScrapedScene { title code details director urls date fi
   return(res)
 }
 
+#' Call GraphQL operation: scrapeMultiScenes
+#'
+#' @description Scrape for multiple scenes
+#' @param source See the Stash Playground for details.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 scrapeMultiScenes <- function(source = NA, input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -1188,6 +1465,14 @@ fragment ScrapedScene on ScrapedScene { title code details director urls date fi
   return(res)
 }
 
+#' Call GraphQL operation: scrapeSingleStudio
+#'
+#' @description Scrape for a single studio
+#' @param source See the Stash Playground for details.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 scrapeSingleStudio <- function(source = NA, input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -1225,6 +1510,14 @@ fragment ScrapedStudio on ScrapedStudio { stored_id name urls parent { stored_id
   return(res)
 }
 
+#' Call GraphQL operation: scrapeSingleTag
+#'
+#' @description Scrape for a single tag
+#' @param source See the Stash Playground for details.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 scrapeSingleTag <- function(source = NA, input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -1262,6 +1555,14 @@ fragment ScrapedTag on ScrapedTag { stored_id name description alias_list parent
   return(res)
 }
 
+#' Call GraphQL operation: scrapeSinglePerformer
+#'
+#' @description Scrape for a single performer
+#' @param source See the Stash Playground for details.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 scrapeSinglePerformer <- function(source = NA, input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -1299,6 +1600,14 @@ fragment ScrapedPerformer on ScrapedPerformer { stored_id name disambiguation ge
   return(res)
 }
 
+#' Call GraphQL operation: scrapeMultiPerformers
+#'
+#' @description Scrape for multiple performers
+#' @param source See the Stash Playground for details.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 scrapeMultiPerformers <- function(source = NA, input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -1336,6 +1645,14 @@ fragment ScrapedPerformer on ScrapedPerformer { stored_id name disambiguation ge
   return(res)
 }
 
+#' Call GraphQL operation: scrapeSingleGallery
+#'
+#' @description Scrape for a single gallery
+#' @param source See the Stash Playground for details.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 scrapeSingleGallery <- function(source = NA, input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -1374,6 +1691,14 @@ fragment ScrapedGallery on ScrapedGallery { title code details photographer urls
   return(res)
 }
 
+#' Call GraphQL operation: scrapeSingleGroup
+#'
+#' @description Scrape for a single group
+#' @param source See the Stash Playground for details.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 scrapeSingleGroup <- function(source = NA, input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -1411,6 +1736,14 @@ fragment ScrapedGroup on ScrapedGroup { stored_id name aliases duration date rat
   return(res)
 }
 
+#' Call GraphQL operation: scrapeSingleImage
+#'
+#' @description Scrape for a single image
+#' @param source See the Stash Playground for details.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 scrapeSingleImage <- function(source = NA, input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -1449,6 +1782,14 @@ fragment ScrapedImage on ScrapedImage { title code details photographer urls dat
   return(res)
 }
 
+#' Call GraphQL operation: scrapeURL
+#'
+#' @description Scrapes content based on a URL
+#' @param url See the Stash Playground for details.
+#' @param ty See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 scrapeURL <- function(url = list(), ty = NA, ...) {
 
   query <- ghql::Query$new()
@@ -1496,6 +1837,13 @@ fragment ScrapedContent on ScrapedContent { ...ScrapedStudio ...ScrapedTag ...Sc
   return(res)
 }
 
+#' Call GraphQL operation: scrapePerformerURL
+#'
+#' @description Scrapes a complete performer record based on a URL
+#' @param url See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 scrapePerformerURL <- function(url = list(), ...) {
 
   query <- ghql::Query$new()
@@ -1529,6 +1877,13 @@ fragment ScrapedPerformer on ScrapedPerformer { stored_id name disambiguation ge
   return(res)
 }
 
+#' Call GraphQL operation: scrapeSceneURL
+#'
+#' @description Scrapes a complete scene record based on a URL
+#' @param url See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 scrapeSceneURL <- function(url = list(), ...) {
 
   query <- ghql::Query$new()
@@ -1566,6 +1921,13 @@ fragment ScrapedScene on ScrapedScene { title code details director urls date fi
   return(res)
 }
 
+#' Call GraphQL operation: scrapeGalleryURL
+#'
+#' @description Scrapes a complete gallery record based on a URL
+#' @param url See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 scrapeGalleryURL <- function(url = list(), ...) {
 
   query <- ghql::Query$new()
@@ -1600,6 +1962,13 @@ fragment ScrapedGallery on ScrapedGallery { title code details photographer urls
   return(res)
 }
 
+#' Call GraphQL operation: scrapeImageURL
+#'
+#' @description Scrapes a complete image record based on a URL
+#' @param url See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 scrapeImageURL <- function(url = list(), ...) {
 
   query <- ghql::Query$new()
@@ -1634,6 +2003,13 @@ fragment ScrapedImage on ScrapedImage { title code details photographer urls dat
   return(res)
 }
 
+#' Call GraphQL operation: scrapeGroupURL
+#'
+#' @description Scrapes a complete group record based on a URL
+#' @param url See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 scrapeGroupURL <- function(url = list(), ...) {
 
   query <- ghql::Query$new()
@@ -1667,6 +2043,12 @@ fragment ScrapedGroup on ScrapedGroup { stored_id name aliases duration date rat
   return(res)
 }
 
+#' Call GraphQL operation: plugins
+#'
+#' @description List loaded plugins
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 plugins <- function(...) {
 
   query <- ghql::Query$new()
@@ -1699,6 +2081,12 @@ fragment Plugin on Plugin { id name description url version enabled settings { .
   return(res)
 }
 
+#' Call GraphQL operation: pluginTasks
+#'
+#' @description List available plugin operations
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 pluginTasks <- function(...) {
 
   query <- ghql::Query$new()
@@ -1731,6 +2119,13 @@ fragment PluginTask on PluginTask { name description }
   return(res)
 }
 
+#' Call GraphQL operation: installedPackages
+#'
+#' @description List installed packages
+#' @param type See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 installedPackages <- function(type = NA, ...) {
 
   query <- ghql::Query$new()
@@ -1764,6 +2159,14 @@ fragment Package on Package { package_id name version date sourceURL metadata }
   return(res)
 }
 
+#' Call GraphQL operation: availablePackages
+#'
+#' @description List available packages
+#' @param type See the Stash Playground for details.
+#' @param source See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 availablePackages <- function(type = NA, source = list(), ...) {
 
   query <- ghql::Query$new()
@@ -1801,6 +2204,12 @@ fragment Package on Package { package_id name version date sourceURL metadata }
   return(res)
 }
 
+#' Call GraphQL operation: configuration
+#'
+#' @description Returns the current, complete configuration
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 configuration <- function(...) {
 
   query <- ghql::Query$new()
@@ -1848,6 +2257,14 @@ fragment ConfigResult on ConfigResult { general { ...ConfigGeneralResult } inter
   return(res)
 }
 
+#' Call GraphQL operation: directory
+#'
+#' @description Returns an array of paths for the given path
+#' @param path The directory path to list
+#' @param locale Desired collation locale. Determines the order of the directory result. eg. 'en-US', 'pt-BR', ...
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 directory <- function(path = NA, locale = NA, ...) {
 
   query <- ghql::Query$new()
@@ -1878,6 +2295,13 @@ fragment Directory on Directory { path parent directories }
   return(res)
 }
 
+#' Call GraphQL operation: validateStashBoxCredentials
+#'
+#' @description Executes the GraphQL operation `validateStashBoxCredentials`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 validateStashBoxCredentials <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -1911,6 +2335,12 @@ fragment StashBoxValidationResult on StashBoxValidationResult { valid status }
   return(res)
 }
 
+#' Call GraphQL operation: systemStatus
+#'
+#' @description Executes the GraphQL operation `systemStatus`.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 systemStatus <- function(...) {
 
   query <- ghql::Query$new()
@@ -1939,6 +2369,12 @@ fragment SystemStatus on SystemStatus { databaseSchema databasePath configPath a
   return(res)
 }
 
+#' Call GraphQL operation: jobQueue
+#'
+#' @description Executes the GraphQL operation `jobQueue`.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 jobQueue <- function(...) {
 
   query <- ghql::Query$new()
@@ -1967,6 +2403,13 @@ fragment Job on Job { id status subTasks description progress startTime endTime 
   return(res)
 }
 
+#' Call GraphQL operation: findJob
+#'
+#' @description Executes the GraphQL operation `findJob`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 findJob <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -2000,6 +2443,12 @@ fragment Job on Job { id status subTasks description progress startTime endTime 
   return(res)
 }
 
+#' Call GraphQL operation: dlnaStatus
+#'
+#' @description Executes the GraphQL operation `dlnaStatus`.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 dlnaStatus <- function(...) {
 
   query <- ghql::Query$new()
@@ -2029,6 +2478,12 @@ fragment DLNAStatus on DLNAStatus { running until recentIPAddresses allowedIPAdd
   return(res)
 }
 
+#' Call GraphQL operation: allPerformers
+#'
+#' @description Executes the GraphQL operation `allPerformers`.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 allPerformers <- function(...) {
 
   query <- ghql::Query$new()
@@ -2057,6 +2512,12 @@ fragment Performer on Performer { id name disambiguation urls gender birthdate e
   return(res)
 }
 
+#' Call GraphQL operation: version
+#'
+#' @description Executes the GraphQL operation `version`.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 version <- function(...) {
 
   query <- ghql::Query$new()
@@ -2085,6 +2546,12 @@ fragment Version on Version { version hash build_time }
   return(res)
 }
 
+#' Call GraphQL operation: latestversion
+#'
+#' @description Executes the GraphQL operation `latestversion`.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 latestversion <- function(...) {
 
   query <- ghql::Query$new()
@@ -2113,6 +2580,13 @@ fragment LatestVersion on LatestVersion { version shorthash release_date url }
   return(res)
 }
 
+#' Call GraphQL operation: setup
+#'
+#' @description Executes the GraphQL operation `setup`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 setup <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -2145,6 +2619,13 @@ setup <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: migrate
+#'
+#' @description Migrates the schema to the required version. Returns the job ID
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 migrate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -2177,6 +2658,12 @@ migrate <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: downloadFFMpeg
+#'
+#' @description Downloads and installs ffmpeg and ffprobe binaries into the configuration directory. Returns the job ID.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 downloadFFMpeg <- function(...) {
 
   query <- ghql::Query$new()
@@ -2204,6 +2691,13 @@ downloadFFMpeg <- function(...) {
   return(res)
 }
 
+#' Call GraphQL operation: sceneCreate
+#'
+#' @description Executes the GraphQL operation `sceneCreate`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 sceneCreate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -2243,6 +2737,13 @@ fragment Scene on Scene { id title code details director urls date rating100 org
   return(res)
 }
 
+#' Call GraphQL operation: sceneUpdate
+#'
+#' @description Executes the GraphQL operation `sceneUpdate`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 sceneUpdate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -2282,6 +2783,13 @@ fragment Scene on Scene { id title code details director urls date rating100 org
   return(res)
 }
 
+#' Call GraphQL operation: sceneMerge
+#'
+#' @description Executes the GraphQL operation `sceneMerge`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 sceneMerge <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -2321,6 +2829,13 @@ fragment Scene on Scene { id title code details director urls date rating100 org
   return(res)
 }
 
+#' Call GraphQL operation: bulkSceneUpdate
+#'
+#' @description Executes the GraphQL operation `bulkSceneUpdate`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 bulkSceneUpdate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -2360,6 +2875,13 @@ fragment Scene on Scene { id title code details director urls date rating100 org
   return(res)
 }
 
+#' Call GraphQL operation: sceneDestroy
+#'
+#' @description Executes the GraphQL operation `sceneDestroy`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 sceneDestroy <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -2392,6 +2914,13 @@ sceneDestroy <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: scenesDestroy
+#'
+#' @description Executes the GraphQL operation `scenesDestroy`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 scenesDestroy <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -2424,6 +2953,13 @@ scenesDestroy <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: scenesUpdate
+#'
+#' @description Executes the GraphQL operation `scenesUpdate`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 scenesUpdate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -2463,6 +2999,14 @@ fragment Scene on Scene { id title code details director urls date rating100 org
   return(res)
 }
 
+#' Call GraphQL operation: sceneAddO
+#'
+#' @description Increments the o-counter for a scene. Uses the current time if none provided.
+#' @param id See the Stash Playground for details.
+#' @param times See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 sceneAddO <- function(id = list(), times = list(), ...) {
 
   query <- ghql::Query$new()
@@ -2497,6 +3041,14 @@ fragment HistoryMutationResult on HistoryMutationResult { count history }
   return(res)
 }
 
+#' Call GraphQL operation: sceneDeleteO
+#'
+#' @description Decrements the o-counter for a scene, removing the last recorded time if specific time not provided. Returns the new value
+#' @param id See the Stash Playground for details.
+#' @param times See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 sceneDeleteO <- function(id = list(), times = list(), ...) {
 
   query <- ghql::Query$new()
@@ -2531,6 +3083,13 @@ fragment HistoryMutationResult on HistoryMutationResult { count history }
   return(res)
 }
 
+#' Call GraphQL operation: sceneResetO
+#'
+#' @description Resets the o-counter for a scene to 0. Returns the new value
+#' @param id See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 sceneResetO <- function(id = list(), ...) {
 
   query <- ghql::Query$new()
@@ -2563,6 +3122,15 @@ sceneResetO <- function(id = list(), ...) {
   return(res)
 }
 
+#' Call GraphQL operation: sceneSaveActivity
+#'
+#' @description Sets the resume time point (if provided) and adds the provided duration to the scene's play duration
+#' @param id See the Stash Playground for details.
+#' @param resumetime See the Stash Playground for details.
+#' @param playDuration See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 sceneSaveActivity <- function(id = list(), resumetime = NA, playDuration = NA, ...) {
 
   query <- ghql::Query$new()
@@ -2597,6 +3165,15 @@ sceneSaveActivity <- function(id = list(), resumetime = NA, playDuration = NA, .
   return(res)
 }
 
+#' Call GraphQL operation: sceneResetActivity
+#'
+#' @description Resets the resume time point and play duration
+#' @param id See the Stash Playground for details.
+#' @param resetresume See the Stash Playground for details.
+#' @param resetduration See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 sceneResetActivity <- function(id = list(), resetresume = NA, resetduration = NA, ...) {
 
   query <- ghql::Query$new()
@@ -2631,6 +3208,14 @@ sceneResetActivity <- function(id = list(), resetresume = NA, resetduration = NA
   return(res)
 }
 
+#' Call GraphQL operation: sceneAddPlay
+#'
+#' @description Increments the play count for the scene. Uses the current time if none provided.
+#' @param id See the Stash Playground for details.
+#' @param times See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 sceneAddPlay <- function(id = list(), times = list(), ...) {
 
   query <- ghql::Query$new()
@@ -2665,6 +3250,14 @@ fragment HistoryMutationResult on HistoryMutationResult { count history }
   return(res)
 }
 
+#' Call GraphQL operation: sceneDeletePlay
+#'
+#' @description Decrements the play count for the scene, removing the specific times or the last recorded time if not provided.
+#' @param id See the Stash Playground for details.
+#' @param times See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 sceneDeletePlay <- function(id = list(), times = list(), ...) {
 
   query <- ghql::Query$new()
@@ -2699,6 +3292,13 @@ fragment HistoryMutationResult on HistoryMutationResult { count history }
   return(res)
 }
 
+#' Call GraphQL operation: sceneResetPlayCount
+#'
+#' @description Resets the play count for a scene to 0. Returns the new play count value.
+#' @param id See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 sceneResetPlayCount <- function(id = list(), ...) {
 
   query <- ghql::Query$new()
@@ -2731,6 +3331,14 @@ sceneResetPlayCount <- function(id = list(), ...) {
   return(res)
 }
 
+#' Call GraphQL operation: sceneGenerateScreenshot
+#'
+#' @description Generates screenshot at specified time in seconds. Leave empty to generate default screenshot
+#' @param id See the Stash Playground for details.
+#' @param at See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 sceneGenerateScreenshot <- function(id = list(), at = NA, ...) {
 
   query <- ghql::Query$new()
@@ -2764,6 +3372,13 @@ sceneGenerateScreenshot <- function(id = list(), at = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: sceneMarkerCreate
+#'
+#' @description Executes the GraphQL operation `sceneMarkerCreate`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 sceneMarkerCreate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -2797,6 +3412,13 @@ fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_se
   return(res)
 }
 
+#' Call GraphQL operation: sceneMarkerUpdate
+#'
+#' @description Executes the GraphQL operation `sceneMarkerUpdate`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 sceneMarkerUpdate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -2830,6 +3452,13 @@ fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_se
   return(res)
 }
 
+#' Call GraphQL operation: bulkSceneMarkerUpdate
+#'
+#' @description Executes the GraphQL operation `bulkSceneMarkerUpdate`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 bulkSceneMarkerUpdate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -2863,6 +3492,13 @@ fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_se
   return(res)
 }
 
+#' Call GraphQL operation: sceneMarkerDestroy
+#'
+#' @description Executes the GraphQL operation `sceneMarkerDestroy`.
+#' @param id See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 sceneMarkerDestroy <- function(id = list(), ...) {
 
   query <- ghql::Query$new()
@@ -2895,6 +3531,13 @@ sceneMarkerDestroy <- function(id = list(), ...) {
   return(res)
 }
 
+#' Call GraphQL operation: sceneMarkersDestroy
+#'
+#' @description Executes the GraphQL operation `sceneMarkersDestroy`.
+#' @param ids See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 sceneMarkersDestroy <- function(ids = list(), ...) {
 
   query <- ghql::Query$new()
@@ -2927,6 +3570,13 @@ sceneMarkersDestroy <- function(ids = list(), ...) {
   return(res)
 }
 
+#' Call GraphQL operation: sceneAssignFile
+#'
+#' @description Executes the GraphQL operation `sceneAssignFile`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 sceneAssignFile <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -2959,6 +3609,13 @@ sceneAssignFile <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: imageUpdate
+#'
+#' @description Executes the GraphQL operation `imageUpdate`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 imageUpdate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -2997,6 +3654,13 @@ fragment Image on Image { id title code rating100 urls date details photographer
   return(res)
 }
 
+#' Call GraphQL operation: bulkImageUpdate
+#'
+#' @description Executes the GraphQL operation `bulkImageUpdate`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 bulkImageUpdate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -3035,6 +3699,13 @@ fragment Image on Image { id title code rating100 urls date details photographer
   return(res)
 }
 
+#' Call GraphQL operation: imageDestroy
+#'
+#' @description Executes the GraphQL operation `imageDestroy`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 imageDestroy <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -3067,6 +3738,13 @@ imageDestroy <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: imagesDestroy
+#'
+#' @description Executes the GraphQL operation `imagesDestroy`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 imagesDestroy <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -3099,6 +3777,13 @@ imagesDestroy <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: imagesUpdate
+#'
+#' @description Executes the GraphQL operation `imagesUpdate`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 imagesUpdate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -3137,6 +3822,13 @@ fragment Image on Image { id title code rating100 urls date details photographer
   return(res)
 }
 
+#' Call GraphQL operation: imageIncrementO
+#'
+#' @description Increments the o-counter for an image. Returns the new value
+#' @param id See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 imageIncrementO <- function(id = list(), ...) {
 
   query <- ghql::Query$new()
@@ -3169,6 +3861,13 @@ imageIncrementO <- function(id = list(), ...) {
   return(res)
 }
 
+#' Call GraphQL operation: imageDecrementO
+#'
+#' @description Decrements the o-counter for an image. Returns the new value
+#' @param id See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 imageDecrementO <- function(id = list(), ...) {
 
   query <- ghql::Query$new()
@@ -3201,6 +3900,13 @@ imageDecrementO <- function(id = list(), ...) {
   return(res)
 }
 
+#' Call GraphQL operation: imageResetO
+#'
+#' @description Resets the o-counter for a image to 0. Returns the new value
+#' @param id See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 imageResetO <- function(id = list(), ...) {
 
   query <- ghql::Query$new()
@@ -3233,6 +3939,13 @@ imageResetO <- function(id = list(), ...) {
   return(res)
 }
 
+#' Call GraphQL operation: galleryCreate
+#'
+#' @description Executes the GraphQL operation `galleryCreate`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 galleryCreate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -3270,6 +3983,13 @@ fragment Gallery on Gallery { id title code urls date details photographer ratin
   return(res)
 }
 
+#' Call GraphQL operation: galleryUpdate
+#'
+#' @description Executes the GraphQL operation `galleryUpdate`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 galleryUpdate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -3307,6 +4027,13 @@ fragment Gallery on Gallery { id title code urls date details photographer ratin
   return(res)
 }
 
+#' Call GraphQL operation: bulkGalleryUpdate
+#'
+#' @description Executes the GraphQL operation `bulkGalleryUpdate`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 bulkGalleryUpdate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -3344,6 +4071,13 @@ fragment Gallery on Gallery { id title code urls date details photographer ratin
   return(res)
 }
 
+#' Call GraphQL operation: galleryDestroy
+#'
+#' @description Executes the GraphQL operation `galleryDestroy`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 galleryDestroy <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -3376,6 +4110,13 @@ galleryDestroy <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: galleriesUpdate
+#'
+#' @description Executes the GraphQL operation `galleriesUpdate`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 galleriesUpdate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -3413,6 +4154,13 @@ fragment Gallery on Gallery { id title code urls date details photographer ratin
   return(res)
 }
 
+#' Call GraphQL operation: addGalleryImages
+#'
+#' @description Executes the GraphQL operation `addGalleryImages`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 addGalleryImages <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -3445,6 +4193,13 @@ addGalleryImages <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: removeGalleryImages
+#'
+#' @description Executes the GraphQL operation `removeGalleryImages`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 removeGalleryImages <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -3477,6 +4232,13 @@ removeGalleryImages <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: setGalleryCover
+#'
+#' @description Executes the GraphQL operation `setGalleryCover`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 setGalleryCover <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -3509,6 +4271,13 @@ setGalleryCover <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: resetGalleryCover
+#'
+#' @description Executes the GraphQL operation `resetGalleryCover`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 resetGalleryCover <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -3541,6 +4310,13 @@ resetGalleryCover <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: galleryChapterCreate
+#'
+#' @description Executes the GraphQL operation `galleryChapterCreate`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 galleryChapterCreate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -3574,6 +4350,13 @@ fragment GalleryChapter on GalleryChapter { id gallery { id title } title image_
   return(res)
 }
 
+#' Call GraphQL operation: galleryChapterUpdate
+#'
+#' @description Executes the GraphQL operation `galleryChapterUpdate`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 galleryChapterUpdate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -3607,6 +4390,13 @@ fragment GalleryChapter on GalleryChapter { id gallery { id title } title image_
   return(res)
 }
 
+#' Call GraphQL operation: galleryChapterDestroy
+#'
+#' @description Executes the GraphQL operation `galleryChapterDestroy`.
+#' @param id See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 galleryChapterDestroy <- function(id = list(), ...) {
 
   query <- ghql::Query$new()
@@ -3639,6 +4429,13 @@ galleryChapterDestroy <- function(id = list(), ...) {
   return(res)
 }
 
+#' Call GraphQL operation: performerCreate
+#'
+#' @description Executes the GraphQL operation `performerCreate`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 performerCreate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -3672,6 +4469,13 @@ fragment Performer on Performer { id name disambiguation urls gender birthdate e
   return(res)
 }
 
+#' Call GraphQL operation: performerUpdate
+#'
+#' @description Executes the GraphQL operation `performerUpdate`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 performerUpdate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -3705,6 +4509,13 @@ fragment Performer on Performer { id name disambiguation urls gender birthdate e
   return(res)
 }
 
+#' Call GraphQL operation: performerDestroy
+#'
+#' @description Executes the GraphQL operation `performerDestroy`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 performerDestroy <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -3737,6 +4548,13 @@ performerDestroy <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: performersDestroy
+#'
+#' @description Executes the GraphQL operation `performersDestroy`.
+#' @param ids See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 performersDestroy <- function(ids = list(), ...) {
 
   query <- ghql::Query$new()
@@ -3769,6 +4587,13 @@ performersDestroy <- function(ids = list(), ...) {
   return(res)
 }
 
+#' Call GraphQL operation: bulkPerformerUpdate
+#'
+#' @description Executes the GraphQL operation `bulkPerformerUpdate`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 bulkPerformerUpdate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -3802,6 +4627,13 @@ fragment Performer on Performer { id name disambiguation urls gender birthdate e
   return(res)
 }
 
+#' Call GraphQL operation: performerMerge
+#'
+#' @description Executes the GraphQL operation `performerMerge`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 performerMerge <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -3835,6 +4667,13 @@ fragment Performer on Performer { id name disambiguation urls gender birthdate e
   return(res)
 }
 
+#' Call GraphQL operation: studioCreate
+#'
+#' @description Executes the GraphQL operation `studioCreate`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 studioCreate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -3868,6 +4707,13 @@ fragment Studio on Studio { id name urls parent_studio { id name } child_studios
   return(res)
 }
 
+#' Call GraphQL operation: studioUpdate
+#'
+#' @description Executes the GraphQL operation `studioUpdate`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 studioUpdate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -3901,6 +4747,13 @@ fragment Studio on Studio { id name urls parent_studio { id name } child_studios
   return(res)
 }
 
+#' Call GraphQL operation: studioDestroy
+#'
+#' @description Executes the GraphQL operation `studioDestroy`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 studioDestroy <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -3933,6 +4786,13 @@ studioDestroy <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: studiosDestroy
+#'
+#' @description Executes the GraphQL operation `studiosDestroy`.
+#' @param ids See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 studiosDestroy <- function(ids = list(), ...) {
 
   query <- ghql::Query$new()
@@ -3965,6 +4825,13 @@ studiosDestroy <- function(ids = list(), ...) {
   return(res)
 }
 
+#' Call GraphQL operation: bulkStudioUpdate
+#'
+#' @description Executes the GraphQL operation `bulkStudioUpdate`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 bulkStudioUpdate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -3998,6 +4865,13 @@ fragment Studio on Studio { id name urls parent_studio { id name } child_studios
   return(res)
 }
 
+#' Call GraphQL operation: groupCreate
+#'
+#' @description Executes the GraphQL operation `groupCreate`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 groupCreate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -4032,6 +4906,13 @@ fragment Group on Group { id name aliases duration date rating100 studio { id na
   return(res)
 }
 
+#' Call GraphQL operation: groupUpdate
+#'
+#' @description Executes the GraphQL operation `groupUpdate`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 groupUpdate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -4066,6 +4947,13 @@ fragment Group on Group { id name aliases duration date rating100 studio { id na
   return(res)
 }
 
+#' Call GraphQL operation: groupDestroy
+#'
+#' @description Executes the GraphQL operation `groupDestroy`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 groupDestroy <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -4098,6 +4986,13 @@ groupDestroy <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: groupsDestroy
+#'
+#' @description Executes the GraphQL operation `groupsDestroy`.
+#' @param ids See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 groupsDestroy <- function(ids = list(), ...) {
 
   query <- ghql::Query$new()
@@ -4130,6 +5025,13 @@ groupsDestroy <- function(ids = list(), ...) {
   return(res)
 }
 
+#' Call GraphQL operation: bulkGroupUpdate
+#'
+#' @description Executes the GraphQL operation `bulkGroupUpdate`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 bulkGroupUpdate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -4164,6 +5066,13 @@ fragment Group on Group { id name aliases duration date rating100 studio { id na
   return(res)
 }
 
+#' Call GraphQL operation: addGroupSubGroups
+#'
+#' @description Executes the GraphQL operation `addGroupSubGroups`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 addGroupSubGroups <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -4196,6 +5105,13 @@ addGroupSubGroups <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: removeGroupSubGroups
+#'
+#' @description Executes the GraphQL operation `removeGroupSubGroups`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 removeGroupSubGroups <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -4228,6 +5144,13 @@ removeGroupSubGroups <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: reorderSubGroups
+#'
+#' @description Reorder sub groups within a group. Returns true if successful.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 reorderSubGroups <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -4260,6 +5183,13 @@ reorderSubGroups <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: tagCreate
+#'
+#' @description Executes the GraphQL operation `tagCreate`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 tagCreate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -4293,6 +5223,13 @@ fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag crea
   return(res)
 }
 
+#' Call GraphQL operation: tagUpdate
+#'
+#' @description Executes the GraphQL operation `tagUpdate`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 tagUpdate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -4326,6 +5263,13 @@ fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag crea
   return(res)
 }
 
+#' Call GraphQL operation: tagDestroy
+#'
+#' @description Executes the GraphQL operation `tagDestroy`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 tagDestroy <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -4358,6 +5302,13 @@ tagDestroy <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: tagsDestroy
+#'
+#' @description Executes the GraphQL operation `tagsDestroy`.
+#' @param ids See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 tagsDestroy <- function(ids = list(), ...) {
 
   query <- ghql::Query$new()
@@ -4390,6 +5341,13 @@ tagsDestroy <- function(ids = list(), ...) {
   return(res)
 }
 
+#' Call GraphQL operation: tagsMerge
+#'
+#' @description Executes the GraphQL operation `tagsMerge`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 tagsMerge <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -4423,6 +5381,13 @@ fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag crea
   return(res)
 }
 
+#' Call GraphQL operation: bulkTagUpdate
+#'
+#' @description Executes the GraphQL operation `bulkTagUpdate`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 bulkTagUpdate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -4456,6 +5421,19 @@ fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag crea
   return(res)
 }
 
+#' Call GraphQL operation: moveFiles
+#'
+#' @description Moves the given files to the given destination. Returns true if successful.
+#' Either the destination_folder or destination_folder_id must be provided.
+#' If both are provided, the destination_folder_id takes precedence.
+#' Destination folder must be a subfolder of one of the stash library paths.
+#' If provided, destination_basename must be a valid filename with an extension that
+#' matches one of the media extensions.
+#' Creates folder hierarchy if needed.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 moveFiles <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -4488,6 +5466,13 @@ moveFiles <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: deleteFiles
+#'
+#' @description Executes the GraphQL operation `deleteFiles`.
+#' @param ids See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 deleteFiles <- function(ids = list(), ...) {
 
   query <- ghql::Query$new()
@@ -4520,6 +5505,13 @@ deleteFiles <- function(ids = list(), ...) {
   return(res)
 }
 
+#' Call GraphQL operation: destroyFiles
+#'
+#' @description Deletes file entries from the database without deleting the files from the filesystem
+#' @param ids See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 destroyFiles <- function(ids = list(), ...) {
 
   query <- ghql::Query$new()
@@ -4552,6 +5544,13 @@ destroyFiles <- function(ids = list(), ...) {
   return(res)
 }
 
+#' Call GraphQL operation: fileSetFingerprints
+#'
+#' @description Executes the GraphQL operation `fileSetFingerprints`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 fileSetFingerprints <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -4584,6 +5583,13 @@ fileSetFingerprints <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: revealFileInFileManager
+#'
+#' @description Reveal the file in the system file manager
+#' @param id See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 revealFileInFileManager <- function(id = list(), ...) {
 
   query <- ghql::Query$new()
@@ -4616,6 +5622,13 @@ revealFileInFileManager <- function(id = list(), ...) {
   return(res)
 }
 
+#' Call GraphQL operation: revealFolderInFileManager
+#'
+#' @description Reveal the folder in the system file manager
+#' @param id See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 revealFolderInFileManager <- function(id = list(), ...) {
 
   query <- ghql::Query$new()
@@ -4648,6 +5661,13 @@ revealFolderInFileManager <- function(id = list(), ...) {
   return(res)
 }
 
+#' Call GraphQL operation: saveFilter
+#'
+#' @description Executes the GraphQL operation `saveFilter`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 saveFilter <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -4682,6 +5702,13 @@ fragment SavedFilter on SavedFilter { id mode name find_filter { ...SavedFindFil
   return(res)
 }
 
+#' Call GraphQL operation: destroySavedFilter
+#'
+#' @description Executes the GraphQL operation `destroySavedFilter`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 destroySavedFilter <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -4714,6 +5741,13 @@ destroySavedFilter <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: configureGeneral
+#'
+#' @description Change general configuration options
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 configureGeneral <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -4750,6 +5784,13 @@ fragment ConfigGeneralResult on ConfigGeneralResult { stashes { ...StashConfig }
   return(res)
 }
 
+#' Call GraphQL operation: configureInterface
+#'
+#' @description Executes the GraphQL operation `configureInterface`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 configureInterface <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -4785,6 +5826,13 @@ fragment ConfigInterfaceResult on ConfigInterfaceResult { sfwContentMode menuIte
   return(res)
 }
 
+#' Call GraphQL operation: configureDLNA
+#'
+#' @description Executes the GraphQL operation `configureDLNA`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 configureDLNA <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -4818,6 +5866,13 @@ fragment ConfigDLNAResult on ConfigDLNAResult { serverName enabled port whitelis
   return(res)
 }
 
+#' Call GraphQL operation: configureScraping
+#'
+#' @description Executes the GraphQL operation `configureScraping`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 configureScraping <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -4851,6 +5906,13 @@ fragment ConfigScrapingResult on ConfigScrapingResult { scraperUserAgent scraper
   return(res)
 }
 
+#' Call GraphQL operation: configureDefaults
+#'
+#' @description Executes the GraphQL operation `configureDefaults`.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 configureDefaults <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -4893,6 +5955,14 @@ fragment ConfigDefaultSettingsResult on ConfigDefaultSettingsResult { scan { ...
   return(res)
 }
 
+#' Call GraphQL operation: configurePlugin
+#'
+#' @description overwrites the entire plugin configuration for the given plugin
+#' @param pluginid See the Stash Playground for details.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 configurePlugin <- function(pluginid = list(), input = list(), ...) {
 
   query <- ghql::Query$new()
@@ -4929,6 +5999,16 @@ configurePlugin <- function(pluginid = list(), input = list(), ...) {
   return(res)
 }
 
+#' Call GraphQL operation: configureUI
+#'
+#' @description overwrites the UI configuration
+#' if input is provided, then the entire UI configuration is replaced
+#' if partial is provided, then the partial UI configuration is merged into the existing UI configuration
+#' @param input See the Stash Playground for details.
+#' @param partial See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 configureUI <- function(input = NA, partial = NA, ...) {
 
   query <- ghql::Query$new()
@@ -4958,6 +6038,15 @@ configureUI <- function(input = NA, partial = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: configureUISetting
+#'
+#' @description sets a single UI key value
+#' key is a dot separated path to the value
+#' @param key See the Stash Playground for details.
+#' @param value See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 configureUISetting <- function(key = list(), value = NA, ...) {
 
   query <- ghql::Query$new()
@@ -4991,6 +6080,13 @@ configureUISetting <- function(key = list(), value = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: generateAPIKey
+#'
+#' @description Generate and set (or clear) API key
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 generateAPIKey <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -5023,6 +6119,13 @@ generateAPIKey <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: exportObjects
+#'
+#' @description Returns a link to download the result
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 exportObjects <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -5055,6 +6158,13 @@ exportObjects <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: importObjects
+#'
+#' @description Performs an incremental import. Returns the job ID
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 importObjects <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -5087,6 +6197,12 @@ importObjects <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: metadataImport
+#'
+#' @description Start an full import. Completely wipes the database and imports from the metadata directory. Returns the job ID
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 metadataImport <- function(...) {
 
   query <- ghql::Query$new()
@@ -5114,6 +6230,12 @@ metadataImport <- function(...) {
   return(res)
 }
 
+#' Call GraphQL operation: metadataExport
+#'
+#' @description Start a full export. Outputs to the metadata directory. Returns the job ID
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 metadataExport <- function(...) {
 
   query <- ghql::Query$new()
@@ -5141,6 +6263,13 @@ metadataExport <- function(...) {
   return(res)
 }
 
+#' Call GraphQL operation: metadataScan
+#'
+#' @description Start a scan. Returns the job ID
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 metadataScan <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -5173,6 +6302,13 @@ metadataScan <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: metadataGenerate
+#'
+#' @description Start generating content. Returns the job ID
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 metadataGenerate <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -5205,6 +6341,13 @@ metadataGenerate <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: metadataAutoTag
+#'
+#' @description Start auto-tagging. Returns the job ID
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 metadataAutoTag <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -5237,6 +6380,13 @@ metadataAutoTag <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: metadataClean
+#'
+#' @description Clean metadata. Returns the job ID
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 metadataClean <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -5269,6 +6419,13 @@ metadataClean <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: metadataCleanGenerated
+#'
+#' @description Clean generated files. Returns the job ID
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 metadataCleanGenerated <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -5301,6 +6458,13 @@ metadataCleanGenerated <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: metadataIdentify
+#'
+#' @description Identifies scenes using scrapers. Returns the job ID
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 metadataIdentify <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -5333,6 +6497,12 @@ metadataIdentify <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: migrateHashNaming
+#'
+#' @description Migrate generated files for the current hash naming
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 migrateHashNaming <- function(...) {
 
   query <- ghql::Query$new()
@@ -5360,6 +6530,13 @@ migrateHashNaming <- function(...) {
   return(res)
 }
 
+#' Call GraphQL operation: migrateSceneScreenshots
+#'
+#' @description Migrates legacy scene screenshot files into the blob storage
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 migrateSceneScreenshots <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -5392,6 +6569,13 @@ migrateSceneScreenshots <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: migrateBlobs
+#'
+#' @description Migrates blobs from the old storage system to the current one
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 migrateBlobs <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -5424,6 +6608,13 @@ migrateBlobs <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: anonymiseDatabase
+#'
+#' @description Anonymise the database in a separate file. Optionally returns a link to download the database file
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 anonymiseDatabase <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -5456,6 +6647,12 @@ anonymiseDatabase <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: optimiseDatabase
+#'
+#' @description Optimises the database. Returns the job ID
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 optimiseDatabase <- function(...) {
 
   query <- ghql::Query$new()
@@ -5483,6 +6680,12 @@ optimiseDatabase <- function(...) {
   return(res)
 }
 
+#' Call GraphQL operation: reloadScrapers
+#'
+#' @description Reload scrapers
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 reloadScrapers <- function(...) {
 
   query <- ghql::Query$new()
@@ -5510,6 +6713,14 @@ reloadScrapers <- function(...) {
   return(res)
 }
 
+#' Call GraphQL operation: setPluginsEnabled
+#'
+#' @description Enable/disable plugins - enabledMap is a map of plugin IDs to enabled booleans.
+#' Plugins not in the map are not affected.
+#' @param enabledMap See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 setPluginsEnabled <- function(enabledMap = list(), ...) {
 
   query <- ghql::Query$new()
@@ -5542,6 +6753,21 @@ setPluginsEnabled <- function(enabledMap = list(), ...) {
   return(res)
 }
 
+#' Call GraphQL operation: runPluginTask
+#'
+#' @description Run a plugin task.
+#' If task_name is provided, then the task must exist in the plugin config and the tasks configuration
+#' will be used to run the plugin.
+#' If no task_name is provided, then the plugin will be executed with the arguments provided only.
+#' Returns the job ID
+#' @param pluginid See the Stash Playground for details.
+#' @param taskname if provided, then the default args will be applied
+#' @param description displayed in the task queue
+#' @param args See the Stash Playground for details.
+#' @param argsmap See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 runPluginTask <- function(pluginid = list(), taskname = NA, description = NA, args = NA, argsmap = NA, ...) {
 
   query <- ghql::Query$new()
@@ -5578,6 +6804,15 @@ runPluginTask <- function(pluginid = list(), taskname = NA, description = NA, ar
   return(res)
 }
 
+#' Call GraphQL operation: runPluginOperation
+#'
+#' @description Runs a plugin operation. The operation is run immediately and does not use the job queue.
+#' Returns a map of the result.
+#' @param pluginid See the Stash Playground for details.
+#' @param args See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 runPluginOperation <- function(pluginid = list(), args = NA, ...) {
 
   query <- ghql::Query$new()
@@ -5611,6 +6846,12 @@ runPluginOperation <- function(pluginid = list(), args = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: reloadPlugins
+#'
+#' @description Executes the GraphQL operation `reloadPlugins`.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 reloadPlugins <- function(...) {
 
   query <- ghql::Query$new()
@@ -5638,6 +6879,17 @@ reloadPlugins <- function(...) {
   return(res)
 }
 
+#' Call GraphQL operation: installPackages
+#'
+#' @description Installs the given packages.
+#' If a package is already installed, it will be updated if needed..
+#' If an error occurs when installing a package, the job will continue to install the remaining packages.
+#' Returns the job ID
+#' @param type See the Stash Playground for details.
+#' @param packages See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 installPackages <- function(type = NA, packages = NA, ...) {
 
   query <- ghql::Query$new()
@@ -5674,6 +6926,19 @@ installPackages <- function(type = NA, packages = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: updatePackages
+#'
+#' @description Updates the given packages.
+#' If a package is not installed, it will not be installed.
+#' If a package does not need to be updated, it will not be updated.
+#' If no packages are provided, all packages of the given type will be updated.
+#' If an error occurs when updating a package, the job will continue to update the remaining packages.
+#' Returns the job ID.
+#' @param type See the Stash Playground for details.
+#' @param packages See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 updatePackages <- function(type = NA, packages = NA, ...) {
 
   query <- ghql::Query$new()
@@ -5707,6 +6972,16 @@ updatePackages <- function(type = NA, packages = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: uninstallPackages
+#'
+#' @description Uninstalls the given packages.
+#' If an error occurs when uninstalling a package, the job will continue to uninstall the remaining packages.
+#' Returns the job ID
+#' @param type See the Stash Playground for details.
+#' @param packages See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 uninstallPackages <- function(type = NA, packages = NA, ...) {
 
   query <- ghql::Query$new()
@@ -5743,6 +7018,13 @@ uninstallPackages <- function(type = NA, packages = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: stopJob
+#'
+#' @description Executes the GraphQL operation `stopJob`.
+#' @param jobid See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 stopJob <- function(jobid = list(), ...) {
 
   query <- ghql::Query$new()
@@ -5775,6 +7057,12 @@ stopJob <- function(jobid = list(), ...) {
   return(res)
 }
 
+#' Call GraphQL operation: stopAllJobs
+#'
+#' @description Executes the GraphQL operation `stopAllJobs`.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 stopAllJobs <- function(...) {
 
   query <- ghql::Query$new()
@@ -5802,6 +7090,13 @@ stopAllJobs <- function(...) {
   return(res)
 }
 
+#' Call GraphQL operation: submitStashBoxFingerprints
+#'
+#' @description Submit fingerprints to stash-box instance
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 submitStashBoxFingerprints <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -5834,6 +7129,13 @@ submitStashBoxFingerprints <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: submitStashBoxSceneDraft
+#'
+#' @description Submit scene as draft to stash-box instance
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 submitStashBoxSceneDraft <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -5866,6 +7168,13 @@ submitStashBoxSceneDraft <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: submitStashBoxPerformerDraft
+#'
+#' @description Submit performer as draft to stash-box instance
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 submitStashBoxPerformerDraft <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -5898,6 +7207,13 @@ submitStashBoxPerformerDraft <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: backupDatabase
+#'
+#' @description Backup the database. Optionally returns a link to download the database file
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 backupDatabase <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -5930,6 +7246,14 @@ backupDatabase <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: querySQL
+#'
+#' @description DANGEROUS: Execute an arbitrary SQL statement that returns rows.
+#' @param sql See the Stash Playground for details.
+#' @param args See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 querySQL <- function(sql = list(), args = NA, ...) {
 
   query <- ghql::Query$new()
@@ -5964,6 +7288,14 @@ fragment SQLQueryResult on SQLQueryResult { columns rows }
   return(res)
 }
 
+#' Call GraphQL operation: execSQL
+#'
+#' @description DANGEROUS: Execute an arbitrary SQL statement without returning any rows.
+#' @param sql See the Stash Playground for details.
+#' @param args See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 execSQL <- function(sql = list(), args = NA, ...) {
 
   query <- ghql::Query$new()
@@ -5998,6 +7330,13 @@ fragment SQLExecResult on SQLExecResult { rows_affected last_insert_id }
   return(res)
 }
 
+#' Call GraphQL operation: stashBoxBatchPerformerTag
+#'
+#' @description Run batch performer tag task. Returns the job ID.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 stashBoxBatchPerformerTag <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -6030,6 +7369,13 @@ stashBoxBatchPerformerTag <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: stashBoxBatchStudioTag
+#'
+#' @description Run batch studio tag task. Returns the job ID.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 stashBoxBatchStudioTag <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -6062,6 +7408,13 @@ stashBoxBatchStudioTag <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: stashBoxBatchTagTag
+#'
+#' @description Run batch tag tag task. Returns the job ID.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 stashBoxBatchTagTag <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -6094,6 +7447,13 @@ stashBoxBatchTagTag <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: enableDLNA
+#'
+#' @description Enables DLNA for an optional duration. Has no effect if DLNA is enabled by default
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 enableDLNA <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -6126,6 +7486,13 @@ enableDLNA <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: disableDLNA
+#'
+#' @description Disables DLNA for an optional duration. Has no effect if DLNA is disabled by default
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 disableDLNA <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -6158,6 +7525,13 @@ disableDLNA <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: addTempDLNAIP
+#'
+#' @description Enables an IP address for DLNA for an optional duration
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 addTempDLNAIP <- function(input = NA, ...) {
 
   query <- ghql::Query$new()
@@ -6190,6 +7564,13 @@ addTempDLNAIP <- function(input = NA, ...) {
   return(res)
 }
 
+#' Call GraphQL operation: removeTempDLNAIP
+#'
+#' @description Removes an IP address from the temporary DLNA whitelist
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
 removeTempDLNAIP <- function(input = NA, ...) {
 
   query <- ghql::Query$new()

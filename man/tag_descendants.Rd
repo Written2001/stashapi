@@ -13,12 +13,17 @@ tag_descendants(tag_id, depth = -1, include_self = FALSE, ...)
 
 \item{include_self}{Whether to include the supplied root tags.}
 
-\item{...}{Additional `findTags()` options such as `.field`, `.response`, and `.progress_bar`.}
+\item{...}{Additional `findTags()` options such as `.field`, `.response`,
+and `.progress_bar`.}
 }
-\value{Descendant tags, optionally including the supplied root tags when
-`include_self = TRUE`, in the shape returned by `findTags()` for the selected
-`.field` and `.response` options.}
-\description{Find tags below one or more parent tags using server-side hierarchy filtering.}
+\value{
+Descendant tags, optionally including the supplied root tags when
+  `include_self = TRUE`, in the shape returned by `findTags()` for the
+  selected `.field` and `.response` options.
+}
+\description{
+Find tags below one or more parent tags
+}
 \examples{
 \dontrun{
 tag_descendants(182)

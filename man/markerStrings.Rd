@@ -7,14 +7,14 @@
 markerStrings(q = NA, sort = NA, ...)
 }
 \arguments{
-\item{q}{See the Playground for further details.}
+\item{q}{See the Stash Playground for details.}
 
-\item{sort}{See the Playground for further details.}
+\item{sort}{See the Stash Playground for details.}
 
-\item{...}{additional parameters like .field to retrieve only a certain field from the response}
+\item{...}{Additional options such as `.field`, `.response`, and `.progress_bar`.}
 }
 \value{
-processed API response
+The processed API response.
 }
 \description{
 Get marker strings

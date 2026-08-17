@@ -7,15 +7,18 @@
 is_stash_connected()
 }
 \value{
-A logical value: `TRUE` for a valid active connection and `FALSE` otherwise.
+A logical value:
+- `TRUE` if a valid connection exists
+- `FALSE` if no connection is found or connection validation fails
 }
 \description{
-Validates whether the active connection to the Stash GraphQL endpoint is functional.
+Validates whether a connection to the GraphQL endpoint of Stash can be established and is functional.
 }
 \examples{
 \dontrun{
 is_stash_connected()
 }
+
 }
 \keyword{connection}
 \keyword{validation}

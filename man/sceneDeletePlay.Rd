@@ -7,14 +7,14 @@
 sceneDeletePlay(id = list(), times = list(), ...)
 }
 \arguments{
-\item{id}{See the Playground for further details.}
+\item{id}{See the Stash Playground for details.}
 
-\item{times}{See the Playground for further details.}
+\item{times}{See the Stash Playground for details.}
 
-\item{...}{additional parameters like .field to retrieve only a certain field from the response}
+\item{...}{Additional options such as `.field`, `.response`, and `.progress_bar`.}
 }
 \value{
-processed API response
+The processed API response.
 }
 \description{
 Decrements the play count for the scene, removing the specific times or the last recorded time if not provided.

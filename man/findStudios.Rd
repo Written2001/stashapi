@@ -7,16 +7,16 @@
 findStudios(studiofilter = NA, filter = NA, ids = list(), ...)
 }
 \arguments{
-\item{studiofilter}{See the Playground for further details.}
+\item{studiofilter}{See the Stash Playground for details.}
 
-\item{filter}{See the Playground for further details.}
+\item{filter}{See the Stash Playground for details.}
 
-\item{ids}{See the Playground for further details.}
+\item{ids}{See the Stash Playground for details.}
 
-\item{...}{additional parameters including \code{.field} for field selection, \code{.response} for response mode, and \code{.progress_bar} to show an opt-in progress bar while collecting paginated results.}
+\item{...}{Additional options such as `.field`, `.response`, and `.progress_bar`.}
 }
 \value{
-processed API response
+The processed API response.
 }
 \description{
 A function which queries Studio objects

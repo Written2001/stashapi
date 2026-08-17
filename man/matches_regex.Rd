@@ -6,7 +6,9 @@
 \usage{
 matches_regex(value)
 }
-\arguments{\item{value}{Regular-expression pattern.}}
+\arguments{
+\item{value}{Regular-expression pattern.}
+}
 \description{
 Build a regular-expression match criterion.
 }

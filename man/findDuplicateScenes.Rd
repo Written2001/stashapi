@@ -7,15 +7,15 @@
 findDuplicateScenes(distance = NA, durationdiff = NA, ...)
 }
 \arguments{
-\item{distance}{See the Playground for further details.}
+\item{distance}{See the Stash Playground for details.}
 
 \item{durationdiff}{Max difference in seconds between files in order to be considered for similarity matching.
 Fractional seconds are ok: 0.5 will mean only files that have durations within 0.5 seconds between them will be matched based on PHash distance.}
 
-\item{...}{additional parameters including \code{.field} for field selection, \code{.response} for response mode, and \code{.progress_bar} to show an opt-in progress bar while collecting paginated results.}
+\item{...}{Additional options such as `.field`, `.response`, and `.progress_bar`.}
 }
 \value{
-processed API response
+The processed API response.
 }
 \description{
 Returns any groups of scenes that are perceptual duplicates within the queried distance

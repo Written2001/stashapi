@@ -36,6 +36,25 @@ testthat::test_that("generated operation names are exported", {
 
   testthat::expect_gt(length(generated_names), 0)
   testthat::expect_true(all(generated_names %in% getNamespaceExports("stashapi")))
+  export_directives <- grepl("^#' @export$", generated_source)
+  testthat::expect_length(export_directives, length(generated_source))
+  testthat::expect_equal(
+    sum(export_directives),
+    length(generated_names)
+  )
+})
+
+testthat::test_that("generated wrappers include schema-derived roxygen documentation", {
+  generated_source <- paste(readLines(generated_wrapper_path, warn = FALSE), collapse = "\n")
+  testthat::expect_match(generated_source, "#' Call GraphQL operation: findScenes")
+  testthat::expect_match(generated_source, "#' @description A function which queries Scene objects")
+  testthat::expect_match(generated_source, "#' @param scenefilter ")
+  testthat::expect_match(
+    generated_source,
+    "#' @param ... Additional options",
+    fixed = TRUE
+  )
+  testthat::expect_match(generated_source, "#' @return The processed API response\\.")
 })
 
 testthat::test_that("findScenes preserves its schema-derived contract", {

@@ -214,6 +214,7 @@ stop_mutation_execution <- function(entry, error, results) {
   stop(condition)
 }
 
+#' @exportS3Method print stashapi_mutation_plan
 print.stashapi_mutation_plan <- function(x, ...) {
   cat("stashapi mutation plan")
   if (!is.null(x$operation)) cat(" (", x$operation, ")", sep = "")
@@ -222,6 +223,7 @@ print.stashapi_mutation_plan <- function(x, ...) {
   invisible(x)
 }
 
+#' @exportS3Method print stashapi_mutation_result
 print.stashapi_mutation_result <- function(x, ...) {
   cat("stashapi mutation result (dry_run = ", x$dry_run, ")\n", sep = "")
   print(mutation_result_summary(x$results), ...)

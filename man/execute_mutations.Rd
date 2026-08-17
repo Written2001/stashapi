@@ -14,19 +14,21 @@ execute_mutations(
 )
 }
 \arguments{
-\item{plan}{A \code{stashapi_mutation_plan} from \code{prepare_mutations()}.}
+\item{plan}{A `stashapi_mutation_plan` from [prepare_mutations()].}
 
-\item{mutate}{Function accepting \code{input = ...}, such as \code{galleryUpdate}.}
+\item{mutate}{Function accepting `input = ...`, such as `galleryUpdate`.}
 
 \item{dry_run}{Whether to skip mutation calls and return a preview.}
 
-\item{on_error}{Error policy: \code{"stop"} or \code{"continue"}.}
+\item{on_error}{Error policy: `"stop"` or `"continue"`.}
 
 \item{progress}{Whether to report each mutation.}
 
 \item{progress_bar}{Whether to display a progress bar.}
 }
-\value{An object of class \code{stashapi_mutation_result}.}
+\value{
+An object of class `stashapi_mutation_result`.
+}
 \description{
 Execute one mutation call per prepared input. Dry-run is the default and
 makes no API calls.

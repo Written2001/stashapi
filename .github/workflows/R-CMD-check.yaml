@@ -10,6 +10,8 @@ on:
       - inst/**
       - man/**
       - tests/**
+      - tools/**
+      - Makefile
   pull_request:
     branches: [ main ]
     paths:
@@ -19,6 +21,8 @@ on:
       - inst/**
       - man/**
       - tests/**
+      - tools/**
+      - Makefile
   workflow_dispatch:
 
 permissions:
@@ -58,8 +62,12 @@ jobs:
         with:
           extra-packages: |
             any::rcmdcheck
+            any::roxygen2
             any::rmarkdown
           needs: check
+
+      - name: Check generated documentation
+        run: Rscript tools/check_documentation.R
 
       - name: Check
         uses: r-lib/actions/check-r-package@v2

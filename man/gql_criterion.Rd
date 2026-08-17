@@ -13,7 +13,7 @@ gql_criterion(
 )
 }
 \arguments{
-\item{value}{Criterion value. Omit it for unary modifiers such as `IS_NULL`.}
+\item{value}{Criterion value.}
 
 \item{modifier}{GraphQL criterion modifier.}
 
@@ -33,6 +33,7 @@ generated Stash API functions.
 \details{
 Criterion helpers return ordinary named lists. Use them as values
   inside a typed filter, for example `scene_filter(tags = includes(182))`.
+Build an EQUALS criterion.
 }
 \examples{
 equals("4k")

@@ -7,12 +7,12 @@
 scrapeGroupURL(url = list(), ...)
 }
 \arguments{
-\item{url}{See the Playground for further details.}
+\item{url}{See the Stash Playground for details.}
 
-\item{...}{additional parameters like .field to retrieve only a certain field from the response}
+\item{...}{Additional options such as `.field`, `.response`, and `.progress_bar`.}
 }
 \value{
-processed API response
+The processed API response.
 }
 \description{
 Scrapes a complete group record based on a URL

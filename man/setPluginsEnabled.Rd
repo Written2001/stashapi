@@ -7,12 +7,12 @@
 setPluginsEnabled(enabledMap = list(), ...)
 }
 \arguments{
-\item{enabledMap}{See the Playground for further details.}
+\item{enabledMap}{See the Stash Playground for details.}
 
-\item{...}{additional parameters like .field to retrieve only a certain field from the response}
+\item{...}{Additional options such as `.field`, `.response`, and `.progress_bar`.}
 }
 \value{
-processed API response
+The processed API response.
 }
 \description{
 Enable/disable plugins - enabledMap is a map of plugin IDs to enabled booleans.

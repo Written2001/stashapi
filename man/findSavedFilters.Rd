@@ -7,13 +7,13 @@
 findSavedFilters(mode = NA, ...)
 }
 \arguments{
-\item{mode}{See the Playground for further details.}
+\item{mode}{See the Stash Playground for details.}
 
-\item{...}{additional parameters including \code{.field} for field selection, \code{.response} for response mode, and \code{.progress_bar} to show an opt-in progress bar while collecting paginated results.}
+\item{...}{Additional options such as `.field`, `.response`, and `.progress_bar`.}
 }
 \value{
-processed API response
+The processed API response.
 }
 \description{
-Call GraphQL operation: findSavedFilters
+Executes the GraphQL operation `findSavedFilters`.
 }

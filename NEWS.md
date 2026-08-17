@@ -6,6 +6,10 @@
 - Stabilize generated wrapper execution while preserving response modes,
 	pagination, metadata, progress bars, and existing operation contracts.
 - Bring the shared execution path to a clean repository lint baseline.
+- Restore schema-derived roxygen documentation for generated operations and
+	make `make roxygen` regenerate wrappers before manuals.
+- Make the common generated-operation options documentation roxygen-owned and
+	reproducible.
 
 # stashapi 0.7.0
 

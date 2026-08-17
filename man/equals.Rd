@@ -3,8 +3,15 @@
 \name{equals}
 \alias{equals}
 \title{Build an EQUALS criterion.}
-\usage{equals(value)}
-\arguments{\item{value}{Criterion value.}}
-\value{A named criterion list.}
-\description{Builds a GraphQL EQUALS criterion.}
-\examples{equals("4k")}
+\usage{
+equals(value)
+}
+\arguments{
+\item{value}{Criterion value.}
+}
+\description{
+Build an EQUALS criterion.
+}
+\examples{
+equals("4k")
+}

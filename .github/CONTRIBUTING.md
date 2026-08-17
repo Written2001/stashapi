@@ -2,7 +2,7 @@
 
 ## Local checks
 
-Before opening a pull request, run the package tests, generated-wrapper check, lint, and `R CMD check` locally. The required CI checks do not need a Stash instance, credentials, or network access.
+Before opening a pull request, run the package tests, generated-wrapper and documentation checks, lint, and `R CMD check` locally. The required CI checks do not need a Stash instance, credentials, or network access.
 
 On systems with `make`, the common checks are available through the Makefile:
 
@@ -20,6 +20,7 @@ testthat::test_local()
 
 ```sh
 Rscript --vanilla tools/check_generated.R
+Rscript --vanilla tools/check_documentation.R
 R CMD check --no-manual .
 ```
 

@@ -14,20 +14,20 @@ runPluginTask(
 )
 }
 \arguments{
-\item{pluginid}{See the Playground for further details.}
+\item{pluginid}{See the Stash Playground for details.}
 
 \item{taskname}{if provided, then the default args will be applied}
 
 \item{description}{displayed in the task queue}
 
-\item{args}{See the Playground for further details.}
+\item{args}{See the Stash Playground for details.}
 
-\item{argsmap}{See the Playground for further details.}
+\item{argsmap}{See the Stash Playground for details.}
 
-\item{...}{additional parameters like .field to retrieve only a certain field from the response}
+\item{...}{Additional options such as `.field`, `.response`, and `.progress_bar`.}
 }
 \value{
-processed API response
+The processed API response.
 }
 \description{
 Run a plugin task.

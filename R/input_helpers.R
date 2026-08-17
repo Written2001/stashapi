@@ -35,17 +35,15 @@ gql_criterion <- function(
   result
 }
 
-#' Build an INCLUDES criterion.
+#' Build an EQUALS criterion.
 #'
 #' @param value Criterion value.
-#' @param depth Optional hierarchy depth. `-1` means unlimited depth.
-#' @param excludes Optional IDs to exclude.
 #' @export
 #' @examples
 #' equals("4k")
 equals <- function(value) gql_criterion(value, "EQUALS")
 
-#' Build an INCLUDES_ALL criterion.
+#' Build an INCLUDES criterion.
 #'
 #' @param value Criterion value.
 #' @param depth Optional hierarchy depth. `-1` means unlimited depth.
@@ -57,6 +55,11 @@ includes <- function(value, depth = NULL, excludes = NULL) {
   gql_criterion(value, "INCLUDES", depth = depth, excludes = excludes)
 }
 
+#' Build an INCLUDES_ALL criterion.
+#'
+#' @param value Criterion values.
+#' @param depth Optional hierarchy depth. `-1` means unlimited depth.
+#' @param excludes Optional IDs to exclude.
 #' @export
 #' @examples
 #' includes_all(c(84, 85))
@@ -64,6 +67,8 @@ includes_all <- function(value, depth = NULL, excludes = NULL) {
   gql_criterion(value, "INCLUDES_ALL", depth = depth, excludes = excludes)
 }
 
+#' Build an IS_NULL criterion.
+#'
 #' @param value Boolean null criterion value.
 #' @export
 #' @examples

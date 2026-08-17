@@ -15,15 +15,17 @@ prepare_mutations(
 \arguments{
 \item{data}{A data frame or list of source rows.}
 
-\item{build_input}{Function called as \code{build_input(row, index)}.}
+\item{build_input}{Function called as `build_input(row, index)`.}
 
-\item{na}{Missing-value policy: \code{"omit"} or \code{"error"}.}
+\item{na}{Missing-value policy: `"omit"` or `"error"`.}
 
-\item{null}{NULL-value policy: \code{"omit"} or \code{"error"}.}
+\item{null}{NULL-value policy: `"omit"` or `"error"`.}
 
 \item{operation}{Optional label for the plan.}
 }
-\value{An object of class \code{stashapi_mutation_plan}.}
+\value{
+An object of class `stashapi_mutation_plan`.
+}
 \description{
 Build and normalize one GraphQL input per source row without contacting
 Stash. The builder controls the mutation input and its field semantics.

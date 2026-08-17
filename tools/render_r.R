@@ -63,6 +63,39 @@ render_r_validation <- function(operation) {
   paste(checks, collapse = "\n  ")
 }
 
+render_roxygen_text <- function(value, fallback) {
+  value <- if (length(value) == 0L || is.na(value[[1]])) "" else as.character(value[[1]])
+  value <- trimws(value)
+  if (!nzchar(value)) value <- fallback
+  gsub("\\r?\\n", "\n#' ", value)
+}
+
+render_r_documentation <- function(operation) {
+  title <- paste0("Call GraphQL operation: ", operation$name)
+  description <- render_roxygen_text(
+    operation$description,
+    paste0("Executes the GraphQL operation `", operation$name, "`.")
+  )
+  arguments <- vapply(operation$arguments, function(argument) {
+    description <- render_roxygen_text(
+      argument$description,
+      "See the Stash Playground for details."
+    )
+    paste0("#' @param ", argument$r_name, " ", description)
+  }, character(1))
+
+  lines <- c(
+    paste0("#' ", title),
+    "#'",
+    paste0("#' @description ", description),
+    arguments,
+    "#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.",
+    "#' @return The processed API response.",
+    "#' @export"
+  )
+  paste(lines, collapse = "\n")
+}
+
 #' Render a backwards-compatible R wrapper.
 #'
 #' @param operation One operation record from build_operation_ir().
@@ -76,6 +109,7 @@ render_r_wrapper <- function(operation, document) {
   query_name <- operation$name
 
   paste0(
+    render_r_documentation(operation), "\n",
     operation$name, " <- function(", formals, ") {\n\n",
     "  query <- ghql::Query$new()\n",
     "  query$query('", query_name, "', '\n",

@@ -7,12 +7,12 @@
 findGroup(id = list(), ...)
 }
 \arguments{
-\item{id}{See the Playground for further details.}
+\item{id}{See the Stash Playground for details.}
 
-\item{...}{additional parameters including \code{.field} for field selection, \code{.response} for response mode, and \code{.progress_bar} to show an opt-in progress bar while collecting paginated results.}
+\item{...}{Additional options such as `.field`, `.response`, and `.progress_bar`.}
 }
 \value{
-processed API response
+The processed API response.
 }
 \description{
 Find a group by ID

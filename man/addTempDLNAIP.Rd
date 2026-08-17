@@ -7,12 +7,12 @@
 addTempDLNAIP(input = NA, ...)
 }
 \arguments{
-\item{input}{See the Playground for further details.}
+\item{input}{See the Stash Playground for details.}
 
-\item{...}{additional parameters like .field to retrieve only a certain field from the response}
+\item{...}{Additional options such as `.field`, `.response`, and `.progress_bar`.}
 }
 \value{
-processed API response
+The processed API response.
 }
 \description{
 Enables an IP address for DLNA for an optional duration

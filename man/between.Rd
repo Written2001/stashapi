@@ -8,6 +8,7 @@ between(value, value2)
 }
 \arguments{
 \item{value}{Lower or first criterion value.}
+
 \item{value2}{Upper or second criterion value.}
 }
 \description{

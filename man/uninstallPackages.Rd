@@ -7,14 +7,14 @@
 uninstallPackages(type = NA, packages = NA, ...)
 }
 \arguments{
-\item{type}{See the Playground for further details.}
+\item{type}{See the Stash Playground for details.}
 
-\item{packages}{See the Playground for further details.}
+\item{packages}{See the Stash Playground for details.}
 
-\item{...}{additional parameters like .field to retrieve only a certain field from the response}
+\item{...}{Additional options such as `.field`, `.response`, and `.progress_bar`.}
 }
 \value{
-processed API response
+The processed API response.
 }
 \description{
 Uninstalls the given packages.
