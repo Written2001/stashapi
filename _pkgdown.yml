@@ -21,6 +21,7 @@ articles:
   - title: User Guides
     contents:
       - filters-and-input-builders
+      - helper-functions
       - mutation-plans
   - title: Maintainer Guides
     contents:

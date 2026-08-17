@@ -92,3 +92,84 @@ testthat::test_that("helper inputs are validated", {
     "multiple must be"
   )
 })
+
+testthat::test_that("tag_descendants uses the server-side hierarchy filter", {
+  observed <- list()
+  connection <- list(exec = function(query, variables) {
+    observed[[length(observed) + 1L]] <<- variables
+    if (is.list(variables$tagfilter) && !is.null(variables$tagfilter$parents)) {
+      return('{"data":{"findTags":{"count":2,"tags":[{"id":"2","name":"Child"},{"id":"3","name":"Grandchild"}]}}}')
+    }
+    '{"data":{"findTags":{"count":1,"tags":[{"id":"1","name":"Root"}]}}}'
+  })
+  stashapi:::set_stash_connection(connection)
+  on.exit(stashapi::stash_disconnect(), add = TRUE)
+
+  result <- stashapi::tag_descendants(1, depth = 2)
+
+  testthat::expect_identical(result$id, c("2", "3"))
+  testthat::expect_identical(observed[[1]]$tagfilter$parents$value, 1)
+  testthat::expect_identical(observed[[1]]$tagfilter$parents$modifier, "INCLUDES")
+  testthat::expect_identical(observed[[1]]$tagfilter$parents$depth, 2)
+  testthat::expect_identical(observed[[1]]$filter$per_page, 5000)
+})
+
+testthat::test_that("tag_descendants can include roots and select IDs", {
+  connection <- list(exec = function(query, variables) {
+    if (is.list(variables$tagfilter) && !is.null(variables$tagfilter$parents)) {
+      return('{"data":{"findTags":{"count":1,"tags":[{"id":"2"}]}}}')
+    }
+    '{"data":{"findTags":{"count":1,"tags":[{"id":"1"}]}}}'
+  })
+  stashapi:::set_stash_connection(connection)
+  on.exit(stashapi::stash_disconnect(), add = TRUE)
+
+  result <- stashapi::tag_descendants(1, include_self = TRUE, .field = c("tags", "id"))
+
+  testthat::expect_identical(result, c("1", "2"))
+})
+
+testthat::test_that("tag_descendants preserves object response mode", {
+  connection <- list(exec = function(query, variables) {
+    if (is.list(variables$tagfilter) && !is.null(variables$tagfilter$parents)) {
+      return('{"data":{"findTags":{"count":1,"tags":[{"id":"2"}]}}}')
+    }
+    '{"data":{"findTags":{"count":1,"tags":[{"id":"1"}]}}}'
+  })
+  stashapi:::set_stash_connection(connection)
+  on.exit(stashapi::stash_disconnect(), add = TRUE)
+
+  result <- stashapi::tag_descendants(1, include_self = TRUE, .response = "object")
+
+  testthat::expect_s3_class(result, "stashapi_response")
+  testthat::expect_identical(unlist(result$data, use.names = FALSE), c("1", "2"))
+})
+
+testthat::test_that("tag_descendants preserves object metadata for selected fields", {
+  connection <- list(exec = function(query, variables) {
+    if (is.list(variables$tagfilter) && !is.null(variables$tagfilter$parents)) {
+      return('{"data":{"findTags":{"count":1,"tags":[{"id":"2"}]}}}')
+    }
+    '{"data":{"findTags":{"count":1,"tags":[{"id":"1"}]}}}'
+  })
+  stashapi:::set_stash_connection(connection)
+  on.exit(stashapi::stash_disconnect(), add = TRUE)
+
+  result <- stashapi::tag_descendants(
+    1,
+    include_self = TRUE,
+    .response = "object",
+    .field = c("tags", "id")
+  )
+
+  testthat::expect_s3_class(result, "stashapi_response")
+  testthat::expect_identical(result$data, c("1", "2"))
+  testthat::expect_identical(result$meta$count, 2L)
+})
+
+testthat::test_that("tag_descendants validates arguments and response modes", {
+  testthat::expect_error(stashapi::tag_descendants(integer()), "tag_id")
+  testthat::expect_error(stashapi::tag_descendants(1, depth = -2), "depth")
+  testthat::expect_error(stashapi::tag_descendants(1, include_self = NA), "include_self")
+  testthat::expect_error(stashapi::tag_descendants(1, .response = "raw"), "raw")
+})

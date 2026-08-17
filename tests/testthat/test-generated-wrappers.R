@@ -56,7 +56,7 @@ testthat::test_that("findScenes preserves its schema-derived contract", {
   testthat::expect_match(generated_source, "scene_filter: \\$scenefilter")
   testthat::expect_match(generated_source, "fragment FindScenesResultType on FindScenesResultType")
   testthat::expect_match(generated_source, "return_default <- \"scenes\"")
-  testthat::expect_match(generated_source, "dotargs\\$\\.field")
+  testthat::expect_match(generated_source, "prepare_stash_query_options")
 })
 
 testthat::test_that("findScenes preserves legacy nested-list calls", {

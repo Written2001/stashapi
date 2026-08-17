@@ -57,7 +57,7 @@ testthat::test_that("R wrapper source preserves execution and field-selection be
   testthat::expect_match(result, "query\\$query\\('findScenes'")
   testthat::expect_match(result, "query = query\\$queries\\$findScenes")
   testthat::expect_match(result, "connection = get_stash_connection\\(\\)")
-  testthat::expect_match(result, "dotargs\\$\\.field")
+  testthat::expect_match(result, "prepare_stash_query_options")
 })
 
 testthat::test_that("R wrapper renderer handles no-argument operations", {
