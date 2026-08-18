@@ -48,8 +48,6 @@ jobs:
             any::rcmdcheck
             any::roxygen2
             any::rmarkdown
-            any::stringr
-            any::tidyr
           needs: check
 
       - name: Check generated wrappers

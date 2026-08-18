@@ -18,9 +18,7 @@ Suggests:
     glue,
     knitr,
     rmarkdown,
-    stringr,
-    testthat (>= 3.0.0),
-    tidyr
+    testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Imports:
     ghql,

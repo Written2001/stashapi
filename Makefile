@@ -3,7 +3,7 @@ RSCRIPT ?= Rscript
 .PHONY: setup test generate-check documentation-check lint coverage build check check-package docs roxygen ci
 
 setup:
-	Rscript -e 'renv::restore(prompt = FALSE)'
+	Rscript -e 'renv::activate(); renv::restore(prompt = FALSE)'
 
 test:
 	$(RSCRIPT) -e 'testthat::test_local()'
