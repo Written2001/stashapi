@@ -10,7 +10,15 @@ From the repository root, restore the development environment before making
 changes:
 
 ```sh
-Rscript -e 'renv::restore()'
+make setup
+```
+
+This runs `renv::restore(prompt = FALSE)` and is also the command used when
+the development container is created. If `make` is unavailable, the
+equivalent R command is:
+
+```sh
+Rscript -e 'renv::restore(prompt = FALSE)'
 ```
 
 The usual contribution loop is:
