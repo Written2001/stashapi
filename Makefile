@@ -1,6 +1,6 @@
 RSCRIPT ?= Rscript
 
-.PHONY: setup test generate-check documentation-check lint coverage build check docs roxygen ci
+.PHONY: setup test generate-check documentation-check lint coverage build check check-package docs roxygen ci
 
 setup:
 	Rscript -e 'renv::restore(prompt = FALSE)'
@@ -21,10 +21,12 @@ coverage:
 	$(RSCRIPT) -e 'coverage <- covr::package_coverage(); writeLines(capture.output(print(coverage)), "coverage.txt")'
 
 build: generate-check documentation-check
-	$(RSCRIPT) -e 'renv::load(); status <- system2("R", c("CMD", "build", ".")); quit(status = status)'
+	$(RSCRIPT) -e 'status <- system2("R", c("CMD", "build", ".")); quit(status = status)'
 
-check: generate-check documentation-check
+check-package:
 	$(RSCRIPT) -e 'rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")'
+
+check: generate-check documentation-check check-package
 
 docs: documentation-check
 	$(RSCRIPT) -e 'pkgdown::build_site(preview = FALSE)'
@@ -34,4 +36,4 @@ roxygen:
 	$(RSCRIPT) -e 'roxygen2::roxygenise()'
 	$(RSCRIPT) tools/generate_input_helper_docs.R
 
-ci: generate-check documentation-check test lint check
+ci: generate-check documentation-check test lint check-package
