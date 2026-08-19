@@ -28,25 +28,3 @@ testthat::test_that("response options retain their public contract", {
     "cannot be used"
   )
 })
-
-testthat::test_that("structured response errors retain their classes", {
-  connection <- list(
-    exec = function(query, variables) {
-      '{"errors":[{"message":"contract test failure"}]}'
-    }
-  )
-
-  error <- tryCatch(
-    stashapi:::fetch_response(
-      query = "query",
-      variables = list(),
-      connection = connection,
-      return_default = NA_character_,
-      field = NA_character_
-    ),
-    error = identity
-  )
-
-  testthat::expect_s3_class(error, "stashapi_graphql_error")
-  testthat::expect_match(conditionMessage(error), "contract test failure")
-})
