@@ -451,6 +451,19 @@ all_performers <- findPerformers(
 )
 ```
 
+For a long result, opt in to a progress bar with `.progress_bar = TRUE`:
+
+```r
+all_performers <- findPerformers(
+  filter = find_filter(q = "Leah", per_page = -1),
+  .progress_bar = TRUE
+)
+```
+
+The option is passed through the generated operation's `...` arguments. It is
+`FALSE` by default, so normal queries remain quiet and progress bars are not
+written into redirected logs or CI output.
+
 The available `find_filter()` fields are `q`, `page`, `per_page`, `sort`, and
 `direction`.
 

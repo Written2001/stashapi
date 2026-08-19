@@ -13,18 +13,18 @@ findPerformers(
 )
 }
 \arguments{
-\item{performerfilter}{See the Playground for further details.}
+\item{performerfilter}{See the Stash Playground for details.}
 
-\item{filter}{See the Playground for further details.}
+\item{filter}{See the Stash Playground for details.}
 
-\item{performerids}{See the Playground for further details.}
+\item{performerids}{See the Stash Playground for details.}
 
-\item{ids}{See the Playground for further details.}
+\item{ids}{See the Stash Playground for details.}
 
-\item{...}{additional parameters like .field to retrieve only a certain field from the response}
+\item{...}{Additional options such as `.field`, `.response`, and `.progress_bar`.}
 }
 \value{
-processed API response
+The processed API response.
 }
 \description{
 A function which queries Performer objects

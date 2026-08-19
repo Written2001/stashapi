@@ -20,7 +20,7 @@ set_stash_connection <- function(connection) {
   invisible(connection)
 }
 
-#' Check if a Valid Connection to Stash Exists
+#' Check if the active Stash connection is valid
 #'
 #' @description Validates whether a connection to the GraphQL endpoint of Stash can be established and is functional.
 #'
@@ -31,12 +31,12 @@ set_stash_connection <- function(connection) {
 #' @export
 #' @examples
 #' \dontrun{
-#' hasConnection()
+#' is_stash_connected()
 #' }
 #'
 #' @importFrom ghql Query
 #' @keywords connection validation
-hasConnection <- function(){
+is_stash_connected <- function() {
   connection <- stash_state$get()
   if (is.null(connection)) return(FALSE)
 
@@ -122,34 +122,6 @@ stash_connect <- function(
 stash_disconnect <- function() {
   stash_state$clear()
   invisible(TRUE)
-}
-
-#' Set Stash API Credentials from a Credentials File
-#'
-#' @description Establishes a connection to the Stash GraphQL endpoint using credentials stored in a file.
-#'
-#' @param stash_credentials Path to the credentials file containing connection
-#'   details. Defaults to `.stash_credentials`. The file should be plain text
-#'   with two lines: URL and API key.
-#'
-#' @return Invisibly returns the configured connection. Stores it in the
-#'   package environment.
-#' @export
-#' @examples
-#' \dontrun{
-#'   # Set credentials from a default or specified credentials file
-#'   setStashCredentials()
-#'   setStashCredentials("path/to/credentials")
-#' }
-#'
-#' @importFrom ghql GraphqlClient
-#' @importFrom tools file_path_as_absolute
-#'
-#' @seealso [hasConnection()] for connection validation
-#'
-#' @keywords connection credentials
-setStashCredentials <- function(stash_credentials = ".stash_credentials") {
-  stash_connect(credentials_file = stash_credentials)
 }
 
 validate_connection_input <- function(value, name) {

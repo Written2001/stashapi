@@ -7,16 +7,16 @@
 findFiles(filefilter = NA, filter = NA, ids = list(), ...)
 }
 \arguments{
-\item{filefilter}{See the Playground for further details.}
+\item{filefilter}{See the Stash Playground for details.}
 
-\item{filter}{See the Playground for further details.}
+\item{filter}{See the Stash Playground for details.}
 
-\item{ids}{See the Playground for further details.}
+\item{ids}{See the Stash Playground for details.}
 
-\item{...}{additional parameters like .field to retrieve only a certain field from the response}
+\item{...}{Additional options such as `.field`, `.response`, and `.progress_bar`.}
 }
 \value{
-processed API response
+The processed API response.
 }
 \description{
 Queries for Files

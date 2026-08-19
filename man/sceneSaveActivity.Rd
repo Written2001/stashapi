@@ -7,16 +7,16 @@
 sceneSaveActivity(id = list(), resumetime = NA, playDuration = NA, ...)
 }
 \arguments{
-\item{id}{See the Playground for further details.}
+\item{id}{See the Stash Playground for details.}
 
-\item{resumetime}{See the Playground for further details.}
+\item{resumetime}{See the Stash Playground for details.}
 
-\item{playDuration}{See the Playground for further details.}
+\item{playDuration}{See the Stash Playground for details.}
 
-\item{...}{additional parameters like .field to retrieve only a certain field from the response}
+\item{...}{Additional options such as `.field`, `.response`, and `.progress_bar`.}
 }
 \value{
-processed API response
+The processed API response.
 }
 \description{
 Sets the resume time point (if provided) and adds the provided duration to the scene's play duration

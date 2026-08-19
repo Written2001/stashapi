@@ -3,8 +3,19 @@
 \name{includes_all}
 \alias{includes_all}
 \title{Build an INCLUDES_ALL criterion.}
-\usage{includes_all(value, depth = NULL, excludes = NULL)}
-\arguments{\item{value}{Criterion value.}\item{depth}{Optional hierarchy depth.}\item{excludes}{Optional IDs to exclude.}}
-\value{A named criterion list.}
-\description{Builds a GraphQL INCLUDES_ALL criterion.}
-\examples{includes_all(c(84, 85))}
+\usage{
+includes_all(value, depth = NULL, excludes = NULL)
+}
+\arguments{
+\item{value}{Criterion values.}
+
+\item{depth}{Optional hierarchy depth. `-1` means unlimited depth.}
+
+\item{excludes}{Optional IDs to exclude.}
+}
+\description{
+Build an INCLUDES_ALL criterion.
+}
+\examples{
+includes_all(c(84, 85))
+}

@@ -69,7 +69,14 @@ testthat::test_that("connection adapter forwards configured curl options", {
 
 testthat::test_that("disconnect removes the active connection", {
   stashapi::stash_disconnect()
-  testthat::expect_false(stashapi::hasConnection())
+  testthat::expect_false(stashapi::is_stash_connected())
+})
+
+testthat::test_that("authentication exports use the current API names", {
+  exports <- getNamespaceExports("stashapi")
+  testthat::expect_true("is_stash_connected" %in% exports)
+  testthat::expect_false("hasConnection" %in% exports)
+  testthat::expect_false("setStashCredentials" %in% exports)
 })
 
 testthat::test_that("missing connections auto-load the default credentials file", {

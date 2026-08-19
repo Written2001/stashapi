@@ -6,7 +6,9 @@
 \usage{
 not_matches_regex(value)
 }
-\arguments{\item{value}{Regular-expression pattern.}}
+\arguments{
+\item{value}{Regular-expression pattern.}
+}
 \description{
 Build a negated regular-expression match criterion.
 }

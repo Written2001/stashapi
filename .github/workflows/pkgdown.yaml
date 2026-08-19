@@ -8,6 +8,7 @@ on:
       - README.md
       - _pkgdown.yml
       - man/**
+      - vignettes/**
   workflow_dispatch:
 
 permissions:
@@ -41,8 +42,13 @@ jobs:
       - name: Setup dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::pkgdown
+          extra-packages: |
+            any::pkgdown
+            any::roxygen2
           needs: website
+
+      - name: Check generated documentation
+        run: Rscript tools/check_documentation.R
 
       - name: Build site
         run: pkgdown::build_site()

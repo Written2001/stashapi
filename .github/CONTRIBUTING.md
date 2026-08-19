@@ -1,50 +1,114 @@
 # Contributing
 
-## Local checks
+## Getting Started
 
-Before opening a pull request, run the package tests, generated-wrapper check, lint, and `R CMD check` locally. The required CI checks do not need a Stash instance, credentials, or network access.
+You need R, the package dependencies managed by `renv`, and a working R
+package toolchain. A Stash server or credentials are not required for the
+development checks.
 
-On systems with `make`, the common checks are available through the Makefile:
+From the repository root, restore the development environment before making
+changes:
+
+```sh
+make setup
+```
+
+This runs `renv::restore(prompt = FALSE)` and is also the command used when
+the development container is created. If `make` is unavailable, the
+equivalent R command is:
+
+```sh
+Rscript -e 'renv::restore(prompt = FALSE)'
+```
+
+The usual contribution loop is:
+
+1. Make a focused change.
+2. Add or update a focused test.
+3. Regenerate artifacts when the schema or generator behavior is involved.
+4. Run `make ci`.
+5. Review the generated changes and the compatibility impact before opening a
+	PR.
+
+## What To Edit
+
+`inst/extdata/schema.json` is the source for generated GraphQL wrappers and
+their manuals. The wrapper and input-helper documentation generated from it
+must not be edited by hand. Change the relevant generator and
+then run `make roxygen` to refresh the derived files.
+
+Handwritten R helpers, tests, vignettes, and development scripts can be edited
+directly. Keep generated changes in the same contribution as the source
+change, and use `make generate-check` to catch drift.
+
+Generated operation names retain the GraphQL spelling, such as
+`findScenes()` and `sceneUpdate()`. User-facing helper functions use
+snake_case, such as `scene_filter()`, `find_studio_id()`, and
+`prepare_mutations()`. Preserve these conventions when adding APIs: generated
+wrappers mirror the schema, while handwritten helpers describe higher-level R
+workflows.
+
+## Before a PR
 
 ```sh
 make ci
-make coverage
+```
+
+This runs generated-artifact checks, tests, lint, and `R CMD check`. It does
+not require Stash credentials or live data.
+
+Run it from the repository root. A successful run should finish with zero
+errors, warnings, and notes. Messages about an out-of-sync `renv` environment
+mean dependencies should be restored; missing `pdflatex` only prevents PDF
+manual generation and is not required by the documented `R CMD check`.
+
+For documentation or site changes:
+
+```sh
 make docs
 ```
 
-The Makefile is a convenience layer; the underlying R commands remain the source of truth and are also usable directly on Windows.
+## Generated Files
 
-```r
-testthat::test_local()
-```
+Wrappers and manuals are generated from `inst/extdata/schema.json`.
 
 ```sh
-Rscript --vanilla tools/check_generated.R
-R CMD check --no-manual .
+make roxygen              # regenerate
+make generate-check       # verify wrappers and input manuals
+make documentation-check  # verify all generated documentation
 ```
 
-## Generated wrappers
+Commit generated changes with the source change. Do not edit generated files
+by hand. If a generated check fails, first run `make roxygen`, then rerun the
+check. A remaining mismatch usually means the generator, schema, or checked-in
+artifact needs to be updated together.
 
-The public GraphQL wrappers in `R/stashapi_functions.R` are generated from `inst/extdata/schema.json` by the schema-driven pipeline in `tools/generate_wrappers.R`. Update the schema fixture deliberately, regenerate the wrappers and filter documentation, and include the generated changes in the same pull request.
+## Documentation Changes
 
-Do not hand-edit generated wrapper functions or their generated man pages.
+Update the relevant vignette or README when a public workflow changes. Run:
 
-## Pull requests
+```sh
+make docs
+```
 
-- Explain the behavior or infrastructure change.
-- Add or update tests, especially schema-to-wrapper contract tests for generator changes.
-- Update documentation when the public API or development workflow changes.
-- Keep credentials and live Stash data out of commits and CI logs.
+This is in addition to `make ci` when the change affects package behavior.
 
-This project is distributed from GitHub and is not intended for CRAN publication.
+Before opening a PR, confirm that examples do not require live credentials,
+private URLs, or persistent local data. Use fake data and `eval=FALSE` for
+examples that intentionally demonstrate live mutations.
+
+## PR Guidelines
+
+- Explain the change and its compatibility impact.
+- Add focused tests for behavior or generator changes.
+- Update user or development documentation when needed.
+- Keep credentials, private URLs, and live data out of commits and CI.
 
 ## Releases
 
-Use three-part semantic versions in `DESCRIPTION` and matching tags in the `vMAJOR.MINOR.PATCH` format. Update `NEWS.md` with the release changes, then push the matching tag to start the release workflow.
-
-For example:
+Update `DESCRIPTION` and `NEWS.md`, then push a matching semantic-version tag:
 
 ```sh
-git tag v0.1.3
-git push origin v0.1.3
+git tag vMAJOR.MINOR.PATCH
+git push origin vMAJOR.MINOR.PATCH
 ```

@@ -3,8 +3,19 @@
 \name{includes}
 \alias{includes}
 \title{Build an INCLUDES criterion.}
-\usage{includes(value, depth = NULL, excludes = NULL)}
-\arguments{\item{value}{Criterion value.}\item{depth}{Optional hierarchy depth.}\item{excludes}{Optional IDs to exclude.}}
-\value{A named criterion list.}
-\description{Builds a GraphQL INCLUDES criterion.}
-\examples{includes(182, depth = -1)}
+\usage{
+includes(value, depth = NULL, excludes = NULL)
+}
+\arguments{
+\item{value}{Criterion value.}
+
+\item{depth}{Optional hierarchy depth. `-1` means unlimited depth.}
+
+\item{excludes}{Optional IDs to exclude.}
+}
+\description{
+Build an INCLUDES criterion.
+}
+\examples{
+includes(182, depth = -1)
+}

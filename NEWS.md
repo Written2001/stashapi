@@ -1,3 +1,30 @@
+# stashapi 0.8.0
+
+- Rename the maintainer-authored query execution implementation to
+	`R/execute_query.R` and split its pagination, response decoding, and
+	normalization responsibilities into snake_case internal helpers.
+- Stabilize generated wrapper execution while preserving response modes,
+	pagination, metadata, progress bars, and existing operation contracts.
+- Bring the shared execution path to a clean repository lint baseline.
+- Restore schema-derived roxygen documentation for generated operations and
+	make `make roxygen` regenerate wrappers before manuals.
+- Make the common generated-operation options documentation roxygen-owned and
+	reproducible.
+
+# stashapi 0.7.0
+
+- Add `prepare_mutations()` for dry-run mutation planning with explicit missing-value policies.
+- Add `execute_mutations()` with indexed results, stop/continue error handling, and dry-run defaults.
+- Add `tag_descendants()` for server-side traversal of tag hierarchies.
+- Replace `hasConnection()` with `is_stash_connected()` and remove the redundant `setStashCredentials()` wrapper.
+- Add opt-in progress bars for paginated generated queries and mutation plans.
+
+# stashapi 0.6.0
+
+- Add `wait_for_job()` for polling asynchronous Stash jobs with timeout and terminal-status handling.
+- Add snake_case exact-name ID helpers for studios, tags, and performers with explicit multiple-match behavior.
+- Add offline tests for helper validation, job polling, and named lookup semantics.
+
 # stashapi 0.5.0
 
 - Remove the legacy GraphQL generator and old/new generator comparison layer.

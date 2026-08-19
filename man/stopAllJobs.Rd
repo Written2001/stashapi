@@ -7,11 +7,11 @@
 stopAllJobs(...)
 }
 \arguments{
-\item{...}{additional parameters like .field to retrieve only a certain field from the response}
+\item{...}{Additional options such as `.field`, `.response`, and `.progress_bar`.}
 }
 \value{
-processed API response
+The processed API response.
 }
 \description{
-Call GraphQL operation: stopAllJobs
+Executes the GraphQL operation `stopAllJobs`.
 }

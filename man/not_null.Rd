@@ -6,7 +6,9 @@
 \usage{
 not_null(value = NULL)
 }
-\arguments{\item{value}{Optional criterion value.}}
+\arguments{
+\item{value}{Optional criterion value.}
+}
 \description{
 Build a NOT_NULL criterion.
 }

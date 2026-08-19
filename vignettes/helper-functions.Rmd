@@ -1,0 +1,110 @@
+---
+title: "Helper Functions"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Helper Functions}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = "#>")
+```
+
+The generated functions in `stashapi` map directly to Stash GraphQL
+operations. The snake_case helpers compose those operations for recurring
+workflows without hiding the underlying API.
+
+## Resolve a named object
+
+Use the explicit helpers when a script needs an ID for an exact name:
+
+```r
+studio_id <- find_studio_id("Example Studio")
+tag_id <- find_tag_id("moderators")
+performer_id <- find_performer_id("Example Performer")
+```
+
+If an exact name has multiple matches, the default is to stop rather than pick
+one silently. Choose deliberately when that is appropriate:
+
+```r
+find_tag_id("Example Tag", multiple = "first")
+find_tag_id("Example Tag", multiple = "all")
+```
+
+## Wait for a job
+
+Long-running operations return a job ID. `wait_for_job()` polls until the job
+finishes and returns the final job record:
+
+```r
+job_id <- metadataScan(input = list(paths = "/data/Images"))
+job <- wait_for_job(job_id, check_interval = 30, timeout = 3600)
+```
+
+Failed, cancelled, unknown, and timed-out jobs raise errors. Set
+`verbose = FALSE` when the surrounding script provides its own progress UI.
+
+## Find tag descendants
+
+Tag hierarchies can be queried server-side with a parent criterion. The helper
+makes that intent explicit and requests all pages:
+
+```r
+moderators_id <- find_tag_id("moderators")
+moderator_tags <- tag_descendants(moderators_id)
+```
+
+The default result has the same shape as `findTags()`, including the standard
+`id` column. Request only IDs when they will be reused in another filter:
+
+```r
+moderator_tag_ids <- tag_descendants(
+  moderators_id,
+  .field = c("tags", "id")
+)
+
+images <- findImages(
+  imagefilter = image_filter(
+    tags = includes(moderator_tag_ids)
+  ),
+  filter = find_filter(per_page = -1)
+)
+```
+
+Limit the hierarchy depth when unlimited traversal is unnecessary:
+
+```r
+direct_and_second_level <- tag_descendants(moderators_id, depth = 2)
+```
+
+Include the root tag when the workflow needs the complete branch:
+
+```r
+complete_branch <- tag_descendants(
+  moderators_id,
+  include_self = TRUE
+)
+```
+
+`tag_descendants()` uses the server-side `parents` filter. It does not walk
+children recursively in R, assign tags, or resolve names. Use `find_tag_id()`
+separately when starting from a name so duplicate-name behavior remains
+explicit.
+
+## Common operation options
+
+The generated operation functions remain available when a helper does not fit
+the workflow. Helpers forward the same response options where applicable:
+
+```r
+tag_descendants(
+  moderators_id,
+  .field = c("tags", "id"),
+  .progress_bar = TRUE
+)
+```
+
+The helper functions are intentionally small. Path parsing, matching local
+files to Stash objects, metadata policy, and mutation decisions remain in the
+user script.

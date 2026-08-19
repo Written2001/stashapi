@@ -11,10 +11,10 @@ directory(path = NA, locale = NA, ...)
 
 \item{locale}{Desired collation locale. Determines the order of the directory result. eg. 'en-US', 'pt-BR', ...}
 
-\item{...}{additional parameters like .field to retrieve only a certain field from the response}
+\item{...}{Additional options such as `.field`, `.response`, and `.progress_bar`.}
 }
 \value{
-processed API response
+The processed API response.
 }
 \description{
 Returns an array of paths for the given path

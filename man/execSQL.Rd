@@ -7,14 +7,14 @@
 execSQL(sql = list(), args = NA, ...)
 }
 \arguments{
-\item{sql}{See the Playground for further details.}
+\item{sql}{See the Stash Playground for details.}
 
-\item{args}{See the Playground for further details.}
+\item{args}{See the Stash Playground for details.}
 
-\item{...}{additional parameters like .field to retrieve only a certain field from the response}
+\item{...}{Additional options such as `.field`, `.response`, and `.progress_bar`.}
 }
 \value{
-processed API response
+The processed API response.
 }
 \description{
 DANGEROUS: Execute an arbitrary SQL statement without returning any rows.

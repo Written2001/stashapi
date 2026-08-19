@@ -46,13 +46,15 @@ jobs:
         with:
           extra-packages: |
             any::rcmdcheck
+            any::roxygen2
             any::rmarkdown
-            any::stringr
-            any::tidyr
           needs: check
 
       - name: Check generated wrappers
         run: Rscript tools/check_generated.R
+
+      - name: Check generated documentation
+        run: Rscript tools/check_documentation.R
 
       - name: Build package
         run: R CMD build .

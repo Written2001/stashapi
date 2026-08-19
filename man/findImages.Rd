@@ -7,18 +7,18 @@
 findImages(imagefilter = NA, imageids = list(), ids = list(), filter = NA, ...)
 }
 \arguments{
-\item{imagefilter}{See the Playground for further details.}
+\item{imagefilter}{See the Stash Playground for details.}
 
-\item{imageids}{See the Playground for further details.}
+\item{imageids}{See the Stash Playground for details.}
 
-\item{ids}{See the Playground for further details.}
+\item{ids}{See the Stash Playground for details.}
 
-\item{filter}{See the Playground for further details.}
+\item{filter}{See the Stash Playground for details.}
 
-\item{...}{additional parameters like .field to retrieve only a certain field from the response}
+\item{...}{Additional options such as `.field`, `.response`, and `.progress_bar`.}
 }
 \value{
-processed API response
+The processed API response.
 }
 \description{
 A function which queries Scene objects

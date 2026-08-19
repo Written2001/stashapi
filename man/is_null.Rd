@@ -3,8 +3,15 @@
 \name{is_null}
 \alias{is_null}
 \title{Build an IS_NULL criterion.}
-\usage{is_null(value = TRUE)}
-\arguments{\item{value}{Boolean null criterion value.}}
-\value{A named criterion list.}
-\description{Builds a GraphQL IS_NULL criterion.}
-\examples{is_null()}
+\usage{
+is_null(value = TRUE)
+}
+\arguments{
+\item{value}{Boolean null criterion value.}
+}
+\description{
+Build an IS_NULL criterion.
+}
+\examples{
+is_null()
+}

@@ -6,7 +6,9 @@
 \usage{
 less_than(value)
 }
-\arguments{\item{value}{Criterion value.}}
+\arguments{
+\item{value}{Criterion value.}
+}
 \description{
 Build a less-than criterion.
 }

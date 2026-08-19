@@ -6,7 +6,9 @@
 \usage{
 greater_than(value)
 }
-\arguments{\item{value}{Criterion value.}}
+\arguments{
+\item{value}{Criterion value.}
+}
 \description{
 The helper name matches the GraphQL schema modifier.
 }

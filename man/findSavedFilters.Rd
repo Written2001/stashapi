@@ -7,13 +7,13 @@
 findSavedFilters(mode = NA, ...)
 }
 \arguments{
-\item{mode}{See the Playground for further details.}
+\item{mode}{See the Stash Playground for details.}
 
-\item{...}{additional parameters like .field to retrieve only a certain field from the response}
+\item{...}{Additional options such as `.field`, `.response`, and `.progress_bar`.}
 }
 \value{
-processed API response
+The processed API response.
 }
 \description{
-Call GraphQL operation: findSavedFilters
+Executes the GraphQL operation `findSavedFilters`.
 }

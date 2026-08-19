@@ -63,6 +63,39 @@ render_r_validation <- function(operation) {
   paste(checks, collapse = "\n  ")
 }
 
+render_roxygen_text <- function(value, fallback) {
+  value <- if (length(value) == 0L || is.na(value[[1]])) "" else as.character(value[[1]])
+  value <- trimws(value)
+  if (!nzchar(value)) value <- fallback
+  gsub("\\r?\\n", "\n#' ", value)
+}
+
+render_r_documentation <- function(operation) {
+  title <- paste0("Call GraphQL operation: ", operation$name)
+  description <- render_roxygen_text(
+    operation$description,
+    paste0("Executes the GraphQL operation `", operation$name, "`.")
+  )
+  arguments <- vapply(operation$arguments, function(argument) {
+    description <- render_roxygen_text(
+      argument$description,
+      "See the Stash Playground for details."
+    )
+    paste0("#' @param ", argument$r_name, " ", description)
+  }, character(1))
+
+  lines <- c(
+    paste0("#' ", title),
+    "#'",
+    paste0("#' @description ", description),
+    arguments,
+    "#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.",
+    "#' @return The processed API response.",
+    "#' @export"
+  )
+  paste(lines, collapse = "\n")
+}
+
 #' Render a backwards-compatible R wrapper.
 #'
 #' @param operation One operation record from build_operation_ir().
@@ -76,6 +109,7 @@ render_r_wrapper <- function(operation, document) {
   query_name <- operation$name
 
   paste0(
+    render_r_documentation(operation), "\n",
     operation$name, " <- function(", formals, ") {\n\n",
     "  query <- ghql::Query$new()\n",
     "  query$query('", query_name, "', '\n",
@@ -89,24 +123,18 @@ render_r_wrapper <- function(operation, document) {
     } else {
       paste0("\"", operation$response_policy$default_field, "\"")
     }, "\n",
-    "  dotargs <- list(...)\n",
-    "  field_supplied <- \".field\" %in% names(dotargs)\n",
-    "  if (!\".field\" %in% names(dotargs)) {\n",
-    "    dotargs$.field <- return_default\n",
-    "  }\n",
-    "  response <- if (\".response\" %in% names(dotargs)) dotargs$.response else \"data\"\n",
-    "  validate_response_mode(response)\n",
-    "  if (identical(response, \"raw\") && field_supplied) {\n",
-    "    stop(\"`.field` cannot be used with `.response = \\\"raw\\\"`\", call. = FALSE)\n",
-    "  }\n",
-    "  field <- if (identical(response, \"raw\")) NA_character_ else dotargs$.field\n",
-    "  res <- executeQuery(\n",
+    "  options <- prepare_stash_query_options(list(...), return_default)\n",
+    "  field <- options$field\n",
+    "  response <- options$response\n",
+    "  progress_bar <- options$progress_bar\n",
+    "  res <- execute_query(\n",
     "    query = query$queries$", query_name, ",\n",
     "    variables = variables,\n",
     "    connection = get_stash_connection(),\n",
     "    return_default = return_default,\n",
     "    field = field,\n",
-    "    response = response\n",
+    "    response = response,\n",
+    "    progress_bar = progress_bar\n",
     "  )\n\n",
     "  return(res)\n",
     "}\n"

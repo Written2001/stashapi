@@ -6,7 +6,9 @@
 \usage{
 not_equals(value)
 }
-\arguments{\item{value}{Criterion value.}}
+\arguments{
+\item{value}{Criterion value.}
+}
 \description{
 Build a NOT_EQUALS criterion.
 }

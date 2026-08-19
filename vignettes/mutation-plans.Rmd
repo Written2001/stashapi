@@ -1,0 +1,297 @@
+---
+title: "Safe Mutation Plans"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Safe Mutation Plans}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = "#>")
+```
+
+Mutations change data in Stash. These helpers separate preparing a request
+from sending it:
+
+1. Build a plan without contacting Stash.
+2. Inspect the inputs and omitted fields.
+3. Execute explicitly with `dry_run = FALSE`.
+4. Keep source indexes and failures with the results.
+
+The helpers do not choose metadata, match objects, retry requests, or provide
+transactions. The builder remains responsible for those decisions.
+
+## The workflow
+
+```r
+prepare_mutations(data, build_input, na = "omit", null = "omit", operation = NULL)
+execute_mutations(plan, mutate, dry_run = TRUE, on_error = "stop", progress = TRUE)
+```
+
+`prepare_mutations()` calls `build_input(row, index)` once per source row. The
+builder must return the complete named GraphQL input, for example
+`list(id = row$id, title = row$title)` for `galleryUpdate()`.
+
+`execute_mutations()` calls the supplied mutation function as
+`mutate(input = input)`. The default is a dry run, so the mutation function is
+not called until `dry_run = FALSE` is supplied.
+
+## A dry run
+
+This example uses fake data and a fake mutation function, so it does not need a
+Stash connection. The source uses `id`, the normal identifier column returned
+by generated `find*()` functions.
+
+```{r dry-run}
+library(stashapi)
+
+updates <- list(
+  list(id = "101", title = "First gallery"),
+  list(id = "102", title = "Second gallery")
+)
+
+plan <- prepare_mutations(
+  updates,
+  build_input = function(row, index) {
+    list(id = row$id, title = row$title)
+  },
+  operation = "galleryUpdate"
+)
+
+plan$entries[[1]]$input
+plan$entries[[1]]$target
+```
+
+Previewing never calls the mutation function:
+
+```{r preview}
+preview <- execute_mutations(
+  plan,
+  mutate = function(input) stop("this must not run during a dry run"),
+  progress = FALSE
+)
+
+preview$dry_run
+vapply(preview$results, function(entry) entry$status, character(1))
+```
+
+## Building from query results
+
+The source can be a data frame made from a Stash query. The builder chooses
+which columns to send; other columns remain local-only.
+
+```{r query-result-shape}
+galleries <- data.frame(
+  id = c("201", "202"),
+  title = c("Example gallery A", "Example gallery B"),
+  date = c("2026-01-01", NA_character_),
+  stringsAsFactors = FALSE
+)
+
+plan <- prepare_mutations(
+  galleries,
+  build_input = function(row, index) {
+    list(id = row$id, title = row$title, date = row$date)
+  },
+  operation = "galleryUpdate"
+)
+
+plan$entries[[2]]$input
+plan$entries[[2]]$omitted
+```
+
+Generated `find*()` results use `id` for the object identifier. Bulk inputs
+use `ids` because they address several objects in one request.
+
+## Missing values
+
+By default, scalar `NA` and `NULL` fields are omitted. Missing elements in a
+vector are removed. Empty vectors are preserved because they may have API
+meaning.
+
+```{r missing-values}
+plan <- prepare_mutations(
+  list(list(id = "301")),
+  build_input = function(row, index) {
+    list(
+      id = row$id,
+      title = NA_character_,
+      details = NULL,
+      tag_ids = list(ids = c("41", NA_character_), mode = "ADD")
+    )
+  }
+)
+
+plan$entries[[1]]$input
+plan$entries[[1]]$omitted
+```
+
+Use `na = "error"` or `null = "error"` when missing data should stop plan
+construction:
+
+```{r strict-values, error=TRUE}
+prepare_mutations(
+  list(list(id = "302")),
+  function(row, index) list(id = row$id, title = NA_character_),
+  na = "error"
+)
+```
+
+`NULL` does not mean “clear this field”. Explicit clearing requires separate
+GraphQL-null semantics and is intentionally not provided here.
+
+## Nested update modes
+
+Bulk mutation fields such as `performer_ids` and `urls` are nested inputs. The
+builder supplies both the values and the operation mode:
+
+```r
+performer_ids = list(
+  ids = row$performer_ids,
+  mode = "ADD"
+)
+```
+
+The helpers preserve this structure. They do not flatten it, change `ADD` to
+`SET`, or infer a mode.
+
+```{r nested-modes}
+source <- list(
+  list(
+    ids = c("401", "402"),
+    performer_ids = c("51", NA_character_),
+    urls = "https://example.test/gallery/one"
+  )
+)
+
+plan <- prepare_mutations(
+  source,
+  build_input = function(row, index) {
+    list(
+      ids = row$ids,
+      organized = TRUE,
+      performer_ids = list(ids = row$performer_ids, mode = "ADD"),
+      urls = list(values = row$urls, mode = "SET")
+    )
+  },
+  operation = "bulkImageUpdate"
+)
+
+plan$entries[[1]]$input$performer_ids
+plan$entries[[1]]$input$urls
+```
+
+## Executing and handling failures
+
+For a live request, pass the generated operation as `mutate`:
+
+```{r live-execution, eval=FALSE}
+result <- execute_mutations(
+  plan,
+  mutate = stashapi::galleryUpdate,
+  dry_run = FALSE,
+  on_error = "continue"
+)
+```
+
+The following offline example demonstrates indexed failures:
+
+```{r failures}
+mutate <- function(input) {
+  if (identical(input$id, "102")) stop("example validation failure")
+  list(id = input$id, updated = TRUE)
+}
+
+result <- execute_mutations(
+  plan = prepare_mutations(
+    list(list(id = "101"), list(id = "102"), list(id = "103")),
+    function(row, index) list(id = row$id)
+  ),
+  mutate = mutate,
+  dry_run = FALSE,
+  on_error = "continue",
+  progress = FALSE
+)
+
+vapply(result$results, function(entry) entry$index, integer(1))
+vapply(result$results, function(entry) entry$status, character(1))
+result$results[[2]]$error$message
+```
+
+With the default `on_error = "stop"`, execution stops at the first failure.
+The `stashapi_mutation_error` condition includes the failed index, original
+error, and partial results. There is still no rollback.
+
+## Bulk updates: one request per source row
+
+`prepare_mutations()` can prepare existing `bulk*Update()` calls. The plan
+entry represents one request, not one object inside that request.
+
+For the gallery-to-image workflow, the user script first obtains the image IDs
+belonging to each gallery. It can then create one source row per gallery:
+
+```{r bulk-plan}
+bulk_source <- list(
+  list(
+    ids = c("601", "602"),
+    studio_id = "7",
+    performer_ids = c("51", "52"),
+    urls = "https://example.test/gallery/one",
+    date = "2026-01-01"
+  ),
+  list(
+    ids = "603",
+    studio_id = "7",
+    performer_ids = character(),
+    urls = "https://example.test/gallery/two",
+    date = NA_character_
+  )
+)
+
+bulk_plan <- prepare_mutations(
+  bulk_source,
+  build_input = function(row, index) {
+    list(
+      ids = row$ids,
+      organized = TRUE,
+      urls = list(values = row$urls, mode = "SET"),
+      studio_id = row$studio_id,
+      performer_ids = list(ids = row$performer_ids, mode = "ADD"),
+      date = row$date
+    )
+  },
+  operation = "bulkImageUpdate"
+)
+
+bulk_plan$entries[[1]]$input
+```
+
+Preview, then execute after review:
+
+```{r bulk-execution, eval=FALSE}
+execute_mutations(bulk_plan, stashapi::bulkImageUpdate, progress = FALSE)
+
+bulk_result <- execute_mutations(
+  bulk_plan,
+  stashapi::bulkImageUpdate,
+  dry_run = FALSE,
+  on_error = "continue"
+)
+```
+
+Each result represents one `bulkImageUpdate()` request. A successful request
+does not create independent success records for every image because the
+GraphQL operation returns one request-level response.
+
+## What remains in the user script
+
+The builder does not decide:
+
+- which gallery metadata to copy;
+- how galleries and images are matched;
+- whether a relationship uses `ADD` or `SET`;
+- how paths and filenames are parsed;
+- whether a failed mutation should be retried.
+
+That is intentional. The helpers make the mutation boundary visible and
+reviewable without turning `stashapi` into a studio-specific automation layer.

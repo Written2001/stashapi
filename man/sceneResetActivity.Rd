@@ -7,16 +7,16 @@
 sceneResetActivity(id = list(), resetresume = NA, resetduration = NA, ...)
 }
 \arguments{
-\item{id}{See the Playground for further details.}
+\item{id}{See the Stash Playground for details.}
 
-\item{resetresume}{See the Playground for further details.}
+\item{resetresume}{See the Stash Playground for details.}
 
-\item{resetduration}{See the Playground for further details.}
+\item{resetduration}{See the Stash Playground for details.}
 
-\item{...}{additional parameters like .field to retrieve only a certain field from the response}
+\item{...}{Additional options such as `.field`, `.response`, and `.progress_bar`.}
 }
 \value{
-processed API response
+The processed API response.
 }
 \description{
 Resets the resume time point and play duration
