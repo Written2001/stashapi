@@ -15,7 +15,7 @@ check_schema_snapshot <- function() {
     grep("^Version:", readLines("DESCRIPTION"), value = TRUE)
   )
   status <- system2(
-    "python3",
+    Sys.getenv("PYTHON", unset = "python3"),
     c(
       "tools/schema_from_sdl.py",
       "--source-root", normalizePath(schema_source_root, winslash = "/", mustWork = TRUE),

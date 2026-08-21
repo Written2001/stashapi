@@ -12,6 +12,7 @@ on:
       - tests/**
       - tools/**
       - Makefile
+      - .github/actions/**
       - README.md
   pull_request:
     branches: [main]
@@ -24,6 +25,7 @@ on:
       - tests/**
       - tools/**
       - Makefile
+      - .github/actions/**
       - README.md
   workflow_dispatch:
 
@@ -37,13 +39,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Setup Python dependencies
-        run: python -m pip install -r tools/requirements.txt
+      - name: Setup pinned Stash schema
+        uses: ./.github/actions/setup-stash-schema
 
       - name: Setup R
         uses: r-lib/actions/setup-r@v2
@@ -59,11 +56,6 @@ jobs:
             any::roxygen2
             any::rmarkdown
           needs: check
-
-      - name: Fetch pinned Stash schema
-        run: |
-          make fetch-stash-schema STASH_SOURCE_ROOT="$RUNNER_TEMP/stashapi-stash"
-          make schema-environment STASH_SOURCE_ROOT="$RUNNER_TEMP/stashapi-stash" >> "$GITHUB_ENV"
 
       - name: Check generated wrappers
         run: Rscript tools/check_generated.R
