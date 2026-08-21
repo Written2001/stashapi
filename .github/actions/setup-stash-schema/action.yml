@@ -17,9 +17,16 @@ runs:
     - name: Install and verify SDL parser
       shell: bash
       run: |
-        "${{ steps.setup-python.outputs.python-path }}" -m pip install -r tools/requirements.txt
-        "${{ steps.setup-python.outputs.python-path }}" -c "import graphql; print('graphql-core', graphql.__version__)"
-        echo "PYTHON=${{ steps.setup-python.outputs.python-path }}" >> "$GITHUB_ENV"
+        venv_path="$RUNNER_TEMP/stashapi-python"
+        "${{ steps.setup-python.outputs.python-path }}" -m venv "$venv_path"
+        if [[ -x "$venv_path/bin/python" ]]; then
+          venv_python="$venv_path/bin/python"
+        else
+          venv_python="$venv_path/Scripts/python.exe"
+        fi
+        "$venv_python" -m pip install -r tools/requirements.txt
+        "$venv_python" -c "import graphql; print('graphql-core', graphql.__version__)"
+        echo "PYTHON=$venv_python" >> "$GITHUB_ENV"
 
     - name: Fetch pinned Stash schema
       if: ${{ inputs.fetch-schema == 'true' }}
