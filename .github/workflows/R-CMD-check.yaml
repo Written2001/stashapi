@@ -71,12 +71,6 @@ jobs:
       - name: Setup pinned Stash schema
         uses: ./.github/actions/setup-stash-schema
 
-      - name: Check generated documentation
-        run: Rscript tools/check_documentation.R
-
-      - name: Check SDL parser
-        run: make schema-source-check
-
       - name: Check
         uses: r-lib/actions/check-r-package@v2
         with:

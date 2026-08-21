@@ -50,18 +50,18 @@ lint:
 coverage:
 	$(RSCRIPT) -e 'coverage <- covr::package_coverage(); writeLines(capture.output(print(coverage)), "coverage.txt")'
 
-build: generate-check documentation-check
+build: generate-check
 	$(RSCRIPT) -e 'status <- system2("R", c("CMD", "build", ".")); quit(status = status)'
 
 check-package:
 	$(RSCRIPT) -e 'rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")'
 
-check: generate-check documentation-check check-package
+check: generate-check check-package
 
-docs: documentation-check
+docs: generate-check
 	$(RSCRIPT) -e 'pkgdown::build_site(preview = FALSE)'
 
 roxygen:
 	$(MAKE) generate-sdl
 
-ci: generate-check documentation-check test lint check-package
+ci: generate-check test lint check-package

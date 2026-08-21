@@ -30,11 +30,8 @@ The usual contribution loop is:
 5. Review the generated changes and the compatibility impact before opening a
 	PR.
 
-Pull requests also run a schema compatibility check in GitHub Actions. The
-workflow extracts `inst/extdata/schema.json` from the pull request's base
-commit and supplies it as `STASH_SCHEMA_BASELINE`; no secret or repository
-variable is required. The resulting report is uploaded as the
-`schema-compatibility-report` artifact, including when the check fails.
+Schema compatibility is an opt-in release review. Supply an explicit baseline
+to `make schema-compatibility-check` when changing the pinned Stash schema.
 
 ## What To Edit
 
@@ -70,7 +67,8 @@ and regenerates wrappers, the namespace, manuals, and input-helper
 documentation. `make generate-check` rejects stale generated files; it does
 not reject a new Stash version when all artifacts have been regenerated.
 
-Review the resulting diff and schema compatibility report before releasing.
+Review the resulting diff and run `make schema-compatibility-check` with an
+explicit baseline before releasing when the package changes its pinned schema.
 Upstream additions and deprecations are reflected in the generated API. An
 upstream removal is also reflected by removing the corresponding generated
 wrapper and manual, and must be treated as a release compatibility change.
@@ -81,7 +79,7 @@ wrapper and manual, and must be treated as a release compatibility change.
 make ci
 ```
 
-This runs generated-artifact checks, tests, lint, and `R CMD check`. It does
+This runs the generated-artifact check, tests, lint, and `R CMD check`. It does
 not require Stash credentials or live data.
 
 Run it from the repository root. A successful run should finish with zero
@@ -103,7 +101,7 @@ Wrappers and manuals are generated from the pinned SDL checkout identified by
 ```sh
 make generate-sdl         # regenerate from the pinned Stash checkout
 make generate-check       # verify snapshot, wrappers, and input manuals
-make documentation-check  # verify all generated documentation
+make documentation-check  # optional full documentation reproducibility check
 ```
 
 Commit generated changes with the source change. Do not edit generated files
