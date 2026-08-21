@@ -146,7 +146,7 @@ its value is a `PerformerFilterType`, so compose `scene_filter()` with
 findScenes(
   scenefilter = scene_filter(
     performers_filter = performer_filter(
-      name = includes("Leah")
+      country = equals("CA")
     )
   )
 )
@@ -157,14 +157,8 @@ The same pattern works for other relationships exposed by the schema:
 ```r
 findScenes(
   scenefilter = scene_filter(
-    studios_filter = studio_filter(name = includes("Dream")),
-    tags_filter = tag_filter(name = equals("4k"))
-  )
-)
-
-findGalleries(
-  galleryfilter = gallery_filter(
-    performers_filter = performer_filter(name = includes("Leah"))
+    performers_filter = performer_filter(image_count = greater_than(1000)),
+    studios_filter = studio_filter(scene_count = greater_than(100))
   )
 )
 ```
@@ -199,7 +193,7 @@ supplied to the criterion**:
 ```r
 findScenes(
   scenefilter = scene_filter(
-    performers = includes_all(c(101, 202, 303))
+    performers = includes_all(matching_performer_ids)
   )
 )
 ```
@@ -208,74 +202,39 @@ This asks for scenes containing performers `101`, `202`, and `303`. It does not
 mean that all performers in a matching scene satisfy some other condition; it
 only requires that all supplied IDs are present.
 
-To find scenes where every performer satisfies a condition such as being
-female, use a two-step workflow. First find the performer IDs, then use
-`includes()` to narrow the scene candidates, and finally check every performer
-in each returned scene:
-
-```r
-matching_performers <- findPerformers(
-  performerfilter = performer_filter(gender = equals("FEMALE")),
-  filter = find_filter(per_page = -1),
-  .field = c("performers", "id")
-)
-
-candidate_scenes <- findScenes(
-  scenefilter = scene_filter(
-    performers = includes(matching_performers)
-  ),
-  filter = find_filter(per_page = -1)
-)
-
-all_performers_match <- purrr::map_lgl(
-  candidate_scenes$performers,
-  function(performers) {
-    ids <- performers$id
-    length(ids) > 0 && all(ids %in% matching_performers)
-  }
-)
-
-scenes_all_matching <- candidate_scenes[all_performers_match, ]
-```
-
-The first server-side query is a candidate filter: it requires at least one
-matching performer. The final R-side check enforces the stronger requirement
-that no performer in the scene is outside `matching_performers`.
-
 ## Combining filters with `AND`, `OR`, and `NOT`
 
-The boolean fields are recursive. Each one receives another filter list of the
-same type, so use a second `scene_filter()` inside a `scene_filter()`.
+The boolean fields combine the outer filter with another filter of the same
+type. Put one condition on the outer filter and the other condition inside a
+second `scene_filter()`. Conditions inside that nested filter are still
+combined with one another, so putting both alternatives inside `OR` does not
+make them an `OR` expression.
 
 ### `AND`
 
-Require all conditions in the nested filter:
+Require both the outer condition and the nested condition:
 
 ```r
 scene_filter(
-  AND = scene_filter(
-    organized = equals(TRUE),
-    rating100 = greater_than(80)
-  )
+  date = greater_than("2026-05-12"),
+  AND = scene_filter(performer_count = equals(1))
 )
 ```
 
 This represents:
 
 ```text
-organized == TRUE AND rating100 > 80
+date > "2026-05-12" AND performer_count == 1
 ```
 
 ### `OR`
 
-Match either condition in the nested filter:
+Match either the outer condition or the nested condition:
 
 ```r
 scene_filter(
-  OR = scene_filter(
-    title = includes("concert"),
-    details = includes("live")
-  )
+  title = includes("concert"),
+  OR = scene_filter(details = includes("live"))
 )
 ```
 
@@ -305,17 +264,19 @@ NOT (tags includes 182)
 
 ### A complete boolean expression
 
-Boolean filters can be combined with ordinary fields and with one another:
+Each filter level can have only one of `AND`, `OR`, or `NOT`. Nest another
+filter when an expression needs more than one boolean operation:
 
 ```r
 scene_filter(
-  organized = equals(TRUE),
-  OR = scene_filter(
-    rating100 = greater_than(80),
-    performers = includes(84)
-  ),
-  NOT = scene_filter(
-    tags = includes(182)
+  AND = scene_filter(
+    organized = equals(TRUE),
+    AND = scene_filter(
+      rating100 = greater_than(80),
+      NOT = scene_filter(
+        tags = includes(182)
+      )
+    )
   )
 )
 ```
@@ -324,9 +285,14 @@ The expression means:
 
 ```text
 organized == TRUE
-AND (rating100 > 80 OR performers includes 84)
-AND NOT (tags includes 182)
+AND (rating100 > 80 AND NOT (tags includes 182))
 ```
+
+In other words, return organized scenes rated above 80, excluding scenes that
+have tag `182`. The nested `AND` groups the rating and tag conditions; because
+all three conditions must ultimately be true, this is also equivalent to
+writing the three conditions as one flat `AND` expression in ordinary Boolean
+logic.
 
 ## The available filter helpers
 

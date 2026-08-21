@@ -95,12 +95,3 @@ R CMD check --no-manual .
 ```
 
 The schema-analysis tests use synthetic type fixtures and the checked-in schema. They do not require network credentials. The generated-wrapper check compares the generated source against `R/stashapi_functions.R` to detect unreviewed drift.
-
-## Changing the generator
-
-Keep transformations pure and update the nearest focused test when changing behavior. Add schema policy overrides only when the behavior cannot be derived from introspection. Review operation names, variable types, selections, fragments, response policies, and generated source together.
-
-The legacy generator has been removed. The schema-driven pipeline is now the
-single source for generated wrappers and filter documentation. The checked-in
-artifacts must be regenerated and reviewed whenever the schema or generation
-policy changes.

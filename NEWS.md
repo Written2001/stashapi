@@ -4,6 +4,7 @@
 	strategic behavioral boundaries without changing package behavior.
 - Remove redundant test fixtures and reorganize schema-driven artifact checks
 	to reduce test-suite fragmentation while preserving coverage.
+- update filters and helper functions documentation for improved clearity and consistency.
 
 # stashapi 0.8.0
 
