@@ -42,7 +42,7 @@ generate-check: fetch-stash-schema
 	PYTHON="$(PYTHON)" STASH_SOURCE_ROOT="$(STASH_SOURCE_ROOT)" STASH_SCHEMA_TAG="$(STASH_SCHEMA_TAG)" STASH_SCHEMA_COMMIT="$(STASH_SCHEMA_COMMIT)" $(RSCRIPT) tools/check_generated.R
 
 documentation-check: fetch-stash-schema
-	STASH_SOURCE_ROOT="$(STASH_SOURCE_ROOT)" $(RSCRIPT) tools/check_documentation.R
+	PYTHON="$(PYTHON)" STASH_SOURCE_ROOT="$(STASH_SOURCE_ROOT)" $(RSCRIPT) tools/check_documentation.R
 
 lint:
 	$(RSCRIPT) -e 'lintr::lint_package()'
