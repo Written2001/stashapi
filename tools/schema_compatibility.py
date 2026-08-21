@@ -14,7 +14,11 @@ def _schema(document: dict[str, Any]) -> dict[str, Any]:
 
 
 def _type_map(document: dict[str, Any]) -> dict[str, dict[str, Any]]:
-    return {item["name"]: item for item in _schema(document).get("types", [])}
+    return {
+        item["name"]: item
+        for item in _schema(document).get("types", [])
+        if not item["name"].startswith("__")
+    }
 
 
 def _type_string(type_ref: dict[str, Any]) -> str:

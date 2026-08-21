@@ -52,6 +52,15 @@ class SchemaCompatibilityTest(unittest.TestCase):
         self.assertEqual(report["removed_operations"], [{"operation": "query", "name": "gone"}])
         self.assertEqual(report["signature_changes"][0]["name"], "changed")
 
+    def test_ignores_introspection_type_changes(self):
+        baseline = document(
+            [],
+            [{"name": "__Type", "kind": "OBJECT", "description": None, "fields": [field("isOneOf")]}],
+        )
+        candidate = document([], [{"name": "__Type", "kind": "OBJECT", "description": None, "fields": []}])
+        report = compare_schemas(baseline, candidate)
+        self.assertEqual(report["removed_fields"], [])
+
 
 if __name__ == "__main__":
     unittest.main()
