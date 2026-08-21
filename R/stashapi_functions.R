@@ -76,6 +76,48 @@ fragment SavedFilter on SavedFilter { id mode name find_filter { ...SavedFindFil
   return(res)
 }
 
+#' Call GraphQL operation: findDefaultFilter
+#'
+#' @description Executes the GraphQL operation `findDefaultFilter`.
+#' @details **Deprecated:** default filter now stored in UI config
+#' @param mode See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
+findDefaultFilter <- function(mode = NA, ...) {
+
+  query <- ghql::Query$new()
+  query$query('findDefaultFilter', '
+  query findDefaultFilter($mode: FilterMode!) { findDefaultFilter(mode: $mode) { ...SavedFilter } }
+fragment SavedFindFilterType on SavedFindFilterType { q page per_page sort direction }
+fragment SavedFilter on SavedFilter { id mode name find_filter { ...SavedFindFilterType } object_filter ui_options }
+  ')
+
+  variables <- list()
+  variables[['mode']] <- mode
+
+  if (is.null(mode) || (length(mode) == 1L && is.atomic(mode) && is.na(mode))) {
+  stop("`mode` is required by GraphQL type `FilterMode!`.", call. = FALSE)
+}
+
+  return_default <- NA_character_
+  options <- prepare_stash_query_options(list(...), return_default)
+  field <- options$field
+  response <- options$response
+  progress_bar <- options$progress_bar
+  res <- execute_query(
+    query = query$queries$findDefaultFilter,
+    variables = variables,
+    connection = get_stash_connection(),
+    return_default = return_default,
+    field = field,
+    response = response,
+    progress_bar = progress_bar
+  )
+
+  return(res)
+}
+
 #' Call GraphQL operation: findFile
 #'
 #' @description Find a file by its id or path
@@ -837,6 +879,89 @@ fragment FindStudiosResultType on FindStudiosResultType { count studios { ...Stu
   progress_bar <- options$progress_bar
   res <- execute_query(
     query = query$queries$findStudios,
+    variables = variables,
+    connection = get_stash_connection(),
+    return_default = return_default,
+    field = field,
+    response = response,
+    progress_bar = progress_bar
+  )
+
+  return(res)
+}
+
+#' Call GraphQL operation: findMovie
+#'
+#' @description Find a movie by ID
+#' @details **Deprecated:** Use findGroup instead
+#' @param id See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
+findMovie <- function(id = list(), ...) {
+
+  query <- ghql::Query$new()
+  query$query('findMovie', '
+  query findMovie($id: ID!) { findMovie(id: $id) { ...Movie } }
+fragment Movie on Movie { id name aliases duration date rating100 studio { id name } director synopsis urls tags { id name } created_at updated_at front_image_path back_image_path scene_count scenes { id title } }
+  ')
+
+  variables <- list()
+  variables[['id']] <- id
+
+  if (is.null(id) || (length(id) == 1L && is.atomic(id) && is.na(id)) || (is.list(id) && length(id) == 0L)) {
+  stop("`id` is required by GraphQL type `ID!`.", call. = FALSE)
+}
+
+  return_default <- NA_character_
+  options <- prepare_stash_query_options(list(...), return_default)
+  field <- options$field
+  response <- options$response
+  progress_bar <- options$progress_bar
+  res <- execute_query(
+    query = query$queries$findMovie,
+    variables = variables,
+    connection = get_stash_connection(),
+    return_default = return_default,
+    field = field,
+    response = response,
+    progress_bar = progress_bar
+  )
+
+  return(res)
+}
+
+#' Call GraphQL operation: findMovies
+#'
+#' @description A function which queries Movie objects
+#' @details **Deprecated:** Use findGroups instead
+#' @param moviefilter See the Stash Playground for details.
+#' @param filter See the Stash Playground for details.
+#' @param ids See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
+findMovies <- function(moviefilter = NA, filter = NA, ids = list(), ...) {
+
+  query <- ghql::Query$new()
+  query$query('findMovies', '
+  query findMovies($moviefilter: MovieFilterType $filter: FindFilterType $ids: [ID!]) { findMovies(movie_filter: $moviefilter filter: $filter ids: $ids) { ...FindMoviesResultType } }
+fragment Movie on Movie { id name aliases duration date rating100 studio { id name } director synopsis urls tags { id name } created_at updated_at front_image_path back_image_path scene_count scenes { id title } }
+fragment FindMoviesResultType on FindMoviesResultType { count movies { ...Movie } }
+  ')
+
+  variables <- list()
+  variables[['moviefilter']] <- moviefilter
+  variables[['filter']] <- filter
+  variables[['ids']] <- ids
+
+  return_default <- "movies"
+  options <- prepare_stash_query_options(list(...), return_default)
+  field <- options$field
+  response <- options$response
+  progress_bar <- options$progress_bar
+  res <- execute_query(
+    query = query$queries$findMovies,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
@@ -1691,6 +1816,52 @@ fragment ScrapedGallery on ScrapedGallery { title code details photographer urls
   return(res)
 }
 
+#' Call GraphQL operation: scrapeSingleMovie
+#'
+#' @description Scrape for a single movie
+#' @details **Deprecated:** Use scrapeSingleGroup instead
+#' @param source See the Stash Playground for details.
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
+scrapeSingleMovie <- function(source = NA, input = NA, ...) {
+
+  query <- ghql::Query$new()
+  query$query('scrapeSingleMovie', '
+  query scrapeSingleMovie($source: ScraperSourceInput! $input: ScrapeSingleMovieInput!) { scrapeSingleMovie(source: $source input: $input) { ...ScrapedMovie } }
+fragment ScrapedMovie on ScrapedMovie { stored_id name aliases duration date rating director urls synopsis studio { stored_id name } tags { stored_id name description alias_list remote_site_id } front_image back_image }
+  ')
+
+  variables <- list()
+  variables[['source']] <- source
+  variables[['input']] <- input
+
+  if (is.null(source) || (length(source) == 1L && is.atomic(source) && is.na(source))) {
+  stop("`source` is required by GraphQL type `ScraperSourceInput!`.", call. = FALSE)
+}
+  if (is.null(input) || (length(input) == 1L && is.atomic(input) && is.na(input))) {
+  stop("`input` is required by GraphQL type `ScrapeSingleMovieInput!`.", call. = FALSE)
+}
+
+  return_default <- NA_character_
+  options <- prepare_stash_query_options(list(...), return_default)
+  field <- options$field
+  response <- options$response
+  progress_bar <- options$progress_bar
+  res <- execute_query(
+    query = query$queries$scrapeSingleMovie,
+    variables = variables,
+    connection = get_stash_connection(),
+    return_default = return_default,
+    field = field,
+    response = response,
+    progress_bar = progress_bar
+  )
+
+  return(res)
+}
+
 #' Call GraphQL operation: scrapeSingleGroup
 #'
 #' @description Scrape for a single group
@@ -1992,6 +2163,47 @@ fragment ScrapedImage on ScrapedImage { title code details photographer urls dat
   progress_bar <- options$progress_bar
   res <- execute_query(
     query = query$queries$scrapeImageURL,
+    variables = variables,
+    connection = get_stash_connection(),
+    return_default = return_default,
+    field = field,
+    response = response,
+    progress_bar = progress_bar
+  )
+
+  return(res)
+}
+
+#' Call GraphQL operation: scrapeMovieURL
+#'
+#' @description Scrapes a complete movie record based on a URL
+#' @details **Deprecated:** Use scrapeGroupURL instead
+#' @param url See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
+scrapeMovieURL <- function(url = list(), ...) {
+
+  query <- ghql::Query$new()
+  query$query('scrapeMovieURL', '
+  query scrapeMovieURL($url: String!) { scrapeMovieURL(url: $url) { ...ScrapedMovie } }
+fragment ScrapedMovie on ScrapedMovie { stored_id name aliases duration date rating director urls synopsis studio { stored_id name } tags { stored_id name description alias_list remote_site_id } front_image back_image }
+  ')
+
+  variables <- list()
+  variables[['url']] <- url
+
+  if (is.null(url) || (length(url) == 1L && is.atomic(url) && is.na(url)) || (is.list(url) && length(url) == 0L)) {
+  stop("`url` is required by GraphQL type `String!`.", call. = FALSE)
+}
+
+  return_default <- NA_character_
+  options <- prepare_stash_query_options(list(...), return_default)
+  field <- options$field
+  response <- options$response
+  progress_bar <- options$progress_bar
+  res <- execute_query(
+    query = query$queries$scrapeMovieURL,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
@@ -2478,6 +2690,161 @@ fragment DLNAStatus on DLNAStatus { running until recentIPAddresses allowedIPAdd
   return(res)
 }
 
+#' Call GraphQL operation: allScenes
+#'
+#' @description Executes the GraphQL operation `allScenes`.
+#' @details **Deprecated:** Use findScenes instead
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
+allScenes <- function(...) {
+
+  query <- ghql::Query$new()
+  query$query('allScenes', '
+  query allScenes { allScenes { ...Scene } }
+fragment VideoCaption on VideoCaption { language_code caption_type }
+fragment Fingerprint on Fingerprint { type value }
+fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+fragment ScenePathsType on ScenePathsType { screenshot preview stream webp vtt sprite funscript interactive_heatmap caption }
+fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_seconds primary_tag { id name } tags { id name } created_at updated_at stream preview screenshot }
+fragment SceneGroup on SceneGroup { group { id name } scene_index }
+fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
+  ')
+
+  variables <- list()
+
+  return_default <- NA_character_
+  options <- prepare_stash_query_options(list(...), return_default)
+  field <- options$field
+  response <- options$response
+  progress_bar <- options$progress_bar
+  res <- execute_query(
+    query = query$queries$allScenes,
+    variables = variables,
+    connection = get_stash_connection(),
+    return_default = return_default,
+    field = field,
+    response = response,
+    progress_bar = progress_bar
+  )
+
+  return(res)
+}
+
+#' Call GraphQL operation: allSceneMarkers
+#'
+#' @description Executes the GraphQL operation `allSceneMarkers`.
+#' @details **Deprecated:** Use findSceneMarkers instead
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
+allSceneMarkers <- function(...) {
+
+  query <- ghql::Query$new()
+  query$query('allSceneMarkers', '
+  query allSceneMarkers { allSceneMarkers { ...SceneMarker } }
+fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_seconds primary_tag { id name } tags { id name } created_at updated_at stream preview screenshot }
+  ')
+
+  variables <- list()
+
+  return_default <- NA_character_
+  options <- prepare_stash_query_options(list(...), return_default)
+  field <- options$field
+  response <- options$response
+  progress_bar <- options$progress_bar
+  res <- execute_query(
+    query = query$queries$allSceneMarkers,
+    variables = variables,
+    connection = get_stash_connection(),
+    return_default = return_default,
+    field = field,
+    response = response,
+    progress_bar = progress_bar
+  )
+
+  return(res)
+}
+
+#' Call GraphQL operation: allImages
+#'
+#' @description Executes the GraphQL operation `allImages`.
+#' @details **Deprecated:** Use findImages instead
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
+allImages <- function(...) {
+
+  query <- ghql::Query$new()
+  query$query('allImages', '
+  query allImages { allImages { ...Image } }
+fragment Fingerprint on Fingerprint { type value }
+fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+fragment ImageFile on ImageFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height created_at updated_at }
+fragment VisualFile on VisualFile { ...VideoFile ...ImageFile }
+fragment ImagePathsType on ImagePathsType { thumbnail preview }
+fragment Image on Image { id title code rating100 urls date details photographer o_counter organized created_at updated_at visual_files { ...VisualFile } paths { ...ImagePathsType } galleries { id title } studio { id name } tags { id name } performers { id name gender } custom_fields }
+  ')
+
+  variables <- list()
+
+  return_default <- NA_character_
+  options <- prepare_stash_query_options(list(...), return_default)
+  field <- options$field
+  response <- options$response
+  progress_bar <- options$progress_bar
+  res <- execute_query(
+    query = query$queries$allImages,
+    variables = variables,
+    connection = get_stash_connection(),
+    return_default = return_default,
+    field = field,
+    response = response,
+    progress_bar = progress_bar
+  )
+
+  return(res)
+}
+
+#' Call GraphQL operation: allGalleries
+#'
+#' @description Executes the GraphQL operation `allGalleries`.
+#' @details **Deprecated:** Use findGalleries instead
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
+allGalleries <- function(...) {
+
+  query <- ghql::Query$new()
+  query$query('allGalleries', '
+  query allGalleries { allGalleries { ...Gallery } }
+fragment Fingerprint on Fingerprint { type value }
+fragment GalleryFile on GalleryFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } created_at updated_at }
+fragment GalleryChapter on GalleryChapter { id gallery { id title } title image_index created_at updated_at }
+fragment GalleryPathsType on GalleryPathsType { cover preview }
+fragment Gallery on Gallery { id title code urls date details photographer rating100 organized created_at updated_at files { ...GalleryFile } folder { id path basename } chapters { ...GalleryChapter } scenes { id title } studio { id name } image_count tags { id name } performers { id name gender } cover { id } paths { ...GalleryPathsType } custom_fields }
+  ')
+
+  variables <- list()
+
+  return_default <- NA_character_
+  options <- prepare_stash_query_options(list(...), return_default)
+  field <- options$field
+  response <- options$response
+  progress_bar <- options$progress_bar
+  res <- execute_query(
+    query = query$queries$allGalleries,
+    variables = variables,
+    connection = get_stash_connection(),
+    return_default = return_default,
+    field = field,
+    response = response,
+    progress_bar = progress_bar
+  )
+
+  return(res)
+}
+
 #' Call GraphQL operation: allPerformers
 #'
 #' @description Executes the GraphQL operation `allPerformers`.
@@ -2501,6 +2868,111 @@ fragment Performer on Performer { id name disambiguation urls gender birthdate e
   progress_bar <- options$progress_bar
   res <- execute_query(
     query = query$queries$allPerformers,
+    variables = variables,
+    connection = get_stash_connection(),
+    return_default = return_default,
+    field = field,
+    response = response,
+    progress_bar = progress_bar
+  )
+
+  return(res)
+}
+
+#' Call GraphQL operation: allTags
+#'
+#' @description Executes the GraphQL operation `allTags`.
+#' @details **Deprecated:** Use findTags instead
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
+allTags <- function(...) {
+
+  query <- ghql::Query$new()
+  query$query('allTags', '
+  query allTags { allTags { ...Tag } }
+fragment Tag on Tag { id name sort_name description aliases ignore_auto_tag created_at updated_at favorite stash_ids { endpoint stash_id } image_path scene_count scene_marker_count image_count gallery_count performer_count studio_count group_count parents { id name } children { id name } parent_count child_count custom_fields }
+  ')
+
+  variables <- list()
+
+  return_default <- NA_character_
+  options <- prepare_stash_query_options(list(...), return_default)
+  field <- options$field
+  response <- options$response
+  progress_bar <- options$progress_bar
+  res <- execute_query(
+    query = query$queries$allTags,
+    variables = variables,
+    connection = get_stash_connection(),
+    return_default = return_default,
+    field = field,
+    response = response,
+    progress_bar = progress_bar
+  )
+
+  return(res)
+}
+
+#' Call GraphQL operation: allStudios
+#'
+#' @description Executes the GraphQL operation `allStudios`.
+#' @details **Deprecated:** Use findStudios instead
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
+allStudios <- function(...) {
+
+  query <- ghql::Query$new()
+  query$query('allStudios', '
+  query allStudios { allStudios { ...Studio } }
+fragment Studio on Studio { id name urls parent_studio { id name } child_studios { id name } aliases tags { id name } ignore_auto_tag organized image_path scene_count image_count gallery_count performer_count group_count stash_ids { endpoint stash_id } rating100 favorite details created_at updated_at groups { id name } o_counter custom_fields }
+  ')
+
+  variables <- list()
+
+  return_default <- NA_character_
+  options <- prepare_stash_query_options(list(...), return_default)
+  field <- options$field
+  response <- options$response
+  progress_bar <- options$progress_bar
+  res <- execute_query(
+    query = query$queries$allStudios,
+    variables = variables,
+    connection = get_stash_connection(),
+    return_default = return_default,
+    field = field,
+    response = response,
+    progress_bar = progress_bar
+  )
+
+  return(res)
+}
+
+#' Call GraphQL operation: allMovies
+#'
+#' @description Executes the GraphQL operation `allMovies`.
+#' @details **Deprecated:** Use findGroups instead
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
+allMovies <- function(...) {
+
+  query <- ghql::Query$new()
+  query$query('allMovies', '
+  query allMovies { allMovies { ...Movie } }
+fragment Movie on Movie { id name aliases duration date rating100 studio { id name } director synopsis urls tags { id name } created_at updated_at front_image_path back_image_path scene_count scenes { id title } }
+  ')
+
+  variables <- list()
+
+  return_default <- NA_character_
+  options <- prepare_stash_query_options(list(...), return_default)
+  field <- options$field
+  response <- options$response
+  progress_bar <- options$progress_bar
+  res <- execute_query(
+    query = query$queries$allMovies,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
@@ -2999,6 +3471,86 @@ fragment Scene on Scene { id title code details director urls date rating100 org
   return(res)
 }
 
+#' Call GraphQL operation: sceneIncrementO
+#'
+#' @description Increments the o-counter for a scene. Returns the new value
+#' @details **Deprecated:** Use sceneAddO instead
+#' @param id See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
+sceneIncrementO <- function(id = list(), ...) {
+
+  query <- ghql::Query$new()
+  query$query('sceneIncrementO', '
+  mutation sceneIncrementO($id: ID!) { sceneIncrementO(id: $id) }
+  ')
+
+  variables <- list()
+  variables[['id']] <- id
+
+  if (is.null(id) || (length(id) == 1L && is.atomic(id) && is.na(id)) || (is.list(id) && length(id) == 0L)) {
+  stop("`id` is required by GraphQL type `ID!`.", call. = FALSE)
+}
+
+  return_default <- NA_character_
+  options <- prepare_stash_query_options(list(...), return_default)
+  field <- options$field
+  response <- options$response
+  progress_bar <- options$progress_bar
+  res <- execute_query(
+    query = query$queries$sceneIncrementO,
+    variables = variables,
+    connection = get_stash_connection(),
+    return_default = return_default,
+    field = field,
+    response = response,
+    progress_bar = progress_bar
+  )
+
+  return(res)
+}
+
+#' Call GraphQL operation: sceneDecrementO
+#'
+#' @description Decrements the o-counter for a scene. Returns the new value
+#' @details **Deprecated:** Use sceneRemoveO instead
+#' @param id See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
+sceneDecrementO <- function(id = list(), ...) {
+
+  query <- ghql::Query$new()
+  query$query('sceneDecrementO', '
+  mutation sceneDecrementO($id: ID!) { sceneDecrementO(id: $id) }
+  ')
+
+  variables <- list()
+  variables[['id']] <- id
+
+  if (is.null(id) || (length(id) == 1L && is.atomic(id) && is.na(id)) || (is.list(id) && length(id) == 0L)) {
+  stop("`id` is required by GraphQL type `ID!`.", call. = FALSE)
+}
+
+  return_default <- NA_character_
+  options <- prepare_stash_query_options(list(...), return_default)
+  field <- options$field
+  response <- options$response
+  progress_bar <- options$progress_bar
+  res <- execute_query(
+    query = query$queries$sceneDecrementO,
+    variables = variables,
+    connection = get_stash_connection(),
+    return_default = return_default,
+    field = field,
+    response = response,
+    progress_bar = progress_bar
+  )
+
+  return(res)
+}
+
 #' Call GraphQL operation: sceneAddO
 #'
 #' @description Increments the o-counter for a scene. Uses the current time if none provided.
@@ -3197,6 +3749,46 @@ sceneResetActivity <- function(id = list(), resetresume = NA, resetduration = NA
   progress_bar <- options$progress_bar
   res <- execute_query(
     query = query$queries$sceneResetActivity,
+    variables = variables,
+    connection = get_stash_connection(),
+    return_default = return_default,
+    field = field,
+    response = response,
+    progress_bar = progress_bar
+  )
+
+  return(res)
+}
+
+#' Call GraphQL operation: sceneIncrementPlayCount
+#'
+#' @description Increments the play count for the scene. Returns the new play count value.
+#' @details **Deprecated:** Use sceneAddPlay instead
+#' @param id See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
+sceneIncrementPlayCount <- function(id = list(), ...) {
+
+  query <- ghql::Query$new()
+  query$query('sceneIncrementPlayCount', '
+  mutation sceneIncrementPlayCount($id: ID!) { sceneIncrementPlayCount(id: $id) }
+  ')
+
+  variables <- list()
+  variables[['id']] <- id
+
+  if (is.null(id) || (length(id) == 1L && is.atomic(id) && is.na(id)) || (is.list(id) && length(id) == 0L)) {
+  stop("`id` is required by GraphQL type `ID!`.", call. = FALSE)
+}
+
+  return_default <- NA_character_
+  options <- prepare_stash_query_options(list(...), return_default)
+  field <- options$field
+  response <- options$response
+  progress_bar <- options$progress_bar
+  res <- execute_query(
+    query = query$queries$sceneIncrementPlayCount,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,
@@ -4865,6 +5457,209 @@ fragment Studio on Studio { id name urls parent_studio { id name } child_studios
   return(res)
 }
 
+#' Call GraphQL operation: movieCreate
+#'
+#' @description Executes the GraphQL operation `movieCreate`.
+#' @details **Deprecated:** Use groupCreate instead
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
+movieCreate <- function(input = NA, ...) {
+
+  query <- ghql::Query$new()
+  query$query('movieCreate', '
+  mutation movieCreate($input: MovieCreateInput!) { movieCreate(input: $input) { ...Movie } }
+fragment Movie on Movie { id name aliases duration date rating100 studio { id name } director synopsis urls tags { id name } created_at updated_at front_image_path back_image_path scene_count scenes { id title } }
+  ')
+
+  variables <- list()
+  variables[['input']] <- input
+
+  if (is.null(input) || (length(input) == 1L && is.atomic(input) && is.na(input))) {
+  stop("`input` is required by GraphQL type `MovieCreateInput!`.", call. = FALSE)
+}
+
+  return_default <- NA_character_
+  options <- prepare_stash_query_options(list(...), return_default)
+  field <- options$field
+  response <- options$response
+  progress_bar <- options$progress_bar
+  res <- execute_query(
+    query = query$queries$movieCreate,
+    variables = variables,
+    connection = get_stash_connection(),
+    return_default = return_default,
+    field = field,
+    response = response,
+    progress_bar = progress_bar
+  )
+
+  return(res)
+}
+
+#' Call GraphQL operation: movieUpdate
+#'
+#' @description Executes the GraphQL operation `movieUpdate`.
+#' @details **Deprecated:** Use groupUpdate instead
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
+movieUpdate <- function(input = NA, ...) {
+
+  query <- ghql::Query$new()
+  query$query('movieUpdate', '
+  mutation movieUpdate($input: MovieUpdateInput!) { movieUpdate(input: $input) { ...Movie } }
+fragment Movie on Movie { id name aliases duration date rating100 studio { id name } director synopsis urls tags { id name } created_at updated_at front_image_path back_image_path scene_count scenes { id title } }
+  ')
+
+  variables <- list()
+  variables[['input']] <- input
+
+  if (is.null(input) || (length(input) == 1L && is.atomic(input) && is.na(input))) {
+  stop("`input` is required by GraphQL type `MovieUpdateInput!`.", call. = FALSE)
+}
+
+  return_default <- NA_character_
+  options <- prepare_stash_query_options(list(...), return_default)
+  field <- options$field
+  response <- options$response
+  progress_bar <- options$progress_bar
+  res <- execute_query(
+    query = query$queries$movieUpdate,
+    variables = variables,
+    connection = get_stash_connection(),
+    return_default = return_default,
+    field = field,
+    response = response,
+    progress_bar = progress_bar
+  )
+
+  return(res)
+}
+
+#' Call GraphQL operation: movieDestroy
+#'
+#' @description Executes the GraphQL operation `movieDestroy`.
+#' @details **Deprecated:** Use groupDestroy instead
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
+movieDestroy <- function(input = NA, ...) {
+
+  query <- ghql::Query$new()
+  query$query('movieDestroy', '
+  mutation movieDestroy($input: MovieDestroyInput!) { movieDestroy(input: $input) }
+  ')
+
+  variables <- list()
+  variables[['input']] <- input
+
+  if (is.null(input) || (length(input) == 1L && is.atomic(input) && is.na(input))) {
+  stop("`input` is required by GraphQL type `MovieDestroyInput!`.", call. = FALSE)
+}
+
+  return_default <- NA_character_
+  options <- prepare_stash_query_options(list(...), return_default)
+  field <- options$field
+  response <- options$response
+  progress_bar <- options$progress_bar
+  res <- execute_query(
+    query = query$queries$movieDestroy,
+    variables = variables,
+    connection = get_stash_connection(),
+    return_default = return_default,
+    field = field,
+    response = response,
+    progress_bar = progress_bar
+  )
+
+  return(res)
+}
+
+#' Call GraphQL operation: moviesDestroy
+#'
+#' @description Executes the GraphQL operation `moviesDestroy`.
+#' @details **Deprecated:** Use groupsDestroy instead
+#' @param ids See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
+moviesDestroy <- function(ids = list(), ...) {
+
+  query <- ghql::Query$new()
+  query$query('moviesDestroy', '
+  mutation moviesDestroy($ids: [ID!]!) { moviesDestroy(ids: $ids) }
+  ')
+
+  variables <- list()
+  variables[['ids']] <- ids
+
+  if (is.null(ids) || (length(ids) == 1L && is.atomic(ids) && is.na(ids))) {
+  stop("`ids` is required by GraphQL type `[ID!]!`.", call. = FALSE)
+}
+
+  return_default <- NA_character_
+  options <- prepare_stash_query_options(list(...), return_default)
+  field <- options$field
+  response <- options$response
+  progress_bar <- options$progress_bar
+  res <- execute_query(
+    query = query$queries$moviesDestroy,
+    variables = variables,
+    connection = get_stash_connection(),
+    return_default = return_default,
+    field = field,
+    response = response,
+    progress_bar = progress_bar
+  )
+
+  return(res)
+}
+
+#' Call GraphQL operation: bulkMovieUpdate
+#'
+#' @description Executes the GraphQL operation `bulkMovieUpdate`.
+#' @details **Deprecated:** Use bulkGroupUpdate instead
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
+bulkMovieUpdate <- function(input = NA, ...) {
+
+  query <- ghql::Query$new()
+  query$query('bulkMovieUpdate', '
+  mutation bulkMovieUpdate($input: BulkMovieUpdateInput!) { bulkMovieUpdate(input: $input) { ...Movie } }
+fragment Movie on Movie { id name aliases duration date rating100 studio { id name } director synopsis urls tags { id name } created_at updated_at front_image_path back_image_path scene_count scenes { id title } }
+  ')
+
+  variables <- list()
+  variables[['input']] <- input
+
+  if (is.null(input) || (length(input) == 1L && is.atomic(input) && is.na(input))) {
+  stop("`input` is required by GraphQL type `BulkMovieUpdateInput!`.", call. = FALSE)
+}
+
+  return_default <- NA_character_
+  options <- prepare_stash_query_options(list(...), return_default)
+  field <- options$field
+  response <- options$response
+  progress_bar <- options$progress_bar
+  res <- execute_query(
+    query = query$queries$bulkMovieUpdate,
+    variables = variables,
+    connection = get_stash_connection(),
+    return_default = return_default,
+    field = field,
+    response = response,
+    progress_bar = progress_bar
+  )
+
+  return(res)
+}
+
 #' Call GraphQL operation: groupCreate
 #'
 #' @description Executes the GraphQL operation `groupCreate`.
@@ -5730,6 +6525,46 @@ destroySavedFilter <- function(input = NA, ...) {
   progress_bar <- options$progress_bar
   res <- execute_query(
     query = query$queries$destroySavedFilter,
+    variables = variables,
+    connection = get_stash_connection(),
+    return_default = return_default,
+    field = field,
+    response = response,
+    progress_bar = progress_bar
+  )
+
+  return(res)
+}
+
+#' Call GraphQL operation: setDefaultFilter
+#'
+#' @description Executes the GraphQL operation `setDefaultFilter`.
+#' @details **Deprecated:** now uses UI config
+#' @param input See the Stash Playground for details.
+#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
+#' @return The processed API response.
+#' @export
+setDefaultFilter <- function(input = NA, ...) {
+
+  query <- ghql::Query$new()
+  query$query('setDefaultFilter', '
+  mutation setDefaultFilter($input: SetDefaultFilterInput!) { setDefaultFilter(input: $input) }
+  ')
+
+  variables <- list()
+  variables[['input']] <- input
+
+  if (is.null(input) || (length(input) == 1L && is.atomic(input) && is.na(input))) {
+  stop("`input` is required by GraphQL type `SetDefaultFilterInput!`.", call. = FALSE)
+}
+
+  return_default <- NA_character_
+  options <- prepare_stash_query_options(list(...), return_default)
+  field <- options$field
+  response <- options$response
+  progress_bar <- options$progress_bar
+  res <- execute_query(
+    query = query$queries$setDefaultFilter,
     variables = variables,
     connection = get_stash_connection(),
     return_default = return_default,

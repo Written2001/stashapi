@@ -1,5 +1,4 @@
-package_root <- normalizePath(testthat::test_path("..", ".."), mustWork = TRUE)
-schema_path <- file.path(package_root, "inst", "extdata", "schema.json")
+schema_path <- schema_fixture_path()
 type_path <- file.path(package_root, "tools", "schema_types.R")
 policy_path <- file.path(package_root, "tools", "schema_policy.R")
 operation_path <- file.path(package_root, "tools", "schema_operations.R")
@@ -12,7 +11,7 @@ sys.source(operation_path, envir = schema_types)
 sys.source(validate_path, envir = schema_types)
 
 build_context <- function() {
-  raw_schema <- jsonlite::fromJSON(schema_path, flatten = FALSE)$data$`__schema`$types
+  raw_schema <- read_schema_fixture()
   registry <- schema_types$normalize_schema_registry(raw_schema)
   list(registry = registry, operations = schema_types$build_operation_ir(registry))
 }

@@ -12,6 +12,7 @@ on:
       - tests/**
       - tools/**
       - Makefile
+      - .github/actions/**
   pull_request:
     branches: [ main ]
     paths:
@@ -23,6 +24,7 @@ on:
       - tests/**
       - tools/**
       - Makefile
+      - .github/actions/**
   workflow_dispatch:
 
 permissions:
@@ -66,8 +68,8 @@ jobs:
             any::rmarkdown
           needs: check
 
-      - name: Check generated documentation
-        run: Rscript tools/check_documentation.R
+      - name: Setup pinned Stash schema
+        uses: ./.github/actions/setup-stash-schema
 
       - name: Check
         uses: r-lib/actions/check-r-package@v2

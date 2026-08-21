@@ -9,6 +9,8 @@ RUN apt-get update && \
         curl \
         git \
         openssh-client \
+        python3 \
+        python3-pip \
         sudo \
         && rm -rf /var/lib/apt/lists/*
 
@@ -64,3 +66,7 @@ RUN useradd --create-home --shell /bin/bash vscode && \
 USER vscode
 
 RUN R -q -e "install.packages('renv', repos = 'https://cloud.r-project.org', lib = Sys.getenv('R_LIBS_USER'))"
+
+COPY tools/requirements.txt /tmp/stashapi-python-requirements.txt
+RUN python3 -m pip install --user --break-system-packages --no-cache-dir \
+    -r /tmp/stashapi-python-requirements.txt

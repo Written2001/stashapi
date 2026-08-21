@@ -4,3 +4,7 @@
 .stash_credentials
 .vscode
 stashapi_*.tar.gz
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.Rcheck/

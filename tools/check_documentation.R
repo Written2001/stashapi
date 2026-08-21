@@ -1,4 +1,8 @@
 documentation_root <- normalizePath(".", mustWork = TRUE)
+schema_source_root <- Sys.getenv("STASH_SOURCE_ROOT", unset = "")
+if (!nzchar(schema_source_root) || !dir.exists(schema_source_root)) {
+  stop("STASH_SOURCE_ROOT must identify a pinned SDL checkout", call. = FALSE)
+}
 required_artifacts <- c(
   "R/stashapi_functions.R",
   "NAMESPACE",
@@ -52,8 +56,9 @@ sys.source(
 )
 run_in_check_directory(
   input_docs$generate_input_helper_docs(
-    file.path(check_directory, "inst", "extdata", "schema.json"),
-    file.path(check_directory, "man")
+    schema_path = NULL,
+    output_dir = file.path(check_directory, "man"),
+    source_root = schema_source_root
   )
 )
 
@@ -89,10 +94,7 @@ curated_types <- input_docs$curated_types
 for (type_name in names(curated_types)) {
   builder <- input_docs$build_input_builder_ir(
     input_docs$normalize_schema_registry(
-      jsonlite::fromJSON(
-        file.path(documentation_root, "inst", "extdata", "schema.json"),
-        flatten = FALSE
-      )$data$`__schema`$types
+      input_docs$read_schema_types(source_root = schema_source_root)
     )
   )[[type_name]]
   compare_file(file.path("man", paste0(input_docs$helper_name(type_name, builder), ".Rd")))

@@ -69,11 +69,11 @@ jobs:
             any::rmarkdown
           needs: check
 
+      - name: Setup pinned Stash schema
+        uses: ./.github/actions/setup-stash-schema
+
       - name: Check generated wrappers
         run: Rscript tools/check_generated.R
-
-      - name: Check generated documentation
-        run: Rscript tools/check_documentation.R
 
       - name: Build source package
         run: R CMD build .

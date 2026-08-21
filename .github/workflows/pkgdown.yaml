@@ -7,6 +7,7 @@ on:
       - DESCRIPTION
       - README.md
       - _pkgdown.yml
+      - .github/actions/**
       - man/**
       - vignettes/**
   workflow_dispatch:
@@ -47,8 +48,8 @@ jobs:
             any::roxygen2
           needs: website
 
-      - name: Check generated documentation
-        run: Rscript tools/check_documentation.R
+      - name: Setup pinned Stash schema
+        uses: ./.github/actions/setup-stash-schema
 
       - name: Build site
         run: pkgdown::build_site()

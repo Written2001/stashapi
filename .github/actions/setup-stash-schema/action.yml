@@ -1,0 +1,36 @@
+name: Setup pinned Stash schema
+description: Install the SDL parser and fetch the pinned Stash checkout
+inputs:
+  fetch-schema:
+    description: Fetch the pinned Stash SDL checkout
+    required: false
+    default: 'true'
+runs:
+  using: composite
+  steps:
+    - name: Setup Python
+      id: setup-python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+
+    - name: Install and verify SDL parser
+      shell: bash
+      run: |
+        venv_path="$RUNNER_TEMP/stashapi-python"
+        "${{ steps.setup-python.outputs.python-path }}" -m venv "$venv_path"
+        if [[ -x "$venv_path/bin/python" ]]; then
+          venv_python="$venv_path/bin/python"
+        else
+          venv_python="$venv_path/Scripts/python.exe"
+        fi
+        "$venv_python" -m pip install -r tools/requirements.txt
+        "$venv_python" -c "import graphql; print('graphql-core', graphql.__version__)"
+        echo "PYTHON=$venv_python" >> "$GITHUB_ENV"
+
+    - name: Fetch pinned Stash schema
+      if: ${{ inputs.fetch-schema == 'true' }}
+      shell: bash
+      run: |
+        make fetch-stash-schema STASH_SOURCE_ROOT="$RUNNER_TEMP/stashapi-stash"
+        make schema-environment STASH_SOURCE_ROOT="$RUNNER_TEMP/stashapi-stash" >> "$GITHUB_ENV"

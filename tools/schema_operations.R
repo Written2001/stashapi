@@ -41,8 +41,7 @@ build_operation_ir <- function(
       stop("operation root is not an object: ", root_type, call. = FALSE)
     }
 
-    fields <- Filter(function(field) !isTRUE(field$is_deprecated), root$fields)
-    lapply(fields, function(field) {
+    lapply(root$fields, function(field) {
       return_type <- field$type
       named_type <- named_type_fn(return_type)
       return_definition <- registry[[named_type]]
@@ -69,6 +68,8 @@ build_operation_ir <- function(
         operation_kind = tolower(root_type),
         root_type = root_type,
         description = field$description,
+        is_deprecated = isTRUE(field$is_deprecated),
+        deprecation_reason = field$deprecation_reason,
         arguments = arguments,
         return_type = return_type,
         return_type_string = type_string_fn(return_type),
