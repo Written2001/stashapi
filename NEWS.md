@@ -1,3 +1,11 @@
+# stashapi 0.8.1
+
+- Consolidate response, generated-artifact, and compatibility tests around
+	strategic behavioral boundaries without changing package behavior.
+- Remove redundant test fixtures and reorganize schema-driven artifact checks
+	to reduce test-suite fragmentation while preserving coverage.
+- update filters and helper functions documentation for improved clearity and consistency.
+
 # stashapi 0.8.0
 
 - Rename the maintainer-authored query execution implementation to

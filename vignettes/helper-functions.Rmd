@@ -51,22 +51,22 @@ Tag hierarchies can be queried server-side with a parent criterion. The helper
 makes that intent explicit and requests all pages:
 
 ```r
-moderators_id <- find_tag_id("moderators")
-moderator_tags <- tag_descendants(moderators_id)
+positions_id <- find_tag_id("positions")
+positions_tags <- tag_descendants(positions_id)
 ```
 
 The default result has the same shape as `findTags()`, including the standard
 `id` column. Request only IDs when they will be reused in another filter:
 
 ```r
-moderator_tag_ids <- tag_descendants(
+positions_tag_ids <- tag_descendants(
   moderators_id,
   .field = c("tags", "id")
 )
 
 images <- findImages(
   imagefilter = image_filter(
-    tags = includes(moderator_tag_ids)
+    tags = includes(positions_tag_ids)
   ),
   filter = find_filter(per_page = -1)
 )
@@ -75,14 +75,14 @@ images <- findImages(
 Limit the hierarchy depth when unlimited traversal is unnecessary:
 
 ```r
-direct_and_second_level <- tag_descendants(moderators_id, depth = 2)
+direct_and_second_level <- tag_descendants(positions_id, depth = 2)
 ```
 
 Include the root tag when the workflow needs the complete branch:
 
 ```r
 complete_branch <- tag_descendants(
-  moderators_id,
+  positions_id,
   include_self = TRUE
 )
 ```
@@ -99,7 +99,7 @@ the workflow. Helpers forward the same response options where applicable:
 
 ```r
 tag_descendants(
-  moderators_id,
+  positions_id,
   .field = c("tags", "id"),
   .progress_bar = TRUE
 )
@@ -107,4 +107,4 @@ tag_descendants(
 
 The helper functions are intentionally small. Path parsing, matching local
 files to Stash objects, metadata policy, and mutation decisions remain in the
-user script.
+users script.
