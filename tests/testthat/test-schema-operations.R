@@ -1,5 +1,4 @@
-package_root <- normalizePath(testthat::test_path("..", ".."), mustWork = TRUE)
-schema_path <- file.path(package_root, "inst", "extdata", "schema.json")
+schema_path <- schema_fixture_path()
 type_path <- file.path(package_root, "tools", "schema_types.R")
 operation_path <- file.path(package_root, "tools", "schema_operations.R")
 
@@ -8,18 +7,23 @@ sys.source(type_path, envir = schema_types)
 sys.source(operation_path, envir = schema_types)
 
 build_registry <- function() {
-  raw_schema <- jsonlite::fromJSON(schema_path, flatten = FALSE)$data$`__schema`$types
+  raw_schema <- read_schema_fixture()
   schema_types$normalize_schema_registry(raw_schema)
 }
 
-testthat::test_that("operation IR covers non-deprecated Query and Mutation fields", {
+testthat::test_that("operation IR retains deprecated Query and Mutation fields", {
   operations <- schema_types$build_operation_ir(build_registry())
 
-  testthat::expect_length(operations, 187)
+  testthat::expect_length(operations, 208)
   testthat::expect_true(all(nzchar(names(operations))))
   testthat::expect_identical(operations$findScenes$operation_kind, "query")
   testthat::expect_identical(operations$sceneCreate$operation_kind, "mutation")
-  testthat::expect_false("findDefaultFilter" %in% names(operations))
+  testthat::expect_true("findDefaultFilter" %in% names(operations))
+  testthat::expect_true(operations$findDefaultFilter$is_deprecated)
+  testthat::expect_identical(
+    operations$findDefaultFilter$deprecation_reason,
+    "default filter now stored in UI config"
+  )
 })
 
 testthat::test_that("operation IR preserves argument and return type metadata", {

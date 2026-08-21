@@ -1,5 +1,16 @@
+# stashapi 0.8.2
+
+- Make the pinned Stash SDL the complete package-generation source. A single
+	`make generate-sdl` run now regenerates the schema snapshot, provenance,
+	wrappers, namespace, manuals, and input helpers.
+- Document the Stash schema upgrade workflow and verify generated snapshots,
+	wrappers, and documentation against the pinned tag and commit.
+- Centralize the offline schema snapshot fixture used by schema contract tests.
+
 # stashapi 0.8.1
 
+- Document the Stash `v0.31.1` schema reference for this release. Generated
+	operations follow the pinned schema, including upstream endpoint removals.
 - Consolidate response, generated-artifact, and compatibility tests around
 	strategic behavioral boundaries without changing package behavior.
 - Remove redundant test fixtures and reorganize schema-driven artifact checks

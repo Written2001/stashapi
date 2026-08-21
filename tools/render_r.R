@@ -72,6 +72,15 @@ render_roxygen_text <- function(value, fallback) {
 
 render_r_documentation <- function(operation) {
   title <- paste0("Call GraphQL operation: ", operation$name)
+  deprecation <- if (isTRUE(operation$is_deprecated)) {
+    reason <- render_roxygen_text(
+      operation$deprecation_reason,
+      "This GraphQL operation is deprecated."
+    )
+    paste0("#' @details **Deprecated:** ", reason)
+  } else {
+    character()
+  }
   description <- render_roxygen_text(
     operation$description,
     paste0("Executes the GraphQL operation `", operation$name, "`.")
@@ -88,6 +97,7 @@ render_r_documentation <- function(operation) {
     paste0("#' ", title),
     "#'",
     paste0("#' @description ", description),
+    deprecation,
     arguments,
     "#' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.",
     "#' @return The processed API response.",

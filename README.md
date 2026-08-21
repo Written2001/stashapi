@@ -13,6 +13,14 @@ instance.
 - [Mutation plans](vignettes/mutation-plans.Rmd) for previewing batch changes
 - [News](NEWS.md) for release history
 
+## Stash compatibility
+
+Generated operations are tied to the pinned upstream schema. The `stashapi`
+0.8.2 release is generated from Stash `v0.31.1`, commit
+`4de2351e7cc990d7ccd7cb6c84c275cd53bf6e55`. A later Stash schema may add,
+deprecate, or remove operations; regenerate and review the compatibility report
+before assigning a new Stash reference to a `stashapi` release.
+
 ## Installation
 
 Install the development version directly from GitHub:

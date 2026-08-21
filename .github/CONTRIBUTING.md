@@ -30,12 +30,20 @@ The usual contribution loop is:
 5. Review the generated changes and the compatibility impact before opening a
 	PR.
 
+Pull requests also run a schema compatibility check in GitHub Actions. The
+workflow extracts `inst/extdata/schema.json` from the pull request's base
+commit and supplies it as `STASH_SCHEMA_BASELINE`; no secret or repository
+variable is required. The resulting report is uploaded as the
+`schema-compatibility-report` artifact, including when the check fails.
+
 ## What To Edit
 
-`inst/extdata/schema.json` is the source for generated GraphQL wrappers and
-their manuals. The wrapper and input-helper documentation generated from it
-must not be edited by hand. Change the relevant generator and
-then run `make roxygen` to refresh the derived files.
+The pinned Stash SDL checkout is the source for generated GraphQL wrappers and
+their manuals. `inst/extdata/schema.json` is a generated introspection snapshot
+from that same checkout. Generated wrapper, snapshot, and input-helper
+documentation must not be edited by hand. Change the relevant generator or
+pinned schema source and then run `make generate-sdl` to refresh all derived
+files.
 
 Handwritten R helpers, tests, vignettes, and development scripts can be edited
 directly. Keep generated changes in the same contribution as the source
@@ -47,6 +55,25 @@ snake_case, such as `scene_filter()`, `find_studio_id()`, and
 `prepare_mutations()`. Preserve these conventions when adding APIs: generated
 wrappers mirror the schema, while handwritten helpers describe higher-level R
 workflows.
+
+## Updating the Stash schema
+
+To update the package to a new Stash release, change both
+`STASH_SCHEMA_TAG` and `STASH_SCHEMA_COMMIT` in the Makefile, then run:
+
+```sh
+make generate-sdl
+```
+
+This fetches the exact commit, regenerates `schema.json` and its provenance,
+and regenerates wrappers, the namespace, manuals, and input-helper
+documentation. `make generate-check` rejects stale generated files; it does
+not reject a new Stash version when all artifacts have been regenerated.
+
+Review the resulting diff and schema compatibility report before releasing.
+Upstream additions and deprecations are reflected in the generated API. An
+upstream removal is also reflected by removing the corresponding generated
+wrapper and manual, and must be treated as a release compatibility change.
 
 ## Before a PR
 
@@ -70,16 +97,17 @@ make docs
 
 ## Generated Files
 
-Wrappers and manuals are generated from `inst/extdata/schema.json`.
+Wrappers and manuals are generated from the pinned SDL checkout identified by
+`STASH_SCHEMA_TAG` and `STASH_SCHEMA_COMMIT` in the Makefile.
 
 ```sh
-make roxygen              # regenerate
-make generate-check       # verify wrappers and input manuals
+make generate-sdl         # regenerate from the pinned Stash checkout
+make generate-check       # verify snapshot, wrappers, and input manuals
 make documentation-check  # verify all generated documentation
 ```
 
 Commit generated changes with the source change. Do not edit generated files
-by hand. If a generated check fails, first run `make roxygen`, then rerun the
+by hand. If a generated check fails, first run `make generate-sdl`, then rerun the
 check. A remaining mismatch usually means the generator, schema, or checked-in
 artifact needs to be updated together.
 

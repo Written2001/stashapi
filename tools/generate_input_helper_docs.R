@@ -1,5 +1,6 @@
 sys.source("tools/schema_types.R", envir = environment())
 sys.source("tools/schema_inputs.R", envir = environment())
+sys.source("tools/schema_loader.R", envir = environment())
 
 normalize_registry <- get("normalize_schema_registry", mode = "function")
 contains_type <- get("type_ref_contains", mode = "function")
@@ -167,10 +168,21 @@ render_filter_doc <- function(builder, find_usage, function_name = builder$funct
 }
 
 generate_input_helper_docs <- function(
-  schema_path = "inst/extdata/schema.json",
-  output_dir = "man"
+  schema_path = NULL,
+  output_dir = "man",
+  source_root = NULL
 ) {
-  raw_schema <- jsonlite::fromJSON(schema_path, flatten = FALSE)$data$`__schema`$types
+  if (is.null(schema_path) && is.null(source_root)) {
+    source_root <- Sys.getenv("STASH_SOURCE_ROOT", unset = "")
+  }
+  if (is.null(source_root) || !nzchar(source_root)) source_root <- NULL
+  if (is.null(schema_path) && is.null(source_root)) {
+    stop("STASH_SOURCE_ROOT must identify a pinned SDL checkout", call. = FALSE)
+  }
+  raw_schema <- read_schema_types(
+    schema_path = if (is.null(source_root)) schema_path else NULL,
+    source_root = source_root
+  )
   registry <- normalize_registry(raw_schema)
   builders <- build_input_builders(registry)
   for (type_name in names(curated_types)) {
@@ -189,5 +201,11 @@ generate_input_helper_docs <- function(
 
 args <- commandArgs(trailingOnly = TRUE)
 if (identical(environment(), globalenv()) && !interactive()) {
-  if (length(args) == 0L) generate_input_helper_docs() else generate_input_helper_docs(args[[1]], args[[2]] %||% "man")
+  if (length(args) == 0L) {
+    generate_input_helper_docs()
+  } else if (length(args) < 3L) {
+    generate_input_helper_docs(args[[1]], args[[2]] %||% "man")
+  } else {
+    generate_input_helper_docs(NULL, args[[2]], args[[3]])
+  }
 }

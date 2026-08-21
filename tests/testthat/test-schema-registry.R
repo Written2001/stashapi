@@ -1,12 +1,11 @@
-package_root <- normalizePath(testthat::test_path("..", ".."), mustWork = TRUE)
-schema_path <- file.path(package_root, "inst", "extdata", "schema.json")
+schema_path <- schema_fixture_path()
 type_path <- file.path(package_root, "tools", "schema_types.R")
 
 schema_types <- new.env(parent = globalenv())
 sys.source(type_path, envir = schema_types)
 
 testthat::test_that("the checked-in schema becomes a complete named registry", {
-  raw_schema <- jsonlite::fromJSON(schema_path, flatten = FALSE)$data$`__schema`$types
+  raw_schema <- read_schema_fixture()
   registry <- schema_types$normalize_schema_registry(raw_schema)
 
   testthat::expect_length(registry, 309)

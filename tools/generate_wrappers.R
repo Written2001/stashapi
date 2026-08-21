@@ -1,18 +1,34 @@
 source("tools/schema_types.R")
+source("tools/schema_loader.R")
 source("tools/schema_policy.R")
 source("tools/schema_operations.R")
 source("tools/schema_selection.R")
 source("tools/schema_render.R")
 source("tools/render_r.R")
 
-build_wrappers <- function(schema_path = "inst/extdata/schema.json") {
+build_wrappers <- function(
+  schema_path = NULL,
+  source_root = NULL,
+  source_ref = NULL
+) {
+  if (is.null(schema_path) && is.null(source_root)) {
+    source_root <- Sys.getenv("STASH_SOURCE_ROOT", unset = "")
+  }
+  if (is.null(source_root) || !nzchar(source_root)) source_root <- NULL
+  if (is.null(schema_path) && is.null(source_root)) {
+    stop("STASH_SOURCE_ROOT must identify a pinned SDL checkout", call. = FALSE)
+  }
   normalize_registry <- get("normalize_schema_registry", mode = "function")
   build_operations <- get("build_operation_ir", mode = "function")
   build_fragments <- get("build_fragment_graph", mode = "function")
   render_document <- get("render_graphql_document", mode = "function")
   render_leaf_operation <- get("render_operation", mode = "function")
   render_wrapper <- get("render_r_wrapper", mode = "function")
-  raw_schema <- jsonlite::fromJSON(schema_path, flatten = FALSE)$data$`__schema`$types
+  raw_schema <- read_schema_types(
+    schema_path = if (is.null(source_root)) schema_path else NULL,
+    source_root = source_root,
+    source_ref = source_ref
+  )
   registry <- normalize_registry(raw_schema)
   operations <- build_operations(registry)
 
@@ -30,4 +46,13 @@ build_wrappers <- function(schema_path = "inst/extdata/schema.json") {
 }
 
 args <- commandArgs(trailingOnly = TRUE)
-if (length(args) > 0L) writeLines(build_wrappers(), args[[1]])
+if (length(args) > 0L) {
+  output_path <- args[[1]]
+  source_root <- if (length(args) > 1L) args[[2]] else NULL
+  source_ref <- if (length(args) > 2L) args[[3]] else NULL
+  writeLines(build_wrappers(
+    schema_path = NULL,
+    source_root = source_root,
+    source_ref = source_ref
+  ), output_path)
+}
