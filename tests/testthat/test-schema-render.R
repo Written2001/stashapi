@@ -11,7 +11,7 @@ sys.source(selection_path, envir = schema_types)
 sys.source(render_path, envir = schema_types)
 
 build_operations <- function() {
-  raw_schema <- read_schema_fixture()
+  raw_schema <- read_schema_fixture() # nolint: object_usage_linter
   registry <- schema_types$normalize_schema_registry(raw_schema)
   schema_types$build_operation_ir(registry)
 }

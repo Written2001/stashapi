@@ -25,3 +25,10 @@
 #' )
 #' }
 NULL
+
+utils::globalVariables("validate_progress_bar")
+utils::globalVariables("new_stash_progress")
+utils::globalVariables("close_stash_progress")
+utils::globalVariables("update_stash_progress")
+utils::globalVariables("validate_response_mode")
+utils::globalVariables("new_stashapi_response")

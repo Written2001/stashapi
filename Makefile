@@ -52,6 +52,7 @@ reproducibility-check: fetch-stash-schema
 generate-check documentation-check: reproducibility-check
 
 lint:
+	R CMD INSTALL -l "$$($(RSCRIPT) -e 'cat(.libPaths()[1])')" .
 	$(RSCRIPT) -e 'lints <- lintr::lint_package(); if (length(lints) > 0L) { print(lints); quit(status = 1L) }'
 
 coverage:
