@@ -91,7 +91,7 @@ The public helper family covers `scene_filter()`, `image_filter()`,
 Run these commands from the repository root:
 
 ```sh
-Rscript tools/check_generated.R
+make reproducibility-check
 Rscript -e 'testthat::test_local()'
 Rscript -e 'lintr::lint_package()'
 R CMD check --no-manual .

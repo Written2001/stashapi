@@ -44,7 +44,7 @@ files.
 
 Handwritten R helpers, tests, vignettes, and development scripts can be edited
 directly. Keep generated changes in the same contribution as the source
-change, and use `make generate-check` to catch drift.
+change, and use `make reproducibility-check` to catch drift.
 
 Generated operation names retain the GraphQL spelling, such as
 `findScenes()` and `sceneUpdate()`. User-facing helper functions use
@@ -64,7 +64,7 @@ make generate-sdl
 
 This fetches the exact commit, regenerates `schema.json` and its provenance,
 and regenerates wrappers, the namespace, manuals, and input-helper
-documentation. `make generate-check` rejects stale generated files; it does
+documentation. `make reproducibility-check` rejects stale generated files; it does
 not reject a new Stash version when all artifacts have been regenerated.
 
 Review the resulting diff and run `make schema-compatibility-check` with an
@@ -79,7 +79,8 @@ wrapper and manual, and must be treated as a release compatibility change.
 make ci
 ```
 
-This runs the generated-artifact check, tests, lint, and `R CMD check`. It does
+This runs the generated-artifact and documentation reproducibility check,
+tests, lint, and `R CMD check`. It does
 not require Stash credentials or live data.
 
 Run it from the repository root. A successful run should finish with zero
@@ -100,14 +101,15 @@ Wrappers and manuals are generated from the pinned SDL checkout identified by
 
 ```sh
 make generate-sdl         # regenerate from the pinned Stash checkout
-make generate-check       # verify snapshot, wrappers, and input manuals
-make documentation-check  # optional full documentation reproducibility check
+make reproducibility-check # verify all generated artifacts and documentation
 ```
 
-Commit generated changes with the source change. Do not edit generated files
-by hand. If a generated check fails, first run `make generate-sdl`, then rerun the
-check. A remaining mismatch usually means the generator, schema, or checked-in
-artifact needs to be updated together.
+The reproducibility check is also run by `make ci`, and can be run locally
+whenever you want to verify a clean generated state. Commit generated changes
+with the source change. Do not edit generated files by hand. If the check
+fails, first run `make generate-sdl`, then rerun the check. A remaining
+mismatch usually means the generator, schema, or checked-in artifact needs to
+be updated together.
 
 ## Documentation Changes
 

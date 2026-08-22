@@ -48,11 +48,15 @@ build_wrappers <- function(
 args <- commandArgs(trailingOnly = TRUE)
 if (length(args) > 0L) {
   output_path <- args[[1]]
-  source_root <- if (length(args) > 1L) args[[2]] else NULL
-  source_ref <- if (length(args) > 2L) args[[3]] else NULL
-  writeLines(build_wrappers(
-    schema_path = NULL,
-    source_root = source_root,
-    source_ref = source_ref
-  ), output_path)
+  if (length(args) > 1L && identical(args[[2]], "--schema")) {
+    writeLines(build_wrappers(schema_path = args[[3]]), output_path)
+  } else {
+    source_root <- if (length(args) > 1L) args[[2]] else NULL
+    source_ref <- if (length(args) > 2L) args[[3]] else NULL
+    writeLines(build_wrappers(
+      schema_path = NULL,
+      source_root = source_root,
+      source_ref = source_ref
+    ), output_path)
+  }
 }

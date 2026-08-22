@@ -6,7 +6,7 @@ STASH_SOURCE_ROOT ?= /tmp/stashapi-stash-$(STASH_SCHEMA_TAG)
 STASH_SCHEMA_COMPATIBILITY_OUTPUT ?= /tmp/stashapi-schema-compatibility.json
 STASHAPI_VERSION ?= $(shell sed -n 's/^Version: *//p' DESCRIPTION)
 
-.PHONY: setup test schema-source-check schema-compatibility-check schema-environment fetch-stash-schema generate-sdl generate-check documentation-check lint coverage build check check-package docs roxygen ci
+.PHONY: setup test schema-source-check schema-compatibility-check schema-environment fetch-stash-schema generate-sdl reproducibility-check generate-check documentation-check lint coverage build check check-package docs roxygen ci
 
 setup:
 	Rscript -e 'renv::activate(); renv::restore(prompt = FALSE)'
@@ -27,22 +27,28 @@ schema-environment:
 	@printf 'STASH_SOURCE_ROOT=%s\n' '$(STASH_SOURCE_ROOT)'
 
 fetch-stash-schema:
-	rm -rf "$(STASH_SOURCE_ROOT)"
-	git clone --quiet --filter=blob:none --no-checkout --branch "$(STASH_SCHEMA_TAG)" https://github.com/stashapp/stash.git "$(STASH_SOURCE_ROOT)"
-	git -C "$(STASH_SOURCE_ROOT)" checkout --quiet "$(STASH_SCHEMA_COMMIT)"
+	@if test -d "$(STASH_SOURCE_ROOT)/.git" && test "$$(git -C "$(STASH_SOURCE_ROOT)" rev-parse HEAD 2>/dev/null)" = "$(STASH_SCHEMA_COMMIT)"; then \
+		echo "Using pinned Stash checkout $(STASH_SCHEMA_COMMIT)"; \
+	else \
+		if test -d "$(STASH_SOURCE_ROOT)/.git"; then \
+			git -C "$(STASH_SOURCE_ROOT)" fetch --quiet origin "$(STASH_SCHEMA_TAG)"; \
+		else \
+			git clone --quiet --filter=blob:none --no-checkout --branch "$(STASH_SCHEMA_TAG)" https://github.com/stashapp/stash.git "$(STASH_SOURCE_ROOT)"; \
+		fi; \
+		git -C "$(STASH_SOURCE_ROOT)" checkout --quiet "$(STASH_SCHEMA_COMMIT)"; \
+	fi
 
 generate-sdl: fetch-stash-schema
 	@test -n "$(STASH_SOURCE_ROOT)" || (echo "STASH_SOURCE_ROOT is required"; exit 1)
 	$(PYTHON) tools/schema_from_sdl.py --source-root "$(STASH_SOURCE_ROOT)" --output inst/extdata/schema.json --provenance-output inst/extdata/schema.provenance.json --ref "$(STASH_SCHEMA_TAG)" --commit "$(STASH_SCHEMA_COMMIT)" --package-version "$(STASHAPI_VERSION)" --artifact inst/extdata/schema.json
-	$(RSCRIPT) tools/generate_wrappers.R R/stashapi_functions.R $(STASH_SOURCE_ROOT) $(STASH_SCHEMA_TAG)
+	$(RSCRIPT) tools/generate_wrappers.R R/stashapi_functions.R --schema inst/extdata/schema.json
 	$(RSCRIPT) -e 'roxygen2::roxygenise()'
-	$(RSCRIPT) tools/generate_input_helper_docs.R /dev/null man $(STASH_SOURCE_ROOT)
+	$(RSCRIPT) tools/generate_input_helper_docs.R --schema inst/extdata/schema.json man
 
-generate-check: fetch-stash-schema
-	PYTHON="$(PYTHON)" STASH_SOURCE_ROOT="$(STASH_SOURCE_ROOT)" STASH_SCHEMA_TAG="$(STASH_SCHEMA_TAG)" STASH_SCHEMA_COMMIT="$(STASH_SCHEMA_COMMIT)" $(RSCRIPT) tools/check_generated.R
+reproducibility-check: fetch-stash-schema
+	PYTHON="$(PYTHON)" STASH_SOURCE_ROOT="$(STASH_SOURCE_ROOT)" STASH_SCHEMA_TAG="$(STASH_SCHEMA_TAG)" STASH_SCHEMA_COMMIT="$(STASH_SCHEMA_COMMIT)" $(RSCRIPT) tools/check_reproducibility.R
 
-documentation-check: fetch-stash-schema
-	PYTHON="$(PYTHON)" STASH_SOURCE_ROOT="$(STASH_SOURCE_ROOT)" $(RSCRIPT) tools/check_documentation.R
+generate-check documentation-check: reproducibility-check
 
 lint:
 	$(RSCRIPT) -e 'lintr::lint_package()'
@@ -50,18 +56,18 @@ lint:
 coverage:
 	$(RSCRIPT) -e 'coverage <- covr::package_coverage(); writeLines(capture.output(print(coverage)), "coverage.txt")'
 
-build: generate-check
+build: reproducibility-check
 	$(RSCRIPT) -e 'status <- system2("R", c("CMD", "build", ".")); quit(status = status)'
 
 check-package:
 	$(RSCRIPT) -e 'rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")'
 
-check: generate-check check-package
+check: reproducibility-check check-package
 
-docs: generate-check
+docs: reproducibility-check
 	$(RSCRIPT) -e 'pkgdown::build_site(preview = FALSE)'
 
 roxygen:
 	$(MAKE) generate-sdl
 
-ci: generate-check test lint check-package
+ci: reproducibility-check test lint check-package

@@ -35,7 +35,7 @@
 
 ## Validation
 
-- [ ] `make generate-check`
+- [ ] `make reproducibility-check`
 - [ ] `make test`
 - [ ] `make lint`
 - [ ] `make check`
