@@ -64,8 +64,16 @@ make generate-sdl
 
 This fetches the exact commit, regenerates `schema.json` and its provenance,
 and regenerates wrappers, the namespace, manuals, and input-helper
-documentation. `make reproducibility-check` rejects stale generated files; it does
-not reject a new Stash version when all artifacts have been regenerated.
+documentation. `make reproducibility-check` rejects stale generated files; it
+does not reject a new Stash version when all artifacts have been regenerated.
+
+The Makefile owns the pinned Stash checkout. GitHub Actions only installs the
+Python SDL parser before invoking Make. The parser and checkout are separate:
+test and coverage jobs install the parser without fetching Stash, while build
+and release jobs let `make reproducibility-check` fetch or reuse the pinned
+checkout. Generation and reproducibility checks need network access when that
+checkout is not already available; neither requires a Stash server or API
+credentials.
 
 Review the resulting diff and run `make schema-compatibility-check` with an
 explicit baseline before releasing when the package changes its pinned schema.
@@ -103,6 +111,11 @@ Wrappers and manuals are generated from the pinned SDL checkout identified by
 make generate-sdl         # regenerate from the pinned Stash checkout
 make reproducibility-check # verify all generated artifacts and documentation
 ```
+
+`make generate-sdl` and `make reproducibility-check` both fetch or reuse the
+checkout identified by `STASH_SCHEMA_TAG` and `STASH_SCHEMA_COMMIT`. The
+reproducibility check writes regenerated artifacts to temporary locations and
+does not modify the working tree.
 
 The reproducibility check is also run by `make ci`, and can be run locally
 whenever you want to verify a clean generated state. Commit generated changes

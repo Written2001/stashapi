@@ -13,6 +13,8 @@ The generated operation functions are derived from the pinned Stash SDL. The
 SDL parser also writes the derived `inst/extdata/schema.json` snapshot, which
 makes compatibility review and offline tests reproducible without requiring a
 live Stash instance. The wrapper generator lives in `tools/generate_wrappers.R`.
+GitHub Actions installs the Python parser, while the Makefile fetches or reuses
+the pinned checkout for generation and reproducibility checks.
 
 ## Pipeline
 
@@ -34,6 +36,13 @@ GraphQL document renderer + R wrapper renderer
         v
 R/stashapi_functions.R
 ```
+
+`make generate-sdl` runs the parser once to create the committed schema
+snapshot, then passes that snapshot to wrapper and input-document generation.
+`make reproducibility-check` performs the same work in temporary locations and
+compares the results with the committed schema, wrappers, namespace, and
+documentation. Both commands may need network access to obtain the pinned
+checkout; they do not need a live Stash server or credentials.
 
 ## Schema registry
 
@@ -97,4 +106,7 @@ Rscript -e 'lintr::lint_package()'
 R CMD check --no-manual .
 ```
 
-The schema-analysis tests use synthetic type fixtures and the checked-in schema. They do not require network credentials. The generated-wrapper check compares the generated source against `R/stashapi_functions.R` to detect unreviewed drift.
+The schema-analysis tests use synthetic type fixtures and the checked-in schema.
+They do not require network credentials. The reproducibility check compares
+generated artifacts against the committed schema snapshot, wrappers, namespace,
+and documentation to detect drift.
