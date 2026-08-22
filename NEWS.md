@@ -6,6 +6,16 @@
 - Document the Stash schema upgrade workflow and verify generated snapshots,
 	wrappers, and documentation against the pinned tag and commit.
 - Centralize the offline schema snapshot fixture used by schema contract tests.
+- Consolidate schema, wrapper, namespace, and documentation verification in a
+	single reproducibility check driven by the pinned Stash SDL source.
+- Clarify the schema-generation pipeline, setup actions, contributor workflow,
+	and generator responsibilities in the development documentation.
+- Simplify GitHub Actions and Makefile workflows around the pinned schema,
+	package checks, releases, and pkgdown builds.
+- Make the required lint check run only when relevant files change while
+	preserving a completed status for unrelated changes.
+- Require lint output to be empty, install the package before linting, and
+	document legitimate cross-file symbols for reliable static analysis.
 
 # stashapi 0.8.1
 
