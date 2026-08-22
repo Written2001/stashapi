@@ -40,7 +40,8 @@ their manuals. `inst/extdata/schema.json` is a generated introspection snapshot
 from that same checkout. Generated wrapper, snapshot, and input-helper
 documentation must not be edited by hand. Change the relevant generator or
 pinned schema source and then run `make generate-sdl` to refresh all derived
-files.
+files. See [`tools/README.md`](../tools/README.md) for the responsibility of
+each generator component.
 
 Handwritten R helpers, tests, vignettes, and development scripts can be edited
 directly. Keep generated changes in the same contribution as the source

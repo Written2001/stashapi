@@ -21,6 +21,7 @@ schema-compatibility-check:
 	@test -n "$(STASH_SCHEMA_BASELINE)" || (echo "STASH_SCHEMA_BASELINE is required"; exit 1)
 	$(PYTHON) tools/schema_compatibility.py --baseline "$(STASH_SCHEMA_BASELINE)" --candidate inst/extdata/schema.json --output "$(STASH_SCHEMA_COMPATIBILITY_OUTPUT)"
 
+# Print the effective schema settings when debugging a local generation run.
 schema-environment:
 	@printf 'STASH_SCHEMA_TAG=%s\n' '$(STASH_SCHEMA_TAG)'
 	@printf 'STASH_SCHEMA_COMMIT=%s\n' '$(STASH_SCHEMA_COMMIT)'
