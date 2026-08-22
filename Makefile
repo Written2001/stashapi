@@ -52,7 +52,7 @@ reproducibility-check: fetch-stash-schema
 generate-check documentation-check: reproducibility-check
 
 lint:
-	$(RSCRIPT) -e 'lintr::lint_package()'
+	$(RSCRIPT) -e 'lints <- lintr::lint_package(); if (length(lints) > 0L) { print(lints); quit(status = 1L) }'
 
 coverage:
 	$(RSCRIPT) -e 'coverage <- covr::package_coverage(); writeLines(capture.output(print(coverage)), "coverage.txt")'
