@@ -9,7 +9,7 @@ sys.source(policy_path, envir = schema_types)
 sys.source(operation_path, envir = schema_types)
 
 build_registry <- function() {
-  raw_schema <- read_schema_fixture()
+  raw_schema <- read_schema_fixture() # nolint: object_usage_linter
   schema_types$normalize_schema_registry(raw_schema)
 }
 

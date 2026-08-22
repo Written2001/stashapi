@@ -7,6 +7,7 @@ on:
       - DESCRIPTION
       - README.md
       - _pkgdown.yml
+      - NAMESPACE
       - .github/actions/**
       - man/**
       - vignettes/**
@@ -47,9 +48,6 @@ jobs:
             any::pkgdown
             any::roxygen2
           needs: website
-
-      - name: Setup pinned Stash schema
-        uses: ./.github/actions/setup-stash-schema
 
       - name: Build site
         run: pkgdown::build_site()

@@ -71,14 +71,20 @@ def schema_document(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(
+        description="Build a GraphQL introspection snapshot from a Stash SDL checkout."
+    )
     parser.add_argument("--source-root", type=Path, required=True)
-    parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--provenance-output", type=Path)
-    parser.add_argument("--ref")
-    parser.add_argument("--commit")
-    parser.add_argument("--package-version")
-    parser.add_argument("--artifact")
+    parser.add_argument("--output", type=Path, required=True, help="snapshot JSON path")
+    parser.add_argument(
+        "--provenance-output", type=Path, help="optional provenance JSON path"
+    )
+    parser.add_argument("--ref", help="Stash tag or branch recorded as provenance")
+    parser.add_argument("--commit", help="Stash commit recorded as provenance")
+    parser.add_argument("--package-version", help="stashapi version recorded as provenance")
+    parser.add_argument(
+        "--artifact", help="package artifact path recorded as provenance"
+    )
     args = parser.parse_args()
 
     document, provenance = schema_document(

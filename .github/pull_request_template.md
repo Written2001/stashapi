@@ -35,10 +35,11 @@
 
 ## Validation
 
-- [ ] `make generate-check`
+- [ ] `make reproducibility-check`
 - [ ] `make test`
-- [ ] `make lint`
-- [ ] `make check`
+- [ ] `make schema-source-check`
+- [ ] `make lint` (package code and `tools/` R scripts)
+- [ ] `make check-package` (package checks via `rcmdcheck`)
 - [ ] CI does not require credentials, live Stash data, or network access beyond dependency installation.
 
 ## Security and Data

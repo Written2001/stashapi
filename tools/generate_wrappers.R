@@ -6,6 +6,17 @@ source("tools/schema_selection.R")
 source("tools/schema_render.R")
 source("tools/render_r.R")
 
+#' Generate all GraphQL operation wrappers from schema data.
+#'
+#' Provide exactly one of `schema_path` or `source_root`. The first reads an
+#' existing introspection snapshot; the second parses a pinned SDL checkout.
+#' The result is one deterministic R source string for the wrapper file.
+#'
+#' @param schema_path Path to an introspection JSON snapshot.
+#' @param source_root Path to a pinned Stash SDL checkout.
+#' @param source_ref Optional source reference passed to the SDL parser.
+#' @return Character scalar containing generated R source.
+#' @noRd
 build_wrappers <- function(
   schema_path = NULL,
   source_root = NULL,
@@ -48,11 +59,15 @@ build_wrappers <- function(
 args <- commandArgs(trailingOnly = TRUE)
 if (length(args) > 0L) {
   output_path <- args[[1]]
-  source_root <- if (length(args) > 1L) args[[2]] else NULL
-  source_ref <- if (length(args) > 2L) args[[3]] else NULL
-  writeLines(build_wrappers(
-    schema_path = NULL,
-    source_root = source_root,
-    source_ref = source_ref
-  ), output_path)
+  if (length(args) > 1L && identical(args[[2]], "--schema")) {
+    writeLines(build_wrappers(schema_path = args[[3]]), output_path)
+  } else {
+    source_root <- if (length(args) > 1L) args[[2]] else NULL
+    source_ref <- if (length(args) > 2L) args[[3]] else NULL
+    writeLines(build_wrappers(
+      schema_path = NULL,
+      source_root = source_root,
+      source_ref = source_ref
+    ), output_path)
+  }
 }

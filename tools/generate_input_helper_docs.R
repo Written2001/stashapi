@@ -203,6 +203,8 @@ args <- commandArgs(trailingOnly = TRUE)
 if (identical(environment(), globalenv()) && !interactive()) {
   if (length(args) == 0L) {
     generate_input_helper_docs()
+  } else if (identical(args[[1]], "--schema")) {
+    generate_input_helper_docs(args[[2]], args[[3]] %||% "man")
   } else if (length(args) < 3L) {
     generate_input_helper_docs(args[[1]], args[[2]] %||% "man")
   } else {

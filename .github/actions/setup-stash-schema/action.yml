@@ -1,20 +1,26 @@
-name: Setup pinned Stash schema
-description: Install the SDL parser and fetch the pinned Stash checkout
+name: Setup Stash schema tooling
+description: Install the SDL parser and optionally fetch the pinned Stash checkout
 inputs:
+  setup-python:
+    description: Install Python and the GraphQL SDL parser
+    required: false
+    default: 'true'
   fetch-schema:
     description: Fetch the pinned Stash SDL checkout
     required: false
-    default: 'true'
+    default: 'false'
 runs:
   using: composite
   steps:
     - name: Setup Python
+      if: ${{ inputs.setup-python == 'true' }}
       id: setup-python
       uses: actions/setup-python@v5
       with:
         python-version: '3.12'
 
     - name: Install and verify SDL parser
+      if: ${{ inputs.setup-python == 'true' }}
       shell: bash
       run: |
         venv_path="$RUNNER_TEMP/stashapi-python"

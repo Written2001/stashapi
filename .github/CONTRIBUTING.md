@@ -40,11 +40,12 @@ their manuals. `inst/extdata/schema.json` is a generated introspection snapshot
 from that same checkout. Generated wrapper, snapshot, and input-helper
 documentation must not be edited by hand. Change the relevant generator or
 pinned schema source and then run `make generate-sdl` to refresh all derived
-files.
+files. See [`tools/README.md`](../tools/README.md) for the responsibility of
+each generator component.
 
 Handwritten R helpers, tests, vignettes, and development scripts can be edited
 directly. Keep generated changes in the same contribution as the source
-change, and use `make generate-check` to catch drift.
+change, and use `make reproducibility-check` to catch drift.
 
 Generated operation names retain the GraphQL spelling, such as
 `findScenes()` and `sceneUpdate()`. User-facing helper functions use
@@ -64,8 +65,16 @@ make generate-sdl
 
 This fetches the exact commit, regenerates `schema.json` and its provenance,
 and regenerates wrappers, the namespace, manuals, and input-helper
-documentation. `make generate-check` rejects stale generated files; it does
-not reject a new Stash version when all artifacts have been regenerated.
+documentation. `make reproducibility-check` rejects stale generated files; it
+does not reject a new Stash version when all artifacts have been regenerated.
+
+The Makefile owns the pinned Stash checkout. GitHub Actions only installs the
+Python SDL parser before invoking Make. The parser and checkout are separate:
+test and coverage jobs install the parser without fetching Stash, while build
+and release jobs let `make reproducibility-check` fetch or reuse the pinned
+checkout. Generation and reproducibility checks need network access when that
+checkout is not already available; neither requires a Stash server or API
+credentials.
 
 Review the resulting diff and run `make schema-compatibility-check` with an
 explicit baseline before releasing when the package changes its pinned schema.
@@ -79,7 +88,8 @@ wrapper and manual, and must be treated as a release compatibility change.
 make ci
 ```
 
-This runs the generated-artifact check, tests, lint, and `R CMD check`. It does
+This runs the generated-artifact and documentation reproducibility check,
+tests, lint, and `R CMD check`. It does
 not require Stash credentials or live data.
 
 Run it from the repository root. A successful run should finish with zero
@@ -100,14 +110,20 @@ Wrappers and manuals are generated from the pinned SDL checkout identified by
 
 ```sh
 make generate-sdl         # regenerate from the pinned Stash checkout
-make generate-check       # verify snapshot, wrappers, and input manuals
-make documentation-check  # optional full documentation reproducibility check
+make reproducibility-check # verify all generated artifacts and documentation
 ```
 
-Commit generated changes with the source change. Do not edit generated files
-by hand. If a generated check fails, first run `make generate-sdl`, then rerun the
-check. A remaining mismatch usually means the generator, schema, or checked-in
-artifact needs to be updated together.
+`make generate-sdl` and `make reproducibility-check` both fetch or reuse the
+checkout identified by `STASH_SCHEMA_TAG` and `STASH_SCHEMA_COMMIT`. The
+reproducibility check writes regenerated artifacts to temporary locations and
+does not modify the working tree.
+
+The reproducibility check is also run by `make ci`, and can be run locally
+whenever you want to verify a clean generated state. Commit generated changes
+with the source change. Do not edit generated files by hand. If the check
+fails, first run `make generate-sdl`, then rerun the check. A remaining
+mismatch usually means the generator, schema, or checked-in artifact needs to
+be updated together.
 
 ## Documentation Changes
 
