@@ -52,7 +52,7 @@ reproducibility-check: fetch-stash-schema
 generate-check documentation-check: reproducibility-check
 
 lint:
-	R CMD INSTALL -l "$$($(RSCRIPT) --vanilla -e 'cat(.libPaths()[1])')" .
+	R CMD INSTALL -l "$$($(RSCRIPT) --vanilla -e 'source("renv/activate.R"); cat(.libPaths()[1])')" .
 	$(RSCRIPT) -e 'package_lints <- lintr::lint_package(); tool_lints <- lintr::lint_dir("tools"); lints <- c(package_lints, tool_lints); if (length(lints) > 0L) { print(lints); quit(status = 1L) }'
 
 coverage:
