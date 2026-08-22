@@ -54,8 +54,10 @@ jobs:
             any::rmarkdown
           needs: check
 
-      - name: Setup pinned Stash schema
+      - name: Setup SDL parser
         uses: ./.github/actions/setup-stash-schema
+        with:
+          fetch-schema: 'false'
 
       - name: Check generated artifacts
         run: make reproducibility-check

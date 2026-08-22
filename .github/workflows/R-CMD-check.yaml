@@ -68,9 +68,6 @@ jobs:
             any::rmarkdown
           needs: check
 
-      - name: Setup pinned Stash schema
-        uses: ./.github/actions/setup-stash-schema
-
       - name: Check
         uses: r-lib/actions/check-r-package@v2
         with:

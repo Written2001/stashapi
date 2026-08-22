@@ -48,9 +48,6 @@ jobs:
             any::roxygen2
           needs: website
 
-      - name: Setup pinned Stash schema
-        uses: ./.github/actions/setup-stash-schema
-
       - name: Build site
         run: pkgdown::build_site()
         shell: Rscript {0}
