@@ -29,11 +29,17 @@ jobs:
             lint:
               - 'R/**'
               - 'tests/**/*.R'
+              - 'inst/**'
+              - 'data-raw/**'
+              - 'demo/**'
+              - 'exec/**'
               - 'tools/**/*.R'
+              - 'tools/.lintr'
               - 'vignettes/**/*.Rmd'
               - '.lintr'
               - 'DESCRIPTION'
               - 'renv.lock'
+              - 'Makefile'
 
       - name: Skip lint for unrelated changes
         if: github.event_name != 'workflow_dispatch' && steps.changes.outputs.lint != 'true'
@@ -57,12 +63,6 @@ jobs:
         if: github.event_name == 'workflow_dispatch' || steps.changes.outputs.lint == 'true'
         run: R CMD INSTALL -l "$(Rscript -e 'cat(.libPaths()[1])')" .
 
-      - name: Lint package
+      - name: Lint package and tools
         if: github.event_name == 'workflow_dispatch' || steps.changes.outputs.lint == 'true'
-        run: |
-          lints <- lintr::lint_package()
-          if (length(lints) > 0L) {
-            print(lints)
-            quit(status = 1L)
-          }
-        shell: Rscript {0}
+        run: make lint

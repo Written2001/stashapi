@@ -53,7 +53,7 @@ generate-check documentation-check: reproducibility-check
 
 lint:
 	R CMD INSTALL -l "$$($(RSCRIPT) -e 'cat(.libPaths()[1])')" .
-	$(RSCRIPT) -e 'lints <- lintr::lint_package(); if (length(lints) > 0L) { print(lints); quit(status = 1L) }'
+	$(RSCRIPT) -e 'package_lints <- lintr::lint_package(); tool_lints <- lintr::lint_dir("tools"); lints <- c(package_lints, tool_lints); if (length(lints) > 0L) { print(lints); quit(status = 1L) }'
 
 coverage:
 	$(RSCRIPT) -e 'coverage <- covr::package_coverage(); writeLines(capture.output(print(coverage)), "coverage.txt")'

@@ -103,9 +103,9 @@ Run these commands from the repository root:
 
 ```sh
 make reproducibility-check
-Rscript -e 'testthat::test_local()'
-Rscript -e 'lintr::lint_package()'
-R CMD check --no-manual .
+make test
+make lint
+make check-package
 ```
 
 The schema-analysis tests use synthetic type fixtures and the checked-in schema.

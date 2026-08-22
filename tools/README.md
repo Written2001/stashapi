@@ -16,10 +16,13 @@ The normal commands are:
 ```sh
 make generate-sdl
 make reproducibility-check
+make lint
 ```
 
 `generate-sdl` updates generated files. `reproducibility-check` repeats the
 process in temporary directories and checks that the committed files match.
+`make lint` checks both the installable package sources and all R scripts under
+`tools/`; it is the canonical lint command for local development and CI.
 Make fetches or reuses the pinned Stash checkout. GitHub Actions installs the
 Python parser when a workflow needs it; it does not own schema generation.
 
