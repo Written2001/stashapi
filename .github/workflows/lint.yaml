@@ -61,7 +61,7 @@ jobs:
 
       - name: Install package for linting
         if: github.event_name == 'workflow_dispatch' || steps.changes.outputs.lint == 'true'
-        run: R CMD INSTALL -l "$(Rscript -e 'cat(.libPaths()[1])')" .
+        run: R CMD INSTALL -l "$(Rscript --vanilla -e 'cat(.libPaths()[1])')" .
 
       - name: Lint package and tools
         if: github.event_name == 'workflow_dispatch' || steps.changes.outputs.lint == 'true'
