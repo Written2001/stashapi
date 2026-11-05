@@ -1,6 +1,6 @@
 {
   "source": "https://github.com/stashapp/stash",
-  "ref": "v0.31.1",
+  "ref": "v0.32.0",
   "patterns": [
     "graphql/schema/types/*.graphql",
     "graphql/schema/*.graphql"
@@ -38,11 +38,11 @@
     "graphql/schema/types/version.graphql"
   ],
   "fingerprints": {
-    "graphql/schema/schema.graphql": "3384aa1c38218547127f288c355ef9ab",
-    "graphql/schema/types/config.graphql": "207e782a1a03e798d3fec70b39bca945",
+    "graphql/schema/schema.graphql": "c7d38384fb6c6d858ed9549c646699f5",
+    "graphql/schema/types/config.graphql": "c66daaabac29b1d16edeacb531f83e3b",
     "graphql/schema/types/dlna.graphql": "4393cd93ea021d88fe52a13868298189",
-    "graphql/schema/types/file.graphql": "8f64d7dff4e08d1bec1cc60f74840d30",
-    "graphql/schema/types/filters.graphql": "f932341129b73ddbbf014f5faf88af62",
+    "graphql/schema/types/file.graphql": "e598d2ab85248827c067bbb5f5a6b3dc",
+    "graphql/schema/types/filters.graphql": "9e876a8d18fdfa1fc4714a7449a54838",
     "graphql/schema/types/gallery-chapter.graphql": "6c96699ae3af7f60f3888b06fd3aa5b9",
     "graphql/schema/types/gallery.graphql": "45178cb41ed679b6b8d2176f96aebb48",
     "graphql/schema/types/group.graphql": "94ca3dfe14270a4875832834ff59b488",
@@ -58,19 +58,19 @@
     "graphql/schema/types/scalars.graphql": "e06ca563055e52d1c2accba7c81fe07a",
     "graphql/schema/types/scene-marker-tag.graphql": "5e02951787281315c2596cd01648a4c9",
     "graphql/schema/types/scene-marker.graphql": "ead7cc60c51c5bdb11576061920aa527",
-    "graphql/schema/types/scene.graphql": "37cd1c43229f34ffd057f397c3c8b149",
+    "graphql/schema/types/scene.graphql": "6862ed9779b417918c20f3e0c0675f31",
     "graphql/schema/types/scraped-group.graphql": "72ade97600dc024254a7b94ec95b1aae",
     "graphql/schema/types/scraped-performer.graphql": "3717b146857531d054aecad2e093ab3d",
-    "graphql/schema/types/scraper.graphql": "1ecda57af851127c7424d1f9707605c8",
+    "graphql/schema/types/scraper.graphql": "adab0f180f19cd3d9edd1392e2e52022",
     "graphql/schema/types/sql.graphql": "87d933f350c93601755fab2bdc24d1be",
     "graphql/schema/types/stash-box.graphql": "aec726ff3de9aeeee0060f53454c7df3",
     "graphql/schema/types/stats.graphql": "6e35530520067e357d1968a210198e8d",
-    "graphql/schema/types/studio.graphql": "dd837a44f3cd1be1721b99c73febe3df",
+    "graphql/schema/types/studio.graphql": "6df9c612b6958f2c509baf76e23fcadb",
     "graphql/schema/types/tag.graphql": "e125798d8297240a0408784030c176c3",
     "graphql/schema/types/version.graphql": "582097109f0420743bc485e8bf453fbf"
   },
   "parser": "graphql-core",
-  "commit": "4de2351e7cc990d7ccd7cb6c84c275cd53bf6e55",
+  "commit": "9e9ad972643320e737c711884f10e4285f0f3a88",
   "stashapi_version": "0.8.2",
   "artifact": "inst/extdata/schema.json"
 }

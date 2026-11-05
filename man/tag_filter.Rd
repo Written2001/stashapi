@@ -17,14 +17,6 @@
 \item{\code{sort_name}}{GraphQL type: `StringCriterionInput`. R input: `criterion, e.g. includes("text")`.}
 \item{\code{aliases}}{GraphQL type: `StringCriterionInput`. R input: `criterion, e.g. includes("text")`.}
 \item{\code{description}}{GraphQL type: `StringCriterionInput`. R input: `criterion, e.g. includes("text")`.}
-\item{\code{scene_count}}{GraphQL type: `IntCriterionInput`. R input: `criterion, e.g. greater_than(1)`.}
-\item{\code{image_count}}{GraphQL type: `IntCriterionInput`. R input: `criterion, e.g. greater_than(1)`.}
-\item{\code{gallery_count}}{GraphQL type: `IntCriterionInput`. R input: `criterion, e.g. greater_than(1)`.}
-\item{\code{performer_count}}{GraphQL type: `IntCriterionInput`. R input: `criterion, e.g. greater_than(1)`.}
-\item{\code{studio_count}}{GraphQL type: `IntCriterionInput`. R input: `criterion, e.g. greater_than(1)`.}
-\item{\code{movie_count}}{GraphQL type: `IntCriterionInput`. R input: `criterion, e.g. greater_than(1)`.}
-\item{\code{group_count}}{GraphQL type: `IntCriterionInput`. R input: `criterion, e.g. greater_than(1)`.}
-\item{\code{marker_count}}{GraphQL type: `IntCriterionInput`. R input: `criterion, e.g. greater_than(1)`.}
 \item{\code{parents}}{GraphQL type: `HierarchicalMultiCriterionInput`. R input: `criterion, e.g. includes(1)`.}
 \item{\code{children}}{GraphQL type: `HierarchicalMultiCriterionInput`. R input: `criterion, e.g. includes(1)`.}
 \item{\code{parent_count}}{GraphQL type: `IntCriterionInput`. R input: `criterion, e.g. greater_than(1)`.}
@@ -46,6 +38,15 @@
 \item{\code{performers_filter}}{GraphQL type: `PerformerFilterType`. R input: `performer_filter(...)`.}
 \item{\code{studios_filter}}{GraphQL type: `StudioFilterType`. R input: `studio_filter(...)`.}
 \item{\code{markers_filter}}{GraphQL type: `SceneMarkerFilterType`. R input: `scene_marker_filter(...)`.}
+}}
+\subsection{Other schema fields}{\describe{\item{\code{scene_count}}{GraphQL type: `HierarchicalCountInput`. R input: `value of type HierarchicalCountInput`.}
+\item{\code{image_count}}{GraphQL type: `HierarchicalCountInput`. R input: `value of type HierarchicalCountInput`.}
+\item{\code{gallery_count}}{GraphQL type: `HierarchicalCountInput`. R input: `value of type HierarchicalCountInput`.}
+\item{\code{performer_count}}{GraphQL type: `HierarchicalCountInput`. R input: `value of type HierarchicalCountInput`.}
+\item{\code{studio_count}}{GraphQL type: `HierarchicalCountInput`. R input: `value of type HierarchicalCountInput`.}
+\item{\code{movie_count}}{GraphQL type: `HierarchicalCountInput`. R input: `value of type HierarchicalCountInput`.}
+\item{\code{group_count}}{GraphQL type: `HierarchicalCountInput`. R input: `value of type HierarchicalCountInput`.}
+\item{\code{marker_count}}{GraphQL type: `HierarchicalCountInput`. R input: `value of type HierarchicalCountInput`.}
 }}
 }
 \examples{tag_filter(name = includes("example"))}
