@@ -55,6 +55,7 @@
 \item{\code{play_duration}}{GraphQL type: `IntCriterionInput`. R input: `criterion, e.g. greater_than(1)`.}
 \item{\code{last_played_at}}{GraphQL type: `TimestampCriterionInput`. R input: `criterion, e.g. equals("2020-01-01")`.}
 \item{\code{date}}{GraphQL type: `DateCriterionInput`. R input: `criterion, e.g. equals("2020-01-01")`.}
+\item{\code{production_date}}{GraphQL type: `DateCriterionInput`. R input: `criterion, e.g. equals("2020-01-01")`.}
 \item{\code{created_at}}{GraphQL type: `TimestampCriterionInput`. R input: `criterion, e.g. equals("2020-01-01")`.}
 \item{\code{updated_at}}{GraphQL type: `TimestampCriterionInput`. R input: `criterion, e.g. equals("2020-01-01")`.}
 \item{\code{custom_fields}}{GraphQL type: `[CustomFieldCriterionInput!]`. R input: `criterion helper`.}

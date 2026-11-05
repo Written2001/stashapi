@@ -1,3 +1,10 @@
+# stashapi (development version)
+
+- Update the generated GraphQL API for Stash `v0.32.0`, including scene
+	production dates and duplicate-scene filtering, studio hierarchy inputs and
+	counts, hierarchical tag counts, and media-file relationships. The
+	`sceneGenerateScreenshot()` mutation now returns an ID instead of a string.
+
 # stashapi 0.8.2
 
 - Make the pinned Stash SDL the complete package-generation source. A single

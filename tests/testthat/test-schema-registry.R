@@ -8,7 +8,7 @@ testthat::test_that("the checked-in schema becomes a complete named registry", {
   raw_schema <- read_schema_fixture()
   registry <- schema_types$normalize_schema_registry(raw_schema)
 
-  testthat::expect_length(registry, 309)
+  testthat::expect_length(registry, 310)
   testthat::expect_true(all(nzchar(names(registry))))
   testthat::expect_identical(registry$Scene$name, "Scene")
   testthat::expect_identical(registry$Scene$kind, "OBJECT")

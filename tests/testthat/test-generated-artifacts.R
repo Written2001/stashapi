@@ -74,7 +74,7 @@ testthat::test_that("input helper source uses stable readable names", {
 testthat::test_that("all schema-derived input helpers render and parse", {
   result <- render_environment$render_input_helpers(build_input_builders())
 
-  testthat::expect_length(parse(text = result), 158)
+  testthat::expect_length(parse(text = result), 159)
   testthat::expect_true(grepl("scene_filter <- function", result, fixed = TRUE))
   testthat::expect_true(grepl("gallery_create_input <- function", result, fixed = TRUE))
 })

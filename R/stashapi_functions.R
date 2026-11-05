@@ -133,9 +133,9 @@ findFile <- function(id = NA, path = NA, ...) {
   query findFile($id: ID $path: String) { findFile(id: $id path: $path) { ...BaseFile } }
 fragment Fingerprint on Fingerprint { type value }
 fragment BasicFile on BasicFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } created_at updated_at }
-fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
-fragment ImageFile on ImageFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height created_at updated_at }
-fragment GalleryFile on GalleryFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } created_at updated_at }
+fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate scenes { id title } created_at updated_at }
+fragment ImageFile on ImageFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height images { id } created_at updated_at }
+fragment GalleryFile on GalleryFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } galleries { id title } created_at updated_at }
 fragment BaseFile on BaseFile { ...BasicFile ...VideoFile ...ImageFile ...GalleryFile }
   ')
 
@@ -177,9 +177,9 @@ findFiles <- function(filefilter = NA, filter = NA, ids = list(), ...) {
   query findFiles($filefilter: FileFilterType $filter: FindFilterType $ids: [ID!]) { findFiles(file_filter: $filefilter filter: $filter ids: $ids) { ...FindFilesResultType } }
 fragment Fingerprint on Fingerprint { type value }
 fragment BasicFile on BasicFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } created_at updated_at }
-fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
-fragment ImageFile on ImageFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height created_at updated_at }
-fragment GalleryFile on GalleryFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } created_at updated_at }
+fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate scenes { id title } created_at updated_at }
+fragment ImageFile on ImageFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height images { id } created_at updated_at }
+fragment GalleryFile on GalleryFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } galleries { id title } created_at updated_at }
 fragment BaseFile on BaseFile { ...BasicFile ...VideoFile ...ImageFile ...GalleryFile }
 fragment FindFilesResultType on FindFilesResultType { count megapixels duration size files { ...BaseFile } }
   ')
@@ -301,11 +301,11 @@ findScene <- function(id = NA, checksum = NA, ...) {
   query findScene($id: ID $checksum: String) { findScene(id: $id checksum: $checksum) { ...Scene } }
 fragment VideoCaption on VideoCaption { language_code caption_type }
 fragment Fingerprint on Fingerprint { type value }
-fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate scenes { id title } created_at updated_at }
 fragment ScenePathsType on ScenePathsType { screenshot preview stream webp vtt sprite funscript interactive_heatmap caption }
 fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_seconds primary_tag { id name } tags { id name } created_at updated_at stream preview screenshot }
 fragment SceneGroup on SceneGroup { group { id name } scene_index }
-fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
+fragment Scene on Scene { id title code details director urls date production_date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
   ')
 
   variables <- list()
@@ -344,11 +344,11 @@ findSceneByHash <- function(input = NA, ...) {
   query findSceneByHash($input: SceneHashInput!) { findSceneByHash(input: $input) { ...Scene } }
 fragment VideoCaption on VideoCaption { language_code caption_type }
 fragment Fingerprint on Fingerprint { type value }
-fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate scenes { id title } created_at updated_at }
 fragment ScenePathsType on ScenePathsType { screenshot preview stream webp vtt sprite funscript interactive_heatmap caption }
 fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_seconds primary_tag { id name } tags { id name } created_at updated_at stream preview screenshot }
 fragment SceneGroup on SceneGroup { group { id name } scene_index }
-fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
+fragment Scene on Scene { id title code details director urls date production_date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
   ')
 
   variables <- list()
@@ -393,11 +393,11 @@ findScenes <- function(scenefilter = NA, sceneids = list(), ids = list(), filter
   query findScenes($scenefilter: SceneFilterType $sceneids: [Int!] $ids: [ID!] $filter: FindFilterType) { findScenes(scene_filter: $scenefilter scene_ids: $sceneids ids: $ids filter: $filter) { ...FindScenesResultType } }
 fragment VideoCaption on VideoCaption { language_code caption_type }
 fragment Fingerprint on Fingerprint { type value }
-fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate scenes { id title } created_at updated_at }
 fragment ScenePathsType on ScenePathsType { screenshot preview stream webp vtt sprite funscript interactive_heatmap caption }
 fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_seconds primary_tag { id name } tags { id name } created_at updated_at stream preview screenshot }
 fragment SceneGroup on SceneGroup { group { id name } scene_index }
-fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
+fragment Scene on Scene { id title code details director urls date production_date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
 fragment FindScenesResultType on FindScenesResultType { count duration filesize scenes { ...Scene } }
   ')
 
@@ -439,11 +439,11 @@ findScenesByPathRegex <- function(filter = NA, ...) {
   query findScenesByPathRegex($filter: FindFilterType) { findScenesByPathRegex(filter: $filter) { ...FindScenesResultType } }
 fragment VideoCaption on VideoCaption { language_code caption_type }
 fragment Fingerprint on Fingerprint { type value }
-fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate scenes { id title } created_at updated_at }
 fragment ScenePathsType on ScenePathsType { screenshot preview stream webp vtt sprite funscript interactive_heatmap caption }
 fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_seconds primary_tag { id name } tags { id name } created_at updated_at stream preview screenshot }
 fragment SceneGroup on SceneGroup { group { id name } scene_index }
-fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
+fragment Scene on Scene { id title code details director urls date production_date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
 fragment FindScenesResultType on FindScenesResultType { count duration filesize scenes { ...Scene } }
   ')
 
@@ -475,26 +475,28 @@ fragment FindScenesResultType on FindScenesResultType { count duration filesize 
 #' @param distance See the Stash Playground for details.
 #' @param durationdiff Max difference in seconds between files in order to be considered for similarity matching.
 #' Fractional seconds are ok: 0.5 will mean only files that have durations within 0.5 seconds between them will be matched based on PHash distance.
+#' @param scenefilter See the Stash Playground for details.
 #' @param ... Additional options such as `.field`, `.response`, and `.progress_bar`.
 #' @return The processed API response.
 #' @export
-findDuplicateScenes <- function(distance = NA, durationdiff = NA, ...) {
+findDuplicateScenes <- function(distance = NA, durationdiff = NA, scenefilter = NA, ...) {
 
   query <- ghql::Query$new()
   query$query('findDuplicateScenes', '
-  query findDuplicateScenes($distance: Int $durationdiff: Float) { findDuplicateScenes(distance: $distance duration_diff: $durationdiff) { ...Scene } }
+  query findDuplicateScenes($distance: Int $durationdiff: Float $scenefilter: SceneFilterType) { findDuplicateScenes(distance: $distance duration_diff: $durationdiff scene_filter: $scenefilter) { ...Scene } }
 fragment VideoCaption on VideoCaption { language_code caption_type }
 fragment Fingerprint on Fingerprint { type value }
-fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate scenes { id title } created_at updated_at }
 fragment ScenePathsType on ScenePathsType { screenshot preview stream webp vtt sprite funscript interactive_heatmap caption }
 fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_seconds primary_tag { id name } tags { id name } created_at updated_at stream preview screenshot }
 fragment SceneGroup on SceneGroup { group { id name } scene_index }
-fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
+fragment Scene on Scene { id title code details director urls date production_date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
   ')
 
   variables <- list()
   variables[['distance']] <- distance
   variables[['durationdiff']] <- durationdiff
+  variables[['scenefilter']] <- scenefilter
 
   return_default <- NA_character_
   options <- prepare_stash_query_options(list(...), return_default)
@@ -649,8 +651,8 @@ findImage <- function(id = NA, checksum = NA, ...) {
   query$query('findImage', '
   query findImage($id: ID $checksum: String) { findImage(id: $id checksum: $checksum) { ...Image } }
 fragment Fingerprint on Fingerprint { type value }
-fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
-fragment ImageFile on ImageFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height created_at updated_at }
+fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate scenes { id title } created_at updated_at }
+fragment ImageFile on ImageFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height images { id } created_at updated_at }
 fragment VisualFile on VisualFile { ...VideoFile ...ImageFile }
 fragment ImagePathsType on ImagePathsType { thumbnail preview }
 fragment Image on Image { id title code rating100 urls date details photographer o_counter organized created_at updated_at visual_files { ...VisualFile } paths { ...ImagePathsType } galleries { id title } studio { id name } tags { id name } performers { id name gender } custom_fields }
@@ -694,8 +696,8 @@ findImages <- function(imagefilter = NA, imageids = list(), ids = list(), filter
   query$query('findImages', '
   query findImages($imagefilter: ImageFilterType $imageids: [Int!] $ids: [ID!] $filter: FindFilterType) { findImages(image_filter: $imagefilter image_ids: $imageids ids: $ids filter: $filter) { ...FindImagesResultType } }
 fragment Fingerprint on Fingerprint { type value }
-fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
-fragment ImageFile on ImageFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height created_at updated_at }
+fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate scenes { id title } created_at updated_at }
+fragment ImageFile on ImageFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height images { id } created_at updated_at }
 fragment VisualFile on VisualFile { ...VideoFile ...ImageFile }
 fragment ImagePathsType on ImagePathsType { thumbnail preview }
 fragment Image on Image { id title code rating100 urls date details photographer o_counter organized created_at updated_at visual_files { ...VisualFile } paths { ...ImagePathsType } galleries { id title } studio { id name } tags { id name } performers { id name gender } custom_fields }
@@ -821,7 +823,7 @@ findStudio <- function(id = list(), ...) {
   query <- ghql::Query$new()
   query$query('findStudio', '
   query findStudio($id: ID!) { findStudio(id: $id) { ...Studio } }
-fragment Studio on Studio { id name urls parent_studio { id name } child_studios { id name } aliases tags { id name } ignore_auto_tag organized image_path scene_count image_count gallery_count performer_count group_count stash_ids { endpoint stash_id } rating100 favorite details created_at updated_at groups { id name } o_counter custom_fields }
+fragment Studio on Studio { id name urls parent_studio { id name } child_studios { id name } aliases tags { id name } ignore_auto_tag organized image_path scene_count image_count gallery_count performer_count group_count scene_marker_count o_counter stash_ids { endpoint stash_id } rating100 favorite details created_at updated_at groups { id name } custom_fields }
   ')
 
   variables <- list()
@@ -863,7 +865,7 @@ findStudios <- function(studiofilter = NA, filter = NA, ids = list(), ...) {
   query <- ghql::Query$new()
   query$query('findStudios', '
   query findStudios($studiofilter: StudioFilterType $filter: FindFilterType $ids: [ID!]) { findStudios(studio_filter: $studiofilter filter: $filter ids: $ids) { ...FindStudiosResultType } }
-fragment Studio on Studio { id name urls parent_studio { id name } child_studios { id name } aliases tags { id name } ignore_auto_tag organized image_path scene_count image_count gallery_count performer_count group_count stash_ids { endpoint stash_id } rating100 favorite details created_at updated_at groups { id name } o_counter custom_fields }
+fragment Studio on Studio { id name urls parent_studio { id name } child_studios { id name } aliases tags { id name } ignore_auto_tag organized image_path scene_count image_count gallery_count performer_count group_count scene_marker_count o_counter stash_ids { endpoint stash_id } rating100 favorite details created_at updated_at groups { id name } custom_fields }
 fragment FindStudiosResultType on FindStudiosResultType { count studios { ...Studio } }
   ')
 
@@ -1069,7 +1071,7 @@ findGallery <- function(id = list(), ...) {
   query$query('findGallery', '
   query findGallery($id: ID!) { findGallery(id: $id) { ...Gallery } }
 fragment Fingerprint on Fingerprint { type value }
-fragment GalleryFile on GalleryFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } created_at updated_at }
+fragment GalleryFile on GalleryFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } galleries { id title } created_at updated_at }
 fragment GalleryChapter on GalleryChapter { id gallery { id title } title image_index created_at updated_at }
 fragment GalleryPathsType on GalleryPathsType { cover preview }
 fragment Gallery on Gallery { id title code urls date details photographer rating100 organized created_at updated_at files { ...GalleryFile } folder { id path basename } chapters { ...GalleryChapter } scenes { id title } studio { id name } image_count tags { id name } performers { id name gender } cover { id } paths { ...GalleryPathsType } custom_fields }
@@ -1115,7 +1117,7 @@ findGalleries <- function(galleryfilter = NA, filter = NA, ids = list(), ...) {
   query$query('findGalleries', '
   query findGalleries($galleryfilter: GalleryFilterType $filter: FindFilterType $ids: [ID!]) { findGalleries(gallery_filter: $galleryfilter filter: $filter ids: $ids) { ...FindGalleriesResultType } }
 fragment Fingerprint on Fingerprint { type value }
-fragment GalleryFile on GalleryFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } created_at updated_at }
+fragment GalleryFile on GalleryFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } galleries { id title } created_at updated_at }
 fragment GalleryChapter on GalleryChapter { id gallery { id title } title image_index created_at updated_at }
 fragment GalleryPathsType on GalleryPathsType { cover preview }
 fragment Gallery on Gallery { id title code urls date details photographer rating100 organized created_at updated_at files { ...GalleryFile } folder { id path basename } chapters { ...GalleryChapter } scenes { id title } studio { id name } image_count tags { id name } performers { id name gender } cover { id } paths { ...GalleryPathsType } custom_fields }
@@ -1276,11 +1278,11 @@ sceneWall <- function(q = NA, ...) {
   query sceneWall($q: String) { sceneWall(q: $q) { ...Scene } }
 fragment VideoCaption on VideoCaption { language_code caption_type }
 fragment Fingerprint on Fingerprint { type value }
-fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate scenes { id title } created_at updated_at }
 fragment ScenePathsType on ScenePathsType { screenshot preview stream webp vtt sprite funscript interactive_heatmap caption }
 fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_seconds primary_tag { id name } tags { id name } created_at updated_at stream preview screenshot }
 fragment SceneGroup on SceneGroup { group { id name } scene_index }
-fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
+fragment Scene on Scene { id title code details director urls date production_date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
   ')
 
   variables <- list()
@@ -1508,8 +1510,8 @@ scrapeSingleScene <- function(source = NA, input = NA, ...) {
 fragment SceneFileType on SceneFileType { size duration video_codec audio_codec width height framerate bitrate }
 fragment ScrapedPerformer on ScrapedPerformer { stored_id name disambiguation gender urls birthdate ethnicity country eye_color height measurements fake_tits penis_length circumcised career_start career_end tattoos piercings aliases tags { stored_id name description alias_list remote_site_id } images details death_date hair_color weight remote_site_id }
 fragment ScrapedGroup on ScrapedGroup { stored_id name aliases duration date rating director urls synopsis studio { stored_id name } tags { stored_id name description alias_list remote_site_id } front_image back_image }
-fragment StashBoxFingerprint on StashBoxFingerprint { algorithm hash duration }
-fragment ScrapedScene on ScrapedScene { title code details director urls date file { ...SceneFileType } studio { stored_id name } tags { stored_id name description alias_list remote_site_id } performers { ...ScrapedPerformer } groups { ...ScrapedGroup } remote_site_id duration fingerprints { ...StashBoxFingerprint } }
+fragment StashBoxFingerprint on StashBoxFingerprint { algorithm hash duration submissions }
+fragment ScrapedScene on ScrapedScene { title code details director urls date production_date file { ...SceneFileType } studio { stored_id name } tags { stored_id name description alias_list remote_site_id } performers { ...ScrapedPerformer } groups { ...ScrapedGroup } remote_site_id duration fingerprints { ...StashBoxFingerprint } }
   ')
 
   variables <- list()
@@ -1557,8 +1559,8 @@ scrapeMultiScenes <- function(source = NA, input = NA, ...) {
 fragment SceneFileType on SceneFileType { size duration video_codec audio_codec width height framerate bitrate }
 fragment ScrapedPerformer on ScrapedPerformer { stored_id name disambiguation gender urls birthdate ethnicity country eye_color height measurements fake_tits penis_length circumcised career_start career_end tattoos piercings aliases tags { stored_id name description alias_list remote_site_id } images details death_date hair_color weight remote_site_id }
 fragment ScrapedGroup on ScrapedGroup { stored_id name aliases duration date rating director urls synopsis studio { stored_id name } tags { stored_id name description alias_list remote_site_id } front_image back_image }
-fragment StashBoxFingerprint on StashBoxFingerprint { algorithm hash duration }
-fragment ScrapedScene on ScrapedScene { title code details director urls date file { ...SceneFileType } studio { stored_id name } tags { stored_id name description alias_list remote_site_id } performers { ...ScrapedPerformer } groups { ...ScrapedGroup } remote_site_id duration fingerprints { ...StashBoxFingerprint } }
+fragment StashBoxFingerprint on StashBoxFingerprint { algorithm hash duration submissions }
+fragment ScrapedScene on ScrapedScene { title code details director urls date production_date file { ...SceneFileType } studio { stored_id name } tags { stored_id name description alias_list remote_site_id } performers { ...ScrapedPerformer } groups { ...ScrapedGroup } remote_site_id duration fingerprints { ...StashBoxFingerprint } }
   ')
 
   variables <- list()
@@ -1971,8 +1973,8 @@ fragment ScrapedTag on ScrapedTag { stored_id name description alias_list parent
 fragment SceneFileType on SceneFileType { size duration video_codec audio_codec width height framerate bitrate }
 fragment ScrapedPerformer on ScrapedPerformer { stored_id name disambiguation gender urls birthdate ethnicity country eye_color height measurements fake_tits penis_length circumcised career_start career_end tattoos piercings aliases tags { stored_id name description alias_list remote_site_id } images details death_date hair_color weight remote_site_id }
 fragment ScrapedGroup on ScrapedGroup { stored_id name aliases duration date rating director urls synopsis studio { stored_id name } tags { stored_id name description alias_list remote_site_id } front_image back_image }
-fragment StashBoxFingerprint on StashBoxFingerprint { algorithm hash duration }
-fragment ScrapedScene on ScrapedScene { title code details director urls date file { ...SceneFileType } studio { stored_id name } tags { stored_id name description alias_list remote_site_id } performers { ...ScrapedPerformer } groups { ...ScrapedGroup } remote_site_id duration fingerprints { ...StashBoxFingerprint } }
+fragment StashBoxFingerprint on StashBoxFingerprint { algorithm hash duration submissions }
+fragment ScrapedScene on ScrapedScene { title code details director urls date production_date file { ...SceneFileType } studio { stored_id name } tags { stored_id name description alias_list remote_site_id } performers { ...ScrapedPerformer } groups { ...ScrapedGroup } remote_site_id duration fingerprints { ...StashBoxFingerprint } }
 fragment ScrapedGallery on ScrapedGallery { title code details photographer urls date studio { stored_id name } tags { stored_id name description alias_list remote_site_id } performers { ...ScrapedPerformer } }
 fragment ScrapedImage on ScrapedImage { title code details photographer urls date studio { stored_id name } tags { stored_id name description alias_list remote_site_id } performers { ...ScrapedPerformer } }
 fragment ScrapedMovie on ScrapedMovie { stored_id name aliases duration date rating director urls synopsis studio { stored_id name } tags { stored_id name description alias_list remote_site_id } front_image back_image }
@@ -2063,8 +2065,8 @@ scrapeSceneURL <- function(url = list(), ...) {
 fragment SceneFileType on SceneFileType { size duration video_codec audio_codec width height framerate bitrate }
 fragment ScrapedPerformer on ScrapedPerformer { stored_id name disambiguation gender urls birthdate ethnicity country eye_color height measurements fake_tits penis_length circumcised career_start career_end tattoos piercings aliases tags { stored_id name description alias_list remote_site_id } images details death_date hair_color weight remote_site_id }
 fragment ScrapedGroup on ScrapedGroup { stored_id name aliases duration date rating director urls synopsis studio { stored_id name } tags { stored_id name description alias_list remote_site_id } front_image back_image }
-fragment StashBoxFingerprint on StashBoxFingerprint { algorithm hash duration }
-fragment ScrapedScene on ScrapedScene { title code details director urls date file { ...SceneFileType } studio { stored_id name } tags { stored_id name description alias_list remote_site_id } performers { ...ScrapedPerformer } groups { ...ScrapedGroup } remote_site_id duration fingerprints { ...StashBoxFingerprint } }
+fragment StashBoxFingerprint on StashBoxFingerprint { algorithm hash duration submissions }
+fragment ScrapedScene on ScrapedScene { title code details director urls date production_date file { ...SceneFileType } studio { stored_id name } tags { stored_id name description alias_list remote_site_id } performers { ...ScrapedPerformer } groups { ...ScrapedGroup } remote_site_id duration fingerprints { ...StashBoxFingerprint } }
   ')
 
   variables <- list()
@@ -2430,7 +2432,7 @@ configuration <- function(...) {
 fragment StashConfig on StashConfig { path excludeVideo excludeImage }
 fragment StashBox on StashBox { endpoint api_key name max_requests_per_minute }
 fragment PackageSource on PackageSource { name url local_path }
-fragment ConfigGeneralResult on ConfigGeneralResult { stashes { ...StashConfig } databasePath backupDirectoryPath deleteTrashPath generatedPath metadataPath configFilePath scrapersPath pluginsPath cachePath blobsPath blobsStorage ffmpegPath ffprobePath calculateMD5 videoFileNamingAlgorithm parallelTasks previewAudio previewSegments previewSegmentDuration previewExcludeStart previewExcludeEnd previewPreset transcodeHardwareAcceleration maxTranscodeSize maxStreamingTranscodeSize transcodeInputArgs transcodeOutputArgs liveTranscodeInputArgs liveTranscodeOutputArgs drawFunscriptHeatmapRange writeImageThumbnails createImageClipsFromVideos apiKey username password maxSessionAge logFile logOut logLevel logAccess logFileMaxSize useCustomSpriteInterval spriteInterval minimumSprites maximumSprites spriteScreenshotSize videoExtensions imageExtensions galleryExtensions createGalleriesFromFolders galleryCoverRegex excludes imageExcludes customPerformerImageLocation stashBoxes { ...StashBox } pythonPath scraperPackageSources { ...PackageSource } pluginPackageSources { ...PackageSource } }
+fragment ConfigGeneralResult on ConfigGeneralResult { stashes { ...StashConfig } databasePath backupDirectoryPath deleteTrashPath generatedPath metadataPath configFilePath scrapersPath pluginsPath cachePath blobsPath blobsStorage ffmpegPath ffprobePath calculateMD5 videoFileNamingAlgorithm parallelTasks previewAudio previewSegments previewSegmentDuration maxMarkerPreviewDuration defaultMarkerPreviewDuration previewExcludeStart previewExcludeEnd previewPreset transcodeHardwareAcceleration maxTranscodeSize maxStreamingTranscodeSize transcodeInputArgs transcodeOutputArgs liveTranscodeInputArgs liveTranscodeOutputArgs drawFunscriptHeatmapRange writeImageThumbnails createImageClipsFromVideos apiKey username password maxSessionAge logFile logOut logLevel logAccess logFileMaxSize useCustomSpriteInterval spriteInterval minimumSprites maximumSprites spriteScreenshotSize videoExtensions imageExtensions galleryExtensions createGalleriesFromFolders galleryCoverRegex excludes imageExcludes customPerformerImageLocation stashBoxes { ...StashBox } pythonPath scraperPackageSources { ...PackageSource } pluginPackageSources { ...PackageSource } }
 fragment ConfigImageLightboxResult on ConfigImageLightboxResult { slideshowDelay displayMode scaleUp resetZoomOnNav scrollMode scrollAttemptsBeforeChange disableAnimation }
 fragment ConfigDisableDropdownCreate on ConfigDisableDropdownCreate { performer tag studio movie gallery }
 fragment ConfigInterfaceResult on ConfigInterfaceResult { sfwContentMode menuItems soundOnPreview wallShowTitle wallPlayback showScrubber maximumLoopDuration noBrowser notificationsEnabled autostartVideo autostartVideoOnPlaySelected continuePlaylistDefault showStudioAsText css cssEnabled javascript javascriptEnabled customLocales customLocalesEnabled disableCustomizations language imageLightbox { ...ConfigImageLightboxResult } disableDropdownCreate { ...ConfigDisableDropdownCreate } handyKey funscriptOffset useStashHostedFunscript }
@@ -2704,11 +2706,11 @@ allScenes <- function(...) {
   query allScenes { allScenes { ...Scene } }
 fragment VideoCaption on VideoCaption { language_code caption_type }
 fragment Fingerprint on Fingerprint { type value }
-fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate scenes { id title } created_at updated_at }
 fragment ScenePathsType on ScenePathsType { screenshot preview stream webp vtt sprite funscript interactive_heatmap caption }
 fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_seconds primary_tag { id name } tags { id name } created_at updated_at stream preview screenshot }
 fragment SceneGroup on SceneGroup { group { id name } scene_index }
-fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
+fragment Scene on Scene { id title code details director urls date production_date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
   ')
 
   variables <- list()
@@ -2779,8 +2781,8 @@ allImages <- function(...) {
   query$query('allImages', '
   query allImages { allImages { ...Image } }
 fragment Fingerprint on Fingerprint { type value }
-fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
-fragment ImageFile on ImageFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height created_at updated_at }
+fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate scenes { id title } created_at updated_at }
+fragment ImageFile on ImageFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height images { id } created_at updated_at }
 fragment VisualFile on VisualFile { ...VideoFile ...ImageFile }
 fragment ImagePathsType on ImagePathsType { thumbnail preview }
 fragment Image on Image { id title code rating100 urls date details photographer o_counter organized created_at updated_at visual_files { ...VisualFile } paths { ...ImagePathsType } galleries { id title } studio { id name } tags { id name } performers { id name gender } custom_fields }
@@ -2819,7 +2821,7 @@ allGalleries <- function(...) {
   query$query('allGalleries', '
   query allGalleries { allGalleries { ...Gallery } }
 fragment Fingerprint on Fingerprint { type value }
-fragment GalleryFile on GalleryFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } created_at updated_at }
+fragment GalleryFile on GalleryFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } galleries { id title } created_at updated_at }
 fragment GalleryChapter on GalleryChapter { id gallery { id title } title image_index created_at updated_at }
 fragment GalleryPathsType on GalleryPathsType { cover preview }
 fragment Gallery on Gallery { id title code urls date details photographer rating100 organized created_at updated_at files { ...GalleryFile } folder { id path basename } chapters { ...GalleryChapter } scenes { id title } studio { id name } image_count tags { id name } performers { id name gender } cover { id } paths { ...GalleryPathsType } custom_fields }
@@ -2926,7 +2928,7 @@ allStudios <- function(...) {
   query <- ghql::Query$new()
   query$query('allStudios', '
   query allStudios { allStudios { ...Studio } }
-fragment Studio on Studio { id name urls parent_studio { id name } child_studios { id name } aliases tags { id name } ignore_auto_tag organized image_path scene_count image_count gallery_count performer_count group_count stash_ids { endpoint stash_id } rating100 favorite details created_at updated_at groups { id name } o_counter custom_fields }
+fragment Studio on Studio { id name urls parent_studio { id name } child_studios { id name } aliases tags { id name } ignore_auto_tag organized image_path scene_count image_count gallery_count performer_count group_count scene_marker_count o_counter stash_ids { endpoint stash_id } rating100 favorite details created_at updated_at groups { id name } custom_fields }
   ')
 
   variables <- list()
@@ -3177,11 +3179,11 @@ sceneCreate <- function(input = NA, ...) {
   mutation sceneCreate($input: SceneCreateInput!) { sceneCreate(input: $input) { ...Scene } }
 fragment VideoCaption on VideoCaption { language_code caption_type }
 fragment Fingerprint on Fingerprint { type value }
-fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate scenes { id title } created_at updated_at }
 fragment ScenePathsType on ScenePathsType { screenshot preview stream webp vtt sprite funscript interactive_heatmap caption }
 fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_seconds primary_tag { id name } tags { id name } created_at updated_at stream preview screenshot }
 fragment SceneGroup on SceneGroup { group { id name } scene_index }
-fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
+fragment Scene on Scene { id title code details director urls date production_date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
   ')
 
   variables <- list()
@@ -3223,11 +3225,11 @@ sceneUpdate <- function(input = NA, ...) {
   mutation sceneUpdate($input: SceneUpdateInput!) { sceneUpdate(input: $input) { ...Scene } }
 fragment VideoCaption on VideoCaption { language_code caption_type }
 fragment Fingerprint on Fingerprint { type value }
-fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate scenes { id title } created_at updated_at }
 fragment ScenePathsType on ScenePathsType { screenshot preview stream webp vtt sprite funscript interactive_heatmap caption }
 fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_seconds primary_tag { id name } tags { id name } created_at updated_at stream preview screenshot }
 fragment SceneGroup on SceneGroup { group { id name } scene_index }
-fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
+fragment Scene on Scene { id title code details director urls date production_date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
   ')
 
   variables <- list()
@@ -3269,11 +3271,11 @@ sceneMerge <- function(input = NA, ...) {
   mutation sceneMerge($input: SceneMergeInput!) { sceneMerge(input: $input) { ...Scene } }
 fragment VideoCaption on VideoCaption { language_code caption_type }
 fragment Fingerprint on Fingerprint { type value }
-fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate scenes { id title } created_at updated_at }
 fragment ScenePathsType on ScenePathsType { screenshot preview stream webp vtt sprite funscript interactive_heatmap caption }
 fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_seconds primary_tag { id name } tags { id name } created_at updated_at stream preview screenshot }
 fragment SceneGroup on SceneGroup { group { id name } scene_index }
-fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
+fragment Scene on Scene { id title code details director urls date production_date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
   ')
 
   variables <- list()
@@ -3315,11 +3317,11 @@ bulkSceneUpdate <- function(input = NA, ...) {
   mutation bulkSceneUpdate($input: BulkSceneUpdateInput!) { bulkSceneUpdate(input: $input) { ...Scene } }
 fragment VideoCaption on VideoCaption { language_code caption_type }
 fragment Fingerprint on Fingerprint { type value }
-fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate scenes { id title } created_at updated_at }
 fragment ScenePathsType on ScenePathsType { screenshot preview stream webp vtt sprite funscript interactive_heatmap caption }
 fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_seconds primary_tag { id name } tags { id name } created_at updated_at stream preview screenshot }
 fragment SceneGroup on SceneGroup { group { id name } scene_index }
-fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
+fragment Scene on Scene { id title code details director urls date production_date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
   ')
 
   variables <- list()
@@ -3439,11 +3441,11 @@ scenesUpdate <- function(input = NA, ...) {
   mutation scenesUpdate($input: [SceneUpdateInput!]!) { scenesUpdate(input: $input) { ...Scene } }
 fragment VideoCaption on VideoCaption { language_code caption_type }
 fragment Fingerprint on Fingerprint { type value }
-fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
+fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate scenes { id title } created_at updated_at }
 fragment ScenePathsType on ScenePathsType { screenshot preview stream webp vtt sprite funscript interactive_heatmap caption }
 fragment SceneMarker on SceneMarker { id scene { id title } title seconds end_seconds primary_tag { id name } tags { id name } created_at updated_at stream preview screenshot }
 fragment SceneGroup on SceneGroup { group { id name } scene_index }
-fragment Scene on Scene { id title code details director urls date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
+fragment Scene on Scene { id title code details director urls date production_date rating100 organized o_counter interactive interactive_speed captions { ...VideoCaption } created_at updated_at last_played_at resume_time play_duration play_count play_history o_history files { ...VideoFile } paths { ...ScenePathsType } scene_markers { ...SceneMarker } galleries { id title } studio { id name } groups { ...SceneGroup } tags { id name } performers { id name gender } stash_ids { endpoint stash_id } custom_fields }
   ')
 
   variables <- list()
@@ -4214,8 +4216,8 @@ imageUpdate <- function(input = NA, ...) {
   query$query('imageUpdate', '
   mutation imageUpdate($input: ImageUpdateInput!) { imageUpdate(input: $input) { ...Image } }
 fragment Fingerprint on Fingerprint { type value }
-fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
-fragment ImageFile on ImageFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height created_at updated_at }
+fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate scenes { id title } created_at updated_at }
+fragment ImageFile on ImageFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height images { id } created_at updated_at }
 fragment VisualFile on VisualFile { ...VideoFile ...ImageFile }
 fragment ImagePathsType on ImagePathsType { thumbnail preview }
 fragment Image on Image { id title code rating100 urls date details photographer o_counter organized created_at updated_at visual_files { ...VisualFile } paths { ...ImagePathsType } galleries { id title } studio { id name } tags { id name } performers { id name gender } custom_fields }
@@ -4259,8 +4261,8 @@ bulkImageUpdate <- function(input = NA, ...) {
   query$query('bulkImageUpdate', '
   mutation bulkImageUpdate($input: BulkImageUpdateInput!) { bulkImageUpdate(input: $input) { ...Image } }
 fragment Fingerprint on Fingerprint { type value }
-fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
-fragment ImageFile on ImageFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height created_at updated_at }
+fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate scenes { id title } created_at updated_at }
+fragment ImageFile on ImageFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height images { id } created_at updated_at }
 fragment VisualFile on VisualFile { ...VideoFile ...ImageFile }
 fragment ImagePathsType on ImagePathsType { thumbnail preview }
 fragment Image on Image { id title code rating100 urls date details photographer o_counter organized created_at updated_at visual_files { ...VisualFile } paths { ...ImagePathsType } galleries { id title } studio { id name } tags { id name } performers { id name gender } custom_fields }
@@ -4382,8 +4384,8 @@ imagesUpdate <- function(input = NA, ...) {
   query$query('imagesUpdate', '
   mutation imagesUpdate($input: [ImageUpdateInput!]!) { imagesUpdate(input: $input) { ...Image } }
 fragment Fingerprint on Fingerprint { type value }
-fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate created_at updated_at }
-fragment ImageFile on ImageFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height created_at updated_at }
+fragment VideoFile on VideoFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height duration video_codec audio_codec frame_rate bit_rate scenes { id title } created_at updated_at }
+fragment ImageFile on ImageFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } format width height images { id } created_at updated_at }
 fragment VisualFile on VisualFile { ...VideoFile ...ImageFile }
 fragment ImagePathsType on ImagePathsType { thumbnail preview }
 fragment Image on Image { id title code rating100 urls date details photographer o_counter organized created_at updated_at visual_files { ...VisualFile } paths { ...ImagePathsType } galleries { id title } studio { id name } tags { id name } performers { id name gender } custom_fields }
@@ -4544,7 +4546,7 @@ galleryCreate <- function(input = NA, ...) {
   query$query('galleryCreate', '
   mutation galleryCreate($input: GalleryCreateInput!) { galleryCreate(input: $input) { ...Gallery } }
 fragment Fingerprint on Fingerprint { type value }
-fragment GalleryFile on GalleryFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } created_at updated_at }
+fragment GalleryFile on GalleryFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } galleries { id title } created_at updated_at }
 fragment GalleryChapter on GalleryChapter { id gallery { id title } title image_index created_at updated_at }
 fragment GalleryPathsType on GalleryPathsType { cover preview }
 fragment Gallery on Gallery { id title code urls date details photographer rating100 organized created_at updated_at files { ...GalleryFile } folder { id path basename } chapters { ...GalleryChapter } scenes { id title } studio { id name } image_count tags { id name } performers { id name gender } cover { id } paths { ...GalleryPathsType } custom_fields }
@@ -4588,7 +4590,7 @@ galleryUpdate <- function(input = NA, ...) {
   query$query('galleryUpdate', '
   mutation galleryUpdate($input: GalleryUpdateInput!) { galleryUpdate(input: $input) { ...Gallery } }
 fragment Fingerprint on Fingerprint { type value }
-fragment GalleryFile on GalleryFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } created_at updated_at }
+fragment GalleryFile on GalleryFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } galleries { id title } created_at updated_at }
 fragment GalleryChapter on GalleryChapter { id gallery { id title } title image_index created_at updated_at }
 fragment GalleryPathsType on GalleryPathsType { cover preview }
 fragment Gallery on Gallery { id title code urls date details photographer rating100 organized created_at updated_at files { ...GalleryFile } folder { id path basename } chapters { ...GalleryChapter } scenes { id title } studio { id name } image_count tags { id name } performers { id name gender } cover { id } paths { ...GalleryPathsType } custom_fields }
@@ -4632,7 +4634,7 @@ bulkGalleryUpdate <- function(input = NA, ...) {
   query$query('bulkGalleryUpdate', '
   mutation bulkGalleryUpdate($input: BulkGalleryUpdateInput!) { bulkGalleryUpdate(input: $input) { ...Gallery } }
 fragment Fingerprint on Fingerprint { type value }
-fragment GalleryFile on GalleryFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } created_at updated_at }
+fragment GalleryFile on GalleryFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } galleries { id title } created_at updated_at }
 fragment GalleryChapter on GalleryChapter { id gallery { id title } title image_index created_at updated_at }
 fragment GalleryPathsType on GalleryPathsType { cover preview }
 fragment Gallery on Gallery { id title code urls date details photographer rating100 organized created_at updated_at files { ...GalleryFile } folder { id path basename } chapters { ...GalleryChapter } scenes { id title } studio { id name } image_count tags { id name } performers { id name gender } cover { id } paths { ...GalleryPathsType } custom_fields }
@@ -4715,7 +4717,7 @@ galleriesUpdate <- function(input = NA, ...) {
   query$query('galleriesUpdate', '
   mutation galleriesUpdate($input: [GalleryUpdateInput!]!) { galleriesUpdate(input: $input) { ...Gallery } }
 fragment Fingerprint on Fingerprint { type value }
-fragment GalleryFile on GalleryFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } created_at updated_at }
+fragment GalleryFile on GalleryFile { id path basename parent_folder { id path basename } zip_file { id path basename } mod_time size fingerprints { ...Fingerprint } galleries { id title } created_at updated_at }
 fragment GalleryChapter on GalleryChapter { id gallery { id title } title image_index created_at updated_at }
 fragment GalleryPathsType on GalleryPathsType { cover preview }
 fragment Gallery on Gallery { id title code urls date details photographer rating100 organized created_at updated_at files { ...GalleryFile } folder { id path basename } chapters { ...GalleryChapter } scenes { id title } studio { id name } image_count tags { id name } performers { id name gender } cover { id } paths { ...GalleryPathsType } custom_fields }
@@ -5271,7 +5273,7 @@ studioCreate <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('studioCreate', '
   mutation studioCreate($input: StudioCreateInput!) { studioCreate(input: $input) { ...Studio } }
-fragment Studio on Studio { id name urls parent_studio { id name } child_studios { id name } aliases tags { id name } ignore_auto_tag organized image_path scene_count image_count gallery_count performer_count group_count stash_ids { endpoint stash_id } rating100 favorite details created_at updated_at groups { id name } o_counter custom_fields }
+fragment Studio on Studio { id name urls parent_studio { id name } child_studios { id name } aliases tags { id name } ignore_auto_tag organized image_path scene_count image_count gallery_count performer_count group_count scene_marker_count o_counter stash_ids { endpoint stash_id } rating100 favorite details created_at updated_at groups { id name } custom_fields }
   ')
 
   variables <- list()
@@ -5311,7 +5313,7 @@ studioUpdate <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('studioUpdate', '
   mutation studioUpdate($input: StudioUpdateInput!) { studioUpdate(input: $input) { ...Studio } }
-fragment Studio on Studio { id name urls parent_studio { id name } child_studios { id name } aliases tags { id name } ignore_auto_tag organized image_path scene_count image_count gallery_count performer_count group_count stash_ids { endpoint stash_id } rating100 favorite details created_at updated_at groups { id name } o_counter custom_fields }
+fragment Studio on Studio { id name urls parent_studio { id name } child_studios { id name } aliases tags { id name } ignore_auto_tag organized image_path scene_count image_count gallery_count performer_count group_count scene_marker_count o_counter stash_ids { endpoint stash_id } rating100 favorite details created_at updated_at groups { id name } custom_fields }
   ')
 
   variables <- list()
@@ -5429,7 +5431,7 @@ bulkStudioUpdate <- function(input = NA, ...) {
   query <- ghql::Query$new()
   query$query('bulkStudioUpdate', '
   mutation bulkStudioUpdate($input: BulkStudioUpdateInput!) { bulkStudioUpdate(input: $input) { ...Studio } }
-fragment Studio on Studio { id name urls parent_studio { id name } child_studios { id name } aliases tags { id name } ignore_auto_tag organized image_path scene_count image_count gallery_count performer_count group_count stash_ids { endpoint stash_id } rating100 favorite details created_at updated_at groups { id name } o_counter custom_fields }
+fragment Studio on Studio { id name urls parent_studio { id name } child_studios { id name } aliases tags { id name } ignore_auto_tag organized image_path scene_count image_count gallery_count performer_count group_count scene_marker_count o_counter stash_ids { endpoint stash_id } rating100 favorite details created_at updated_at groups { id name } custom_fields }
   ')
 
   variables <- list()
@@ -6591,7 +6593,7 @@ configureGeneral <- function(input = NA, ...) {
 fragment StashConfig on StashConfig { path excludeVideo excludeImage }
 fragment StashBox on StashBox { endpoint api_key name max_requests_per_minute }
 fragment PackageSource on PackageSource { name url local_path }
-fragment ConfigGeneralResult on ConfigGeneralResult { stashes { ...StashConfig } databasePath backupDirectoryPath deleteTrashPath generatedPath metadataPath configFilePath scrapersPath pluginsPath cachePath blobsPath blobsStorage ffmpegPath ffprobePath calculateMD5 videoFileNamingAlgorithm parallelTasks previewAudio previewSegments previewSegmentDuration previewExcludeStart previewExcludeEnd previewPreset transcodeHardwareAcceleration maxTranscodeSize maxStreamingTranscodeSize transcodeInputArgs transcodeOutputArgs liveTranscodeInputArgs liveTranscodeOutputArgs drawFunscriptHeatmapRange writeImageThumbnails createImageClipsFromVideos apiKey username password maxSessionAge logFile logOut logLevel logAccess logFileMaxSize useCustomSpriteInterval spriteInterval minimumSprites maximumSprites spriteScreenshotSize videoExtensions imageExtensions galleryExtensions createGalleriesFromFolders galleryCoverRegex excludes imageExcludes customPerformerImageLocation stashBoxes { ...StashBox } pythonPath scraperPackageSources { ...PackageSource } pluginPackageSources { ...PackageSource } }
+fragment ConfigGeneralResult on ConfigGeneralResult { stashes { ...StashConfig } databasePath backupDirectoryPath deleteTrashPath generatedPath metadataPath configFilePath scrapersPath pluginsPath cachePath blobsPath blobsStorage ffmpegPath ffprobePath calculateMD5 videoFileNamingAlgorithm parallelTasks previewAudio previewSegments previewSegmentDuration maxMarkerPreviewDuration defaultMarkerPreviewDuration previewExcludeStart previewExcludeEnd previewPreset transcodeHardwareAcceleration maxTranscodeSize maxStreamingTranscodeSize transcodeInputArgs transcodeOutputArgs liveTranscodeInputArgs liveTranscodeOutputArgs drawFunscriptHeatmapRange writeImageThumbnails createImageClipsFromVideos apiKey username password maxSessionAge logFile logOut logLevel logAccess logFileMaxSize useCustomSpriteInterval spriteInterval minimumSprites maximumSprites spriteScreenshotSize videoExtensions imageExtensions galleryExtensions createGalleriesFromFolders galleryCoverRegex excludes imageExcludes customPerformerImageLocation stashBoxes { ...StashBox } pythonPath scraperPackageSources { ...PackageSource } pluginPackageSources { ...PackageSource } }
   ')
 
   variables <- list()

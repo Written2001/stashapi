@@ -4,13 +4,15 @@
 \alias{findDuplicateScenes}
 \title{Call GraphQL operation: findDuplicateScenes}
 \usage{
-findDuplicateScenes(distance = NA, durationdiff = NA, ...)
+findDuplicateScenes(distance = NA, durationdiff = NA, scenefilter = NA, ...)
 }
 \arguments{
 \item{distance}{See the Stash Playground for details.}
 
 \item{durationdiff}{Max difference in seconds between files in order to be considered for similarity matching.
 Fractional seconds are ok: 0.5 will mean only files that have durations within 0.5 seconds between them will be matched based on PHash distance.}
+
+\item{scenefilter}{See the Stash Playground for details.}
 
 \item{...}{Additional options such as `.field`, `.response`, and `.progress_bar`.}
 }
