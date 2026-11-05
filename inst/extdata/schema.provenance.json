@@ -71,6 +71,6 @@
   },
   "parser": "graphql-core",
   "commit": "9e9ad972643320e737c711884f10e4285f0f3a88",
-  "stashapi_version": "0.8.2",
+  "stashapi_version": "0.9.0",
   "artifact": "inst/extdata/schema.json"
 }
