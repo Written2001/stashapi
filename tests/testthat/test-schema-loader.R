@@ -44,7 +44,7 @@ testthat::test_that("the pinned schema provenance identifies an immutable releas
   )
 
   testthat::expect_identical(provenance$ref, "v0.32.0")
-  testthat::expect_identical(provenance$stashapi_version, "0.8.2")
+  testthat::expect_identical(provenance$stashapi_version, "0.9.0")
   testthat::expect_identical(
     provenance$commit,
     "9e9ad972643320e737c711884f10e4285f0f3a88"
