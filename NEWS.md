@@ -1,4 +1,4 @@
-# stashapi (development version)
+# stashapi 0.9.0
 
 - Update the generated GraphQL API for Stash `v0.32.0`, including scene
 	production dates and duplicate-scene filtering, studio hierarchy inputs and
